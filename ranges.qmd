@@ -1,0 +1,191 @@
+## Estimating ranges
+
+### Overview
+
+Estimating the boundaries of seasonal and annual caribou ranges is an important step in effective wildlife conservation and management. Defining these spatial limits allows managers to identify core habitat areas, including calving grounds and winter foraging areas. This information is fundamental for land use planning, as it ensures that development and human activities are regulated to minimize disturbance and avoid habitat loss and fragmentation within these key areas. Ultimately, understanding and mapping caribou ranges provides the necessary baseline data to implement targeted conservation measures, monitor population health in relation to their environment, and support sustainable resource management for the long-term persistence of the herds.
+
+We estimated annual and seasonal ranges using locations collected from many caribou over multiple years. To understand how herds use the landscape across the year, we grouped these locations into biologically meaningful seasons: annual, early winter, late winter, summer, and the fall rut. For each season, we used a statistical mapping approach called a kernel density estimator (KDE), implemented in R using the `amt` package. This method creates smooth contours around clusters of points, showing where caribou spend most of their time. The outer contour (the 95% isopleth) represents the broader seasonal range, while the inner contour (the 50% isopleth) highlights the core areas most heavily used.
+
+This approach provides a consistent way to compare how different herds use space and how their ranges shift across seasons. Because it summarizes many individual movement paths into a single population‑level map, it helps identify key habitats and areas that may require conservation attention. The graphic below illustrates the concept, showing points, the estimated 95% range boundary, and the 50% core area for an example herd.
+
+**Individual-level range estimation**
+
+For each individual/year/season, use the Kernel Density Estimation (KDE) method to estimate probability density functions of animal locations, resulting in utilization distributions.
+
+Parameters: Select appropriate smoothing parameters (e.g., h-value) using methods like Likelihood Cross-Validation (LCV) or reference bandwidth.
+
+Output: Generate 95% and 50% (or other relevant contours) utilization distributions (UDs) for annual and seasonal ranges for each individual for each year.  The former (95%) represents the overall annual or seasonal range while the latter (50% isopleths) represents core or high use areas.
+
+**Population-level range estimation**
+
+There are two broad approaches that could be used to estimate population-level annual and seasonal ranges:
+
+- Method 1 - Union of individual ranges: Combine individual ranges (e.g., 95% KDEs) to visualize the total area used by the population annually and seasonally.
+- Method 2 - Population-level estimates: Pool all individual locations for a given period and estimate a single population-level range that represents the overall utilization distribution.
+
+We used the second method to estimate population-level ranges and the resulting maps are available in the main section of the report (Section 9).
+
+**Interactive dashboard**
+
+In addition, to the maps in the report, we developed an interactive dashboard to assist in visualizing 1) individual- and population-level annual and seasonal range estimates and 2) variation in range estimates between individuals, years, and seasons.
+
+
+### Walkthrough
+
+In this section we describe the steps used to estimate individual home ranges using the KDE approach and compare it to another commonly used method, the minimum convex hull (MCP). We illustrate the approach for one individual caribou.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(sf)
+library(amt)
+library(tmap)
+library(tidyverse)
+```
+
+#### Step 1. Read locations
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 8
+gps <- read_csv('../data/little_rancheria/caribou.csv')
+gps1 <- gps |> filter(id=="SKRATALR0043" & year==2022)
+gps1_sf <- gps1 |>
+  st_as_sf(coords=c("longitude", "latitude"), crs=4326, remove=FALSE) |>
+  mutate(year=as.factor(year))
+tm_basemap("Esri.WorldTopoMap") +
+  tm_shape(gps1_sf) +
+  tm_dots(fill="red")
+```
+
+#### Step 2. Make tracks
+
+Tracks are the basic building blocks of movement analysis in the `amt` package. So, we first use the `make_track` function for convert our data.frame into tracks. Note that we have to specify the crs of the data which, in this case, is lat-long or "EPSG:4326". We can then project our coordinates to the Yukon Albers projection using the `transform_coords` function.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 8
+trk <- make_track(gps, longitude, latitude, timestamp, id=id, year=year, season=season, crs=4326)
+trk1 <- make_track(gps1, longitude, latitude, timestamp, id=id, year=year, season=season, crs=4326)
+trk1_sf <- trk1 |>
+  group_by(id, year) |>
+  st_as_sf(coords=c("x_", "y_"), crs=4326) |>
+  summarize(do_union=FALSE) |>
+  st_cast("LINESTRING") |>
+  st_make_valid()
+tm_basemap("Esri.WorldTopoMap") +
+  tm_shape(trk1_sf) +
+  tm_lines(lwd=2) +
+  tm_shape(gps1_sf) +
+  tm_dots(fill="red")
+```
+
+#### Step 3. Estimate ranges
+
+**Geometric estimators: MCP**
+
+Geometric estimators such as minimum convex polygons(MCP) only rely on the observed locations and can only estimate the occurrence distribution (i.e., where the animal was during the study period). MCPs can be constructed with multiple levels using the function `hr_mcp()` from the `amt` package.
+
+Estimated home range area for each level:
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+mcps <- hr_mcp(trk1, levels = c(0.5, 0.75, 0.95, 1))
+hr_area(mcps, units = TRUE) %>% 
+  mutate(area = units::set_units(area, "km^2"))
+```
+
+MCPs can be viewed as isopleths.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 8
+iso1 <- hr_isopleths(mcps) |>
+  mutate(level = factor(level))
+tm_basemap("Esri.WorldTopoMap") +
+  tm_shape(gps1_sf) +
+  tm_dots() +
+  tm_shape(iso1) +
+  tm_borders(col="level", col.scale=tm_scale(values=c("red","darkgreen","blue","black")), lwd=2, col.legend = tm_legend_hide()) +
+  tm_add_legend(title="MCP Level", labels=c("50%","75%","95%","100%"), col=c("red","darkgreen","blue","black"), 
+    fill_alpha=0, position = tm_pos_in(pos.v = "bottom", pos.h="right")) 
+```
+
+**Probabilistic estimators (KDE)**
+
+Probabilistic estimators (e.g., KDEs) are based on an underlying model for the utilization distribution (UD). They can estimate the occurrence distribution or the range distribution (where the animal could be found at any future time if its movement process remains the same) depending on the underlying model. Can be represented as a hull by outlining a cumulative probability of use. Fitting a KDE to telemetry data is the same problem as with MCPs, but in 2 dimensions. Choosing a bandwidth is important to the final result, and there are multiple possible methods for doing so. Here, we will focus on the reference bandwidth, whic is the default.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+kde1 <- hr_kde(trk1, levels = c(0.5, 0.95))
+hr_area(kde1)
+```
+
+Unlike MCPs, KDEs include two additional raster objects:
+
+* 'ud' -- the rasterized utilization distribution
+* 'trast' -- the template raster used to rasterize the UD
+
+Here we make a plot with the 50% and 95% isopleths drawn over the UD raster.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 8
+kde1 <- hr_kde(trk1, levels = c(0.5, 0.95))
+kde1i <- kde1 |>
+  hr_isopleths()
+tm_basemap("Esri.WorldTopoMap") +
+  tm_shape(kde1i) +
+  tm_borders(col="black", lwd=2, lty="dashed") +
+  tm_polygons( 
+    fill="level", fill.scale=tm_scale(values=c("yellow","darkgreen")),
+    fill_alpha=0.5, fill.legend = tm_legend_hide()) +
+  tm_add_legend(
+    title = "KDE", labels = c("Core (50%)", "Overall (95%)"), fill=c("yellow","darkgreen"), fill_alpha=0.75, position = tm_pos_in(pos.v = "bottom", pos.h="right"))
+```
+
+#### Step 4. Compare estimates
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 8
+mcp1 <- hr_mcp(trk1, levels = c(0.5, 0.95))
+mcp1i <- mcp1 |> hr_isopleths()
+kde1 <- hr_kde(trk1, levels = c(0.5, 0.95))
+kde1i <- kde1 |> hr_isopleths()
+tm_basemap("Esri.WorldTopoMap") +
+  tm_shape(kde1i) +
+  tm_borders(col="black", lwd=2, lty="dashed") +
+  tm_polygons( 
+    fill="level", fill.scale=tm_scale(values=c("yellow","darkgreen")),
+    fill_alpha=0.5, fill.legend = tm_legend_hide()) +
+  tm_add_legend(
+    title = "KDE", labels = c("Core (50%)", "Overall (95%)"), fill=c("yellow","darkgreen"), fill_alpha=0.75, position = tm_pos_in(pos.v = "bottom", pos.h="right")) +
+  tm_shape(mcp1i) +
+  tm_borders(col="level", col.scale=tm_scale(values=c("red","blue")), lwd=2, lty="solid", col.legend = tm_legend_hide()) +
+  tm_add_legend(title="MCP", labels=c("Core (50%)","Overall (95%)"), col=c("red","blue"), fill_alpha=0, position = tm_pos_in(pos.v = "bottom", pos.h="right")) +
+  tm_shape(gps1_sf) +
+  tm_dots(col="black", size=0.1) +
+  tm_compass(position = tm_pos_in("right", "top")) +
+  tm_scalebar(position = tm_pos_in("left", "top"))
+```

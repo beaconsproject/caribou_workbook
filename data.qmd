@@ -1,0 +1,22 @@
+## Movement data
+
+There are 26 herds of Northern Mountain caribou in Yukon occupying most of the south and central regions (Environment Yukon 2016). Twelve of the herds intersect the LFN area of interest (Figure 1), with four herds crossing over into British Columbia (Horseranch, Liard Plateau, Little Rancheria, and Swan Lake).
+
+![](../pics/fig_herds.png)<br>
+Figure 1. Distribution caribou herds intersecting the LFN planning area.
+
+We currently have movement data for 2 of the herds, Little Rancheria and Wolf Lake, with more data on its way. Table 1 provides a summary of the available data for the Little Rancheria herd.
+
+### Little Rancheria herd
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+#| tbl-cap: Table 1. Number of caribou used to estimate ranges and corridors by season or migration period.
+x <- readr::read_csv("pics/counts.csv")
+knitr::kable(x)
+```
+
+
+### Wolf Lake herd

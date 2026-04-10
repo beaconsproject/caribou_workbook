@@ -1,0 +1,19 @@
+project:
+  type: book
+
+book:
+  title: "LFN IPCA Report - Appendices"
+  author: "BEACONs Project"
+  date: "2026-04-09"
+  chapters:
+    - index.qmd
+    - data.qmd
+    - segments.qmd
+    - ranges.qmd
+    - corridors.qmd
+
+format:
+  html:
+    theme: default
+    toc: true
+    number-sections: false

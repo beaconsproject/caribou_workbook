@@ -1,0 +1,8 @@
+# Overview
+
+This document describes the methods used to analyse caribou movement data. It is divided into four sections:
+
+1. Summarizing data. Description of caribou movement datasets that were acquired from the Yukon and BC governments.
+2. Defining seasons. A priori seasonal and migration date ranges and methods used to define date ranges for individual caribou.
+3. Estimating ranges. Methods used to estimate annual and seasonal ranges.
+4. Identifying corridors. Methods used to identify and map seasonal migration corridors.

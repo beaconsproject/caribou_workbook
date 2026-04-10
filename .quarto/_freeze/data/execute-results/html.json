@@ -1,0 +1,15 @@
+{
+  "hash": "6ada43b3c84cb85c59ff9cc8aa8f74bc",
+  "result": {
+    "engine": "knitr",
+    "markdown": "## Movement data\n\nThere are 26 herds of Northern Mountain caribou in Yukon occupying most of the south and central regions (Environment Yukon 2016). Twelve of the herds intersect the LFN area of interest (Figure 1), with four herds crossing over into British Columbia (Horseranch, Liard Plateau, Little Rancheria, and Swan Lake).\n\n![](../pics/fig_herds.png)<br>\nFigure 1. Distribution caribou herds intersecting the LFN planning area.\n\nWe currently have movement data for 2 of the herds, Little Rancheria and Wolf Lake, with more data on its way. Table 1 provides a summary of the available data for the Little Rancheria herd.\n\n### Little Rancheria herd\n\n\n::: {.cell tbl-cap='Table 1. Number of caribou used to estimate ranges and corridors by season or migration period.'}\n::: {.cell-output-display}\n\n\n|Season/migration | 2020| 2021| 2022| 2023| 2024| 2025| 2026| Total|\n|:----------------|----:|----:|----:|----:|----:|----:|----:|-----:|\n|Early winter     |   29|   29|   32|   24|   23|   21|    7|   165|\n|Late winter      |   NA|   29|   33|   24|   23|   21|    7|   137|\n|Summer           |   NA|   25|   27|   24|   22|   19|   NA|   117|\n|Fall rut         |   NA|   24|   24|   24|   22|   15|   NA|   109|\n|Spring migration |   NA|   28|   32|   24|   23|   19|   NA|   126|\n|Fall migration   |   NA|   24|   24|   24|   22|   16|   NA|   110|\n\n\n:::\n:::\n\n\n\n### Wolf Lake herd\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
