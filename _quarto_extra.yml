@@ -1,6 +1,0 @@
-  pdf:
-    documentclass: scrreprt
-  docx:
-    toc: true
-    number-sections: false
-    reference-doc: pics/template.docx

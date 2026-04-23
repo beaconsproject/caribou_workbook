@@ -13,5 +13,29 @@
   },
   "corridors.qmd": {
     "corridors.html": "186fdb1b"
+  },
+  "methods.qmd": {
+    "methods.html": "e38d7b54"
+  },
+  "methods/corridors.qmd": {
+    "corridors.html": "42c7c324"
+  },
+  "methods/ranges.qmd": {
+    "ranges.html": "624b03f2"
+  },
+  "little_rancheria/overview.qmd": {
+    "overview.html": "d994081a"
+  },
+  "horseranch/overview.qmd": {
+    "overview.html": "31fa838d"
+  },
+  "wolf_lake/overview.qmd": {
+    "overview.html": "d7947d28"
+  },
+  "workflow/segments.qmd": {
+    "segments.html": "6ec6cb66"
+  },
+  "workflow/ranges.qmd": {
+    "ranges.html": "802451a9"
   }
 }

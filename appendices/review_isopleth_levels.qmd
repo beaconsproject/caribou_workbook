@@ -1,0 +1,270 @@
+## Review of Isopleth Levels in Home Range Estimates
+
+### 1. Introduction
+
+The concept of an animal's home range, defined as the area traversed by an individual during its normal activities of food gathering, mating, and caring for young, forms a cornerstone of ecological research.1 Understanding the spatial extent and patterns of animal movement is crucial for addressing a wide array of ecological questions, including habitat use, social interactions, population dynamics, and conservation strategies.8 In an era marked by increasing human impact on natural environments, the ability to accurately delineate and analyze home ranges is more critical than ever, informing management decisions aimed at mitigating human-wildlife conflicts and ensuring the persistence of biodiversity.8
+
+While the basic idea of a home range is intuitive, its quantification presents considerable challenges. Animals rarely utilize their environment uniformly; instead, they exhibit varying intensities of space use across their range. Isopleths, defined as lines connecting points of equal value, have emerged as a powerful tool in spatial ecology to address this complexity.11 In the context of home range estimation, isopleths provide a probabilistic framework for understanding the likelihood of an animal's presence within a given area. This report aims to provide a comprehensive and expert-level analysis of isopleth levels in home range estimation. It will delve into the definition and role of isopleths, the interpretation of different probability levels, the common methods used to generate them, their applications in ecological analysis, and the crucial limitations and considerations that researchers must be aware of when employing this technique.
+
+## 2. Defining Isopleths in Home Range Estimation
+
+In ecological studies and wildlife research, an isopleth is a contour line drawn on a map that connects points representing an equal probability density of an animal's location.11 These lines are not arbitrary; they are derived from an underlying statistical representation of an animal's space use known as the utilization distribution (UD).1 The UD essentially maps the relative frequency with which an animal is found in different parts of its environment over a specific period, thereby quantifying the intensity of space use.
+
+The concept of the UD can be visualized as a three-dimensional surface draped over the landscape, where the height of the surface at any given point corresponds to the probability density of the animal being located there. The total volume under this surface is normalized to sum to 1, representing the total probability of the animal being somewhere within its range.11 Isopleths are then the two-dimensional contours formed by slicing this three-dimensional probability surface at different height levels, corresponding to different probabilities of occurrence. These contours delineate areas within which there is a specified probability of finding the animal.
+
+This probabilistic approach offered by isopleths stands in stark contrast to earlier, more simplistic methods of home range estimation, such as the Minimum Convex Polygon (MCP).1 While the MCP method simply connects the outermost recorded locations of an animal to form a polygon, it provides no information about how the animal uses the space within that boundary. Isopleths, by being derived from the UD, offer a much more nuanced understanding of space use, revealing areas of high and low intensity of activity and allowing for a probabilistic interpretation of an animal's spatial behavior.
+
+### 3. The Role of Isopleths in Delineating Home Ranges
+
+Isopleths serve as the operational tool for defining the spatial extent of an animal's home range by allowing researchers to select a specific probability level that corresponds to their definition of the range.1 For instance, a researcher might choose the 95% isopleth to represent the overall home range, implying that there is a 95% probability of finding the animal within the area enclosed by this contour at any given time.
+
+Different isopleth levels can delineate distinct zones of space use intensity within the broader home range.1 For example, the 50% isopleth is commonly used to identify the core area, representing the region where the animal spends the majority of its time or has the highest probability of being located. Conversely, higher percentage isopleths encompass progressively larger areas that include the less frequently visited parts of the home range.
+
+The selection of the isopleth level used to define the home range boundary is a critical decision that can significantly influence the estimated size and shape of the range.11 This choice should not be arbitrary but rather should be guided by the specific ecological question being addressed and the biological characteristics of the species under investigation. For example, a study focusing on resource acquisition might prioritize the core area defined by a lower isopleth, while a study on dispersal patterns might be more interested in the overall extent defined by a higher isopleth.
+
+Furthermore, isopleths provide a standardized and quantitative way to compare home range characteristics between individuals, populations, or across different temporal scales.1 By comparing the areas enclosed by isopleths at the same probability level (e.g., 95%) for different animals, researchers can assess differences in home range size. Similarly, analyzing the degree of overlap between isopleths of different individuals can provide insights into social interactions and territoriality.
+
+### 4. Understanding Different Isopleth Levels and Their Probabilistic Interpretation
+
+Different isopleth levels represent different probabilities of an animal's location within its home range. Understanding these probabilities is crucial for interpreting ecological patterns and processes.
+
+50% Isopleth: The 50% isopleth delineates the area where there is a 50% probability of finding the animal at any random point in time within the study period.11 Ecologically, this is commonly interpreted as the core area of an animal's home range, representing the zone of most intensive use. This area likely encompasses key resources, such as primary foraging sites, crucial resting locations, or important areas for social interactions.11 For instance, comparisons of core area size and location can reveal differences in resource availability or social status among individuals.
+
+90% or 95% Isopleth: These higher-level isopleths, typically the 90% or 95% contours, are generally used to represent the overall home range extent.1 The 95% isopleth, for example, indicates the area within which there is a 95% probability of finding the animal. These levels capture the total area an animal regularly uses, including both the intensively used core and the more peripheral areas that may be visited less frequently for exploration or accessing seasonally available resources. While 95% is a common standard, some researchers advocate for the use of the 90% isopleth in specific contexts.1
+
+Other isopleth levels, such as 75% or 99%, can also be used depending on the specific research objectives.13 For instance, a 75% isopleth might be used to define a secondary area of high use, while a 99% isopleth could represent the maximum extent of occasional excursions.
+
+It is also important to understand the concept of "percent volume contours" in the context of three-dimensional utilization distributions.11 A 2D isopleth at a given percentage can be thought of as the projection of the corresponding volume contour from the 3D UD onto a two-dimensional map. This means that the area enclosed by an isopleth represents a specific proportion of the total probability volume of the animal's space use.
+
+Ultimately, the choice of which isopleth levels to analyze and interpret should be driven by the specific ecological questions being asked and the biological characteristics of the study animal.1 Relying solely on arbitrary conventions like always using the 50% and 95% isopleths without considering their ecological relevance to the species and the study system can lead to misleading interpretations.
+
+Table 1: Common Isopleth Levels and Their Typical Ecological Interpretations
+
+|                    |                                                        |                                                                                                          |
+| ------------------ | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| Isopleth Level (%) | Typical Ecological Interpretation                      | Common Applications                                                                                      |
+| 50%                | Core Area, Area of Highest Use Intensity               | Identifying primary foraging or resting sites, Comparing core area size across individuals or conditions |
+| 75%                | Secondary Area of High Use                             | Investigating patterns of resource use beyond the core                                                   |
+| 90%                | Overall Home Range Extent (Alternative)                | Estimating the total area regularly used, Assessing habitat connectivity                                 |
+| 95%                | Overall Home Range Extent (Common Standard)            | Defining the boundary of the home range for comparisons, Conservation planning                           |
+| 99%                | Maximum Extent of Use, Including Occasional Excursions | Identifying rare or exploratory movements                                                                |
+
+### 5. Common Methods for Generating Home Range Isopleths
+
+Several methods are commonly employed to generate isopleths for home range estimation, each with its own underlying assumptions and computational approaches.
+
+Kernel Density Estimation (KDE): Kernel Density Estimation is one of the most widely used non-parametric methods for estimating an animal's utilization distribution from a set of location data.1 The fundamental principle of KDE involves placing a kernel function, which is a probability density function (often a bivariate normal distribution), centered at each observed location of the animal.17 These individual kernels are then summed across all locations to produce an overall estimate of the probability density of the animal's presence at any given point in space.
+
+A critical aspect of KDE is the selection of the bandwidth or smoothing parameter.13 The bandwidth determines the size and shape of the kernel and significantly influences the resulting UD and the derived isopleths. A small bandwidth results in a highly localized and potentially fragmented UD, reflecting fine-scale movements, while a large bandwidth produces a smoother, more generalized UD that may obscure important details. Several methods exist for bandwidth selection, including least-squares cross-validation (LSCV) and plug-in methods, but the choice often involves a degree of subjectivity and can substantially impact the results.19
+
+KDE offers several advantages, including its ability to estimate complex, non-linear home range shapes that are not constrained by convexity, and its provision of a continuous utilization distribution from which isopleths at any desired probability level can be extracted.5 However, KDE also has limitations. It is sensitive to the choice of bandwidth, can potentially overestimate home range size, particularly for animals with linear movement patterns or home ranges containing large areas of unused space.16 Furthermore, traditional KDE assumes that the location data are statistically independent, an assumption that is often violated by GPS telemetry data which typically exhibit temporal autocorrelation.19
+
+Minimum Convex Polygon (MCP): The Minimum Convex Polygon is a more traditional and geometrically straightforward method for home range estimation.1 It defines the home range as the smallest convex polygon that encloses all the recorded locations of an animal. While a 100% MCP includes all data points, variations exist, such as the 95% MCP, which excludes a small percentage (typically 5%) of the most outlying locations to reduce the influence of occasional excursions.
+
+While isopleths derived from UDs represent probability densities, MCPs essentially define a boundary based on the outermost occurrences. However, one can conceptually link MCPs to isopleths by considering polygons that enclose a specific percentage of the data points.
+
+The primary advantages of MCP are its simplicity in calculation and interpretation.19 Its historical prevalence also allows for comparisons with older studies.20 However, MCP suffers from significant limitations. It tends to overestimate home range size, often including large areas that are rarely or never used by the animal.6 It is also highly sensitive to the inclusion of even a single outlying location, which can disproportionately inflate the estimated range. Critically, MCP provides no information about the intensity of space use within the defined polygon.16
+
+Local Convex Hull (LoCoH): Local Convex Hull is a non-parametric kernel method that offers an alternative to traditional KDE, particularly for home ranges with complex shapes.1 LoCoH constructs a series of overlapping local convex hulls based on subsets of the animal's location data. These subsets are typically defined by a fixed number of nearest neighbors (k-LoCoH), a fixed radius around each point (r-LoCoH), or an adaptive radius based on the distance to neighboring points (a-LoCoH).
+
+Utilization distributions and isopleths can be derived from the density of these overlapping local hulls.65 LoCoH offers advantages in its ability to better represent home ranges with intricate boundaries, including those with internal unused areas or "hard" boundaries such as coastlines or rivers.1 Research suggests that LoCoH may provide more accurate estimates and exhibit better convergence properties as sample size increases compared to parametric KDE methods.1
+
+Other Methods: Beyond KDE, MCP, and LoCoH, several other methods exist for home range estimation that can generate utilization distributions and, consequently, isopleths. These include:
+
+- Brownian Bridge Movement Models (BBMM): These models explicitly incorporate the animal's movement path and the temporal autocorrelation between consecutive locations, making them well-suited for analyzing GPS tracking data.1
+    
+- Autocorrelated Kernel Density Estimation (aKDE): This is a modification of traditional KDE that accounts for the temporal autocorrelation inherent in many animal tracking datasets, providing more robust estimates for serially correlated locations.1
+    
+- Time-Geographic Density Estimation (TGDE): This approach generates a continuous probability density surface of an animal's movements by considering both the spatial locations and the time elapsed between them, incorporating constraints on the animal's maximum velocity.32
+    
+- Density-based Fuzzy Home Range Estimator (DFHRE): This novel method aims to improve home range estimation by incorporating environmental factors such as terrain and obstacles, which can influence animal movement and space use.66
+    
+
+Table 2: Common Methods for Generating Home Range Isopleths
+
+|                                                 |                |                                                                                                  |                                                                                 |                                                                                            |
+| ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Method                                          | Type           | Key Principles                                                                                   | Advantages                                                                      | Limitations                                                                                |
+| Kernel Density Estimation (KDE)                 | Non-parametric | Places a kernel function over each location point and sums them to estimate probability density. | Can estimate complex shapes, provides a continuous utilization distribution.    | Sensitive to bandwidth selection, potential for overestimation, assumes data independence. |
+| Minimum Convex Polygon (MCP)                    | Geometric      | Creates the smallest convex polygon enclosing all location points.                               | Simple to calculate and interpret, historically used.                           | Overestimates home range size, sensitive to outliers, no information on intensity of use.  |
+| Local Convex Hull (LoCoH)                       | Non-parametric | Constructs overlapping local convex hulls based on subsets of data points.                       | Handles complex shapes and boundaries well, potentially more accurate than KDE. | Parameter selection can be influential.                                                    |
+| Brownian Bridge Movement Model (BBMM)           | Probabilistic  | Incorporates movement path and temporal autocorrelation.                                         | Suitable for GPS data, accounts for movement patterns.                          | Can be computationally intensive.                                                          |
+| Autocorrelated Kernel Density Estimation (aKDE) | Non-parametric | Modifies KDE to account for temporal autocorrelation.                                            | More robust for serially correlated data.                                       | Still requires bandwidth selection.                                                        |
+
+### 6. Interpretation and Application of Isopleth Levels in Ecological Analysis
+
+Isopleth levels are invaluable tools for interpreting and analyzing animal space use in various ecological contexts.
+
+Identifying Core Areas of Activity: The 50% isopleth is a widely adopted standard for delineating the core area of an animal's home range.11 This area of highest probability of use often reflects the locations of essential resources or habitats that are critical for the animal's survival and reproduction.11 Researchers can use the 50% isopleth to identify key foraging sites, important resting locations, or areas crucial for social interactions. Comparing the size, shape, and location of core areas across individuals or under different environmental conditions can provide insights into resource competition, habitat quality, or the impact of disturbances.
+
+Defining the Overall Home Range Extent: Higher isopleth levels, typically 90% or 95%, are used to estimate the total spatial extent of an animal's home range.1 This provides a measure of the total area an animal regularly utilizes, including both the core and the less frequently visited peripheral regions. Understanding the overall home range extent is crucial for conservation planning, as it helps determine the amount of habitat required to support individuals or populations. It can also be important for studying dispersal patterns and potential interactions with human activities or landscape features.8
+
+Comparing Space Use Patterns: Isopleths at different probability levels offer a valuable tool for comparing space use patterns among individuals, between populations, or across different time periods or environmental conditions.2 For instance, comparing the 50% isopleths of two individuals might reveal differences in their core resource areas, while comparing their 95% isopleths could indicate variations in overall range size. Furthermore, changes in isopleth size or location over time can reflect responses to changes in resource availability, the presence of competitors or predators, or habitat alterations.11 Overlap indices, calculated using the utilization distributions from which isopleths are derived, provide quantitative measures of the degree of spatial overlap between individuals or groups.1
+
+Analyzing Habitat Selection and Resource Utilization: By overlaying isopleth maps with spatial data on habitat types, resource distribution, or other environmental variables, researchers can analyze habitat selection patterns within different zones of space use intensity.7 For example, comparing the proportion of different habitat types within the 50% isopleth (core area) to that within the 95% isopleth (overall range) can reveal whether an animal exhibits specific habitat preferences in its most intensively used areas.17 This can provide valuable insights into the factors driving habitat selection and resource use.
+
+Visualizing Intensity of Use: Isopleth maps offer a powerful visual representation of the intensity with which an animal utilizes its space across its home range.7 The spacing of isopleth lines indicates the gradient of use intensity; closely spaced lines signify a rapid change in the probability of occurrence, while widely spaced lines suggest a more gradual transition. This visual representation can be crucial for communicating research findings and understanding the spatial ecology of a species.
+
+### 7. Limitations and Considerations When Using Isopleth Levels
+
+While isopleth levels are a valuable tool in home range analysis, it is crucial to be aware of their limitations and to consider several factors when interpreting and applying them.
+
+The influence of sample size and data collection methods cannot be overstated.5 The accuracy and reliability of home range estimates, and consequently the derived isopleths, are directly dependent on having a sufficient number of location data points that are representative of the animal's space use over the relevant time period.13 Insufficient data can lead to underestimation or misrepresentation of the home range. Furthermore, the method of data collection, such as GPS telemetry versus VHF radio telemetry, can introduce biases due to factors like location accuracy, fix rates, and potential for signal obstruction.5
+
+Spatial and temporal autocorrelation in animal tracking data pose a significant challenge for many traditional home range estimation methods, including standard Kernel Density Estimation.4 The non-independence of consecutive location points, where points closer in time are likely to be closer in space, violates the assumption of independence underlying these methods. This can lead to biased estimates of home range size and shape. Researchers should consider using methods specifically designed to address autocorrelation, such as Autocorrelated Kernel Density Estimation (aKDE) or Brownian Bridge Movement Models (BBMM).1
+
+The subjectivity in parameter selection for certain home range estimation methods is another important consideration.15 For instance, the choice of bandwidth in KDE can significantly influence the resulting utilization distribution and isopleths, and different bandwidth selection methods can yield varying outcomes.15 Similarly, parameters in other methods like LoCoH (e.g., the number of neighbors) can also affect the results.41 Researchers should be aware of this subjectivity and, where possible, justify their parameter choices based on ecological knowledge or employ sensitivity analyses to assess the impact of different parameter values.
+
+Different home range estimation methods have inherent biases and assumptions that can affect the interpretation of isopleth levels.1 For example, MCPs are known to overestimate home range size, while traditional KDE might smooth over important fine-scale patterns or extend into areas that are physically inaccessible to the animal.6 The choice of method should be carefully considered in relation to the specific characteristics of the animal's movement and the research question.
+
+The selection of appropriate isopleth levels is crucial for meaningful ecological interpretation.1 Relying on arbitrary conventions like always using 50% and 95% isopleths without considering their ecological relevance to the species and the study system can lead to misleading conclusions.24 The choice should be driven by the specific research question and the biological significance of those levels for the animal under study.
+
+Finally, standard home range estimation methods may not adequately account for environmental barriers and habitat heterogeneity.14 For example, a traditional KDE might produce isopleths that extend across a large river that the animal cannot cross. Newer methods, such as those incorporating cost distance or network-based approaches, can help address these limitations.16 Additionally, the heterogeneity of the habitat can influence space use patterns, and researchers should consider how this might be reflected in the shape and size of isopleths.7
+
+### 8. Conclusion
+
+Isopleth levels represent a sophisticated and valuable tool in the field of spatial ecology for understanding how animals utilize their environment. By providing a probabilistic framework for delineating home ranges and visualizing the intensity of space use, isopleths offer significant advantages over simpler methods. They enable researchers to identify core areas of activity, estimate overall home range extent, compare space use patterns across different groups or conditions, and analyze habitat selection within varying intensity-of-use zones.
+
+However, the effective and responsible application of isopleth levels requires a thorough understanding of the underlying principles of home range estimation methods, as well as a critical awareness of their inherent limitations and assumptions. Factors such as sample size, data collection techniques, spatial and temporal autocorrelation, subjectivity in parameter selection, and the influence of environmental barriers must be carefully considered to ensure the generation of reliable and ecologically meaningful home range estimates. The selection of appropriate isopleth levels should be driven by the specific research questions and the biological characteristics of the species under investigation, rather than relying on arbitrary conventions.
+
+In conclusion, isopleth analysis remains a cornerstone of ecological and wildlife research, providing essential insights into animal space use. By employing these techniques thoughtfully and with a clear understanding of their strengths and weaknesses, researchers can continue to advance our knowledge of animal behavior, population ecology, and the spatial dynamics of species in a changing world.
+
+## References
+
+1. A fresh look at an old concept: home-range estimation in a tidy world - PMC, accessed on April 9, 2025, [https://pmc.ncbi.nlm.nih.gov/articles/PMC8048401/](https://pmc.ncbi.nlm.nih.gov/articles/PMC8048401/)
+    
+2. A fresh look at an old concept: Home-range estimation in a tidy world | bioRxiv, accessed on April 9, 2025, [https://www.biorxiv.org/content/10.1101/2020.08.19.256859v1.full](https://www.biorxiv.org/content/10.1101/2020.08.19.256859v1.full)
+    
+3. A fresh look at an old concept: Home-range estimation in a tidy - bioRxiv, accessed on April 9, 2025, [https://www.biorxiv.org/content/10.1101/2020.08.19.256859v2.full.pdf](https://www.biorxiv.org/content/10.1101/2020.08.19.256859v2.full.pdf)
+    
+4. A fresh look at an old concept: home- range estimation in a tidy world - PeerJ, accessed on April 9, 2025, [https://peerj.com/articles/11031.pdf](https://peerj.com/articles/11031.pdf)
+    
+5. The home-range concept: are traditional estimators still relevant with modern telemetry technology? - PubMed Central, accessed on April 9, 2025, [https://pmc.ncbi.nlm.nih.gov/articles/PMC2894967/](https://pmc.ncbi.nlm.nih.gov/articles/PMC2894967/)
+    
+6. Home range - Wikipedia, accessed on April 9, 2025, [https://en.wikipedia.org/wiki/Home_range](https://en.wikipedia.org/wiki/Home_range)
+    
+7. Home range estimation of wildlife - Definition & Example - Umweltanalysen, accessed on April 9, 2025, [https://www.umweltanalysen.com/en/knowledge/home-range-estimation/](https://www.umweltanalysen.com/en/knowledge/home-range-estimation/)
+    
+8. Density and behavior isopleths (six different density isopleths per... | Download Scientific Diagram - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/figure/Density-and-behavior-isopleths-six-different-density-isopleths-per-season-with-k-values_fig9_384595595](https://www.researchgate.net/figure/Density-and-behavior-isopleths-six-different-density-isopleths-per-season-with-k-values_fig9_384595595)
+    
+9. Spatial and temporal overlap of domestic cats (Felis catus) and native urban wildlife - Frontiers, accessed on April 9, 2025, [https://www.frontiersin.org/journals/ecology-and-evolution/articles/10.3389/fevo.2022.1048585/full](https://www.frontiersin.org/journals/ecology-and-evolution/articles/10.3389/fevo.2022.1048585/full)
+    
+10. Home Range Estimation | Movement of Life - Smithsonian Institution, accessed on April 9, 2025, [https://movementoflife.si.edu/analytical-tools/home-range-estimation/](https://movementoflife.si.edu/analytical-tools/home-range-estimation/)
+    
+11. Evaluating distributional shifts in home range estimates - PMC - PubMed Central, accessed on April 9, 2025, [https://pmc.ncbi.nlm.nih.gov/articles/PMC4588651/](https://pmc.ncbi.nlm.nih.gov/articles/PMC4588651/)
+    
+12. (PDF) A fresh look at an old concept: Home-range estimation in a tidy world - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/publication/350186131_A_fresh_look_at_an_old_concept_Home-range_estimation_in_a_tidy_world](https://www.researchgate.net/publication/350186131_A_fresh_look_at_an_old_concept_Home-range_estimation_in_a_tidy_world)
+    
+13. Introduction to home range analysis, accessed on April 9, 2025, [http://scbi-migbirds.github.io/homeRange.html](http://scbi-migbirds.github.io/homeRange.html)
+    
+14. Kernel Density Estimates of Linear Home Ranges for Stream Fishes: Advantages and Data Requirements, accessed on April 9, 2025, [https://academic.oup.com/najfm/article-pdf/23/3/1020/61063939/nafm1020.pdf](https://academic.oup.com/najfm/article-pdf/23/3/1020/61063939/nafm1020.pdf)
+    
+15. An Evaluation of the Accuracy of Kernel Density Estimators for Home Range Analysis D. Erran Seaman - NC State Repository, accessed on April 9, 2025, [https://repository.lib.ncsu.edu/bitstreams/0132b777-7d17-418e-aa6d-74efe1168db0/download](https://repository.lib.ncsu.edu/bitstreams/0132b777-7d17-418e-aa6d-74efe1168db0/download)
+    
+16. Re: Estimating Home Ranges Of Individual Animals In ArcGIS - Google Groups, accessed on April 9, 2025, [https://groups.google.com/g/gis-in-ecology-forum/c/k13R3rNpXts](https://groups.google.com/g/gis-in-ecology-forum/c/k13R3rNpXts)
+    
+17. Case Study: Home Range Estimations - Utah State University, accessed on April 9, 2025, [https://www.usu.edu/geospatial/tutorials/advanced/home-range-estimations](https://www.usu.edu/geospatial/tutorials/advanced/home-range-estimations)
+    
+18. Home range estimation, MCP - mgritts, accessed on April 9, 2025, [https://mgritts.github.io/2016/04/02/homerange-mcp/](https://mgritts.github.io/2016/04/02/homerange-mcp/)
+    
+19. (PDF) Home Range Estimation - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/publication/316553966_Home_Range_Estimation](https://www.researchgate.net/publication/316553966_Home_Range_Estimation)
+    
+20. MCP, KDE, and LoCoH - Teng Keng Vang, accessed on April 9, 2025, [https://tengkengvang.com/2017/08/23/mcp-kde-and-locoh/](https://tengkengvang.com/2017/08/23/mcp-kde-and-locoh/)
+    
+21. Kernels Are Not Accurate Estimators of Home-range Size for Herpetofauna, accessed on April 9, 2025, [https://bioone.org/journals/ichthyology-and-herpetology/volume-2006/issue-4/0045-8511(2006)6%5B797%3AKANAEO%5D2.0.CO%3B2/Kernels-Are-Not-Accurate-Estimators-of-Home-range-Size-for/10.1643/0045-8511(2006)6[797:KANAEO]2.0.CO;2.full](https://bioone.org/journals/ichthyology-and-herpetology/volume-2006/issue-4/0045-8511\(2006\)6%5B797%3AKANAEO%5D2.0.CO%3B2/Kernels-Are-Not-Accurate-Estimators-of-Home-range-Size-for/10.1643/0045-8511\(2006\)6[797:KANAEO]2.0.CO;2.full)
+    
+22. Home range polygons estimated using three different methods. The... - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/figure/Home-range-polygons-estimated-using-three-different-methods-The-polygons-represent-the_fig6_299376246](https://www.researchgate.net/figure/Home-range-polygons-estimated-using-three-different-methods-The-polygons-represent-the_fig6_299376246)
+    
+23. The 95% isopleth home ranges (HR) from telemetry locations of 8 Eastern... - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/figure/The-95-isopleth-home-ranges-HR-from-telemetry-locations-of-8-Eastern-Spotted-Skunks_tbl1_351884772](https://www.researchgate.net/figure/The-95-isopleth-home-ranges-HR-from-telemetry-locations-of-8-Eastern-Spotted-Skunks_tbl1_351884772)
+    
+24. Accounting for Individuals, Uncertainty, and Multiscale Clustering in Core Area Estimation - UNL Digital Commons, accessed on April 9, 2025, [https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=2282&context=icwdm_usdanwrc](https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=2282&context=icwdm_usdanwrc)
+    
+25. WLF 315 Wildlife Ecology Lab I Fall 2012 - GIS Exercise: Analyses of Home Range and Space Use Patterns - University of Idaho, accessed on April 9, 2025, [https://www.webpages.uidaho.edu/wlf314/labs/Home%20Range%20GIS%20Exercise%202012.pdf](https://www.webpages.uidaho.edu/wlf314/labs/Home%20Range%20GIS%20Exercise%202012.pdf)
+    
+26. Table 4. Criteria for reporting and analyzing the results of home range... - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/figure/Criteria-for-reporting-and-analyzing-the-results-of-home-range-estimation-reported-in_tbl4_227688720](https://www.researchgate.net/figure/Criteria-for-reporting-and-analyzing-the-results-of-home-range-estimation-reported-in_tbl4_227688720)
+    
+27. Number of core areas (defined as the 50% isopleth) in bimonthly... - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/figure/Number-of-core-areas-defined-as-the-50-isopleth-in-bimonthly-harmonic-mean-home-ranges_tbl2_227936962](https://www.researchgate.net/figure/Number-of-core-areas-defined-as-the-50-isopleth-in-bimonthly-harmonic-mean-home-ranges_tbl2_227936962)
+    
+28. T-LoCoH Tips: Analyzing Isopleth Overlap, accessed on April 9, 2025, [https://tlocoh.r-forge.r-project.org/tips/isopleth_overlap.html](https://tlocoh.r-forge.r-project.org/tips/isopleth_overlap.html)
+    
+29. Hard Core or Soft Core: On the Characterization of Animal Space Use - Mevin Hooten, accessed on April 9, 2025, [https://mhooten.github.io/publications/Hooten_etal_JSMProc_2008.pdf](https://mhooten.github.io/publications/Hooten_etal_JSMProc_2008.pdf)
+    
+30. Could you please phrase “home range” as a question? | Journal of Mammalogy | Oxford Academic, accessed on April 9, 2025, [https://academic.oup.com/jmammal/article/93/4/890/962756](https://academic.oup.com/jmammal/article/93/4/890/962756)
+    
+31. A new selection criterion for statistical home range estimation - PMC, accessed on April 9, 2025, [https://pmc.ncbi.nlm.nih.gov/articles/PMC9042166/](https://pmc.ncbi.nlm.nih.gov/articles/PMC9042166/)
+    
+32. Full article: Time-geographic density estimation for home range analysis, accessed on April 9, 2025, [https://www.tandfonline.com/doi/full/10.1080/19475683.2011.602023](https://www.tandfonline.com/doi/full/10.1080/19475683.2011.602023)
+    
+33. An Evaluation of the Accuracy of Kernel Density Estimators for Home Range Analysis, accessed on April 9, 2025, [https://www.researchgate.net/publication/224817410_An_Evaluation_of_the_Accuracy_of_Kernel_Density_Estimators_for_Home_Range_Analysis](https://www.researchgate.net/publication/224817410_An_Evaluation_of_the_Accuracy_of_Kernel_Density_Estimators_for_Home_Range_Analysis)
+    
+34. Network-Based Kernel Density Estimation for Home Range Analysis, accessed on April 9, 2025, [https://www.geog.leeds.ac.uk/groups/geocomp/2007/4B-Apps_Environment_3/4B1.pdf](https://www.geog.leeds.ac.uk/groups/geocomp/2007/4B-Apps_Environment_3/4B1.pdf)
+    
+35. A fresh look at an old concept: home-range estimation in a tidy world - PeerJ, accessed on April 9, 2025, [https://peerj.com/articles/11031/](https://peerj.com/articles/11031/)
+    
+36. Calculating home-range overlaps with amt - Index of /, accessed on April 9, 2025, [http://ftp.eenet.ee/pub/cran/web/packages/amt/vignettes/p2_hr.html](http://ftp.eenet.ee/pub/cran/web/packages/amt/vignettes/p2_hr.html)
+    
+37. Home range overlap for 50% akde isopleth - Google Groups, accessed on April 9, 2025, [https://groups.google.com/g/ctmm-user/c/7-TyXZwQsH4](https://groups.google.com/g/ctmm-user/c/7-TyXZwQsH4)
+    
+38. Home Range | Fieberg Lab - University of Minnesota, accessed on April 9, 2025, [https://fieberg-lab.cfans.umn.edu/research/home-range](https://fieberg-lab.cfans.umn.edu/research/home-range)
+    
+39. Home on the Range – The GIS Blog, accessed on April 9, 2025, [https://blogs.lincoln.ac.nz/gis/home-on-the-range/](https://blogs.lincoln.ac.nz/gis/home-on-the-range/)
+    
+40. The kernel home range plots of 95–50% isopleths, represented by the... - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/figure/The-kernel-home-range-plots-of-95-50-isopleths-represented-by-the-different_fig3_228714998](https://www.researchgate.net/figure/The-kernel-home-range-plots-of-95-50-isopleths-represented-by-the-different_fig3_228714998)
+    
+41. Evaluating methods for estimating home ranges using GPS collars: A comparison using proboscis monkeys (Nasalis larvatus) - PMC, accessed on April 9, 2025, [https://pmc.ncbi.nlm.nih.gov/articles/PMC5376085/](https://pmc.ncbi.nlm.nih.gov/articles/PMC5376085/)
+    
+42. Testing the consistency of wildlife data types before combining them: the case of camera traps and telemetry - PubMed Central, accessed on April 9, 2025, [https://pmc.ncbi.nlm.nih.gov/articles/PMC3997311/](https://pmc.ncbi.nlm.nih.gov/articles/PMC3997311/)
+    
+43. Applied Raptor Ecology - The Peregrine Fund, accessed on April 9, 2025, [http://assets.peregrinefund.org/docs/project-data/book-applied-raptor-ecology/ch-11-applied-raptor-ecology.pdf](http://assets.peregrinefund.org/docs/project-data/book-applied-raptor-ecology/ch-11-applied-raptor-ecology.pdf)
+    
+44. Home range creation and analysis using Geospatial Modeling Environment and ArcGIS software - ScholarWorks@GVSU, accessed on April 9, 2025, [https://scholarworks.gvsu.edu/cgi/viewcontent.cgi?article=1011&context=books](https://scholarworks.gvsu.edu/cgi/viewcontent.cgi?article=1011&context=books)
+    
+45. Spatial Ecology and Social Interactions of Jaguars (Panthera onca) in the Southern Pantanal, Brazil | Journal of Mammalogy | Oxford Academic, accessed on April 9, 2025, [https://academic.oup.com/jmammal/article/90/4/935/852277](https://academic.oup.com/jmammal/article/90/4/935/852277)
+    
+46. Home Range Estimation, accessed on April 9, 2025, [https://ecosystems.psu.edu/research/labs/walter-lab/manual/home-range-estimation/link-to-pdf](https://ecosystems.psu.edu/research/labs/walter-lab/manual/home-range-estimation/link-to-pdf)
+    
+47. 5. Home Range Analysis using ArcMap, accessed on April 9, 2025, [https://pressbooks.gvsu.edu/geospatialmodeling/chapter/home-range-analysis-using-arcmap/](https://pressbooks.gvsu.edu/geospatialmodeling/chapter/home-range-analysis-using-arcmap/)
+    
+48. Kernel density (50% core area and 95% home range) using QGis - Google Groups, accessed on April 9, 2025, [https://groups.google.com/g/gis-in-ecology-forum/c/-k6fHpJfcRQ](https://groups.google.com/g/gis-in-ecology-forum/c/-k6fHpJfcRQ)
+    
+49. What Is the Proper Method to Delineate Home Range of an Animal Using Today's Advanced GPS Telemetry Systems: The Initial Step - UNL Digital Commons, accessed on April 9, 2025, [https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=2373&context=icwdm_usdanwrc](https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=2373&context=icwdm_usdanwrc)
+    
+50. Defining Space Use and Movements of Canada Lynx with Global Positioning System Telemetry - UNL Digital Commons, accessed on April 9, 2025, [https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1088&context=usgsnpwrc](https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1088&context=usgsnpwrc)
+    
+51. LoCoH: Nonparameteric Kernel Methods for Constructing Home Ranges and Utilization Distributions - University of California, Berkeley, accessed on April 9, 2025, [https://nature.berkeley.edu/getzlab/Reprints07/GetzEtAlLoCoHPLoSONE07.pdf](https://nature.berkeley.edu/getzlab/Reprints07/GetzEtAlLoCoHPLoSONE07.pdf)
+    
+52. Permissible Home Range Estimation (PHRE) in Restricted Habitats: A New Algorithm and an Evaluation for Sea Otters | PLOS One, accessed on April 9, 2025, [https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0150547](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0150547)
+    
+53. Kernel Density Estimates of Linear Home Ranges for Stream Fishes: Advantages and Data Requirements - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/publication/238051502_Kernel_Density_Estimates_of_Linear_Home_Ranges_for_Stream_Fishes_Advantages_and_Data_Requirements](https://www.researchgate.net/publication/238051502_Kernel_Density_Estimates_of_Linear_Home_Ranges_for_Stream_Fishes_Advantages_and_Data_Requirements)
+    
+54. Edge-focused network-based approach: an improved kernel density estimator for home range | bioRxiv, accessed on April 9, 2025, [https://www.biorxiv.org/content/10.1101/2022.08.21.504698v1](https://www.biorxiv.org/content/10.1101/2022.08.21.504698v1)
+    
+55. Kernels Are Not Accurate Estimators of Home-Range Size for Herpetofauna - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/publication/236982057_Kernels_Are_Not_Accurate_Estimators_of_Home-Range_Size_for_Herpetofauna](https://www.researchgate.net/publication/236982057_Kernels_Are_Not_Accurate_Estimators_of_Home-Range_Size_for_Herpetofauna)
+    
+56. Kernel density estimators of home range: smoothing and the autocorrelation red herring, accessed on April 9, 2025, [https://pubmed.ncbi.nlm.nih.gov/17536721/](https://pubmed.ncbi.nlm.nih.gov/17536721/)
+    
+57. Choosing kernel density radius [closed] - GIS StackExchange, accessed on April 9, 2025, [https://gis.stackexchange.com/questions/340361/choosing-kernel-density-radius](https://gis.stackexchange.com/questions/340361/choosing-kernel-density-radius)
+    
+58. Home range spillover in habitats with impassable boundaries: Causes, biases, and corrections using autocorrelated kernel density estimation | bioRxiv, accessed on April 9, 2025, [https://www.biorxiv.org/content/10.1101/2024.11.20.624379v1.full-text](https://www.biorxiv.org/content/10.1101/2024.11.20.624379v1.full-text)
+    
+59. Why does kernel density of positive data display negative values? - Cross Validated, accessed on April 9, 2025, [https://stats.stackexchange.com/questions/483203/why-does-kernel-density-of-positive-data-display-negative-values](https://stats.stackexchange.com/questions/483203/why-does-kernel-density-of-positive-data-display-negative-values)
+    
+60. accessed on December 31, 1969, [https://www.researchgate.net/publication/228493386_Factors_affecting_the_estimation_of_home_range_size_A_review](https://www.researchgate.net/publication/228493386_Factors_affecting_the_estimation_of_home_range_size_A_review)
+    
+61. accessed on December 31, 1969, [https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.1188](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.1188)
+    
+62. EXAMINING THE EFFECTS OF HOME RANGE ESTIMATION TECHNIQUES ON ELEPHANT HABITAT USE ANALYSIS - University of Twente Student Theses, accessed on April 9, 2025, [http://essay.utwente.nl/83700/1/83700_huang.pdf](http://essay.utwente.nl/83700/1/83700_huang.pdf)
+    
+63. of the strengths and weaknesses of the home range estimators examined in this study - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/figure/of-the-strengths-and-weaknesses-of-the-home-range-estimators-examined-in-this-study_tbl3_315807491](https://www.researchgate.net/figure/of-the-strengths-and-weaknesses-of-the-home-range-estimators-examined-in-this-study_tbl3_315807491)
+    
+64. pmc.ncbi.nlm.nih.gov, accessed on April 9, 2025, [https://pmc.ncbi.nlm.nih.gov/articles/PMC8048401/#:~:text=Home%2Drange%20estimators%20can%20be,where%20an%20animal%20was%20observed.](https://pmc.ncbi.nlm.nih.gov/articles/PMC8048401/#:~:text=Home%2Drange%20estimators%20can%20be,where%20an%20animal%20was%20observed.)
+    
+65. Home range plus: a space-time characterization of movement over real landscapes - eScholarship.org, accessed on April 9, 2025, [https://escholarship.org/content/qt7kd7s56q/qt7kd7s56q.pdf](https://escholarship.org/content/qt7kd7s56q/qt7kd7s56q.pdf)
+    
+66. A Model for Animal Home Range Estimation Based on the Active Learning Method - MDPI, accessed on April 9, 2025, [https://www.mdpi.com/2220-9964/8/11/490](https://www.mdpi.com/2220-9964/8/11/490)
+    
+67. Lecture 4 Space-time considerations - Dana Paige Seidel, accessed on April 9, 2025, [https://www.danaseidel.com/MovEco-R-Workshop/Materials/Day4/HongKongMovement2018Lec4.pdf](https://www.danaseidel.com/MovEco-R-Workshop/Materials/Day4/HongKongMovement2018Lec4.pdf)
+    
+68. (PDF) A Critical Review of Home Range Studies - ResearchGate, accessed on April 9, 2025, [https://www.researchgate.net/publication/227688720_A_Critical_Review_of_Home_Range_Studies](https://www.researchgate.net/publication/227688720_A_Critical_Review_of_Home_Range_Studies)
+    
+69. SELECTING THE BEST HOME RANGE MODEL: AN INFORMATION-THEORETIC APPROACH - University of Idaho, accessed on April 9, 2025, [https://www.webpages.uidaho.edu/population_ecology/Horne%20and%20Garton%202006.pdf](https://www.webpages.uidaho.edu/population_ecology/Horne%20and%20Garton%202006.pdf)

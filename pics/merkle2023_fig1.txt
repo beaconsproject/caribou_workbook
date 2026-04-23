@@ -1,0 +1,13 @@
+F I G U R E 1 The analytical steps to create an individual migration
+corridor from a sequence of migration data from a GPS collared
+animal. The top panel (a) depicts the typical approach where a
+movement model (e.g. Brownian Bridge movement model; BBMM)
+is applied to a sequence of relocation data to create an occurrence
+distribution (OD). The migration corridor is then defined by
+calculating a contour from the OD (e.g. the 99% contour). The
+bottom panel (b) depicts the line buffer approach where the
+sequence of point data is connected by a line and then buffered by
+a consistent width (in this case by 250 m) to create the migration
+corridor. Note that the data and scale in the figure are the same,
+and thus, the BBMM provides a similar sized corridor to the line
+buffer approach, despite the simplicity of the latter.

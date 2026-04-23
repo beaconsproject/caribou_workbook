@@ -1,19 +1,55 @@
 project:
-  type: book
+  type: website
 
-book:
-  title: "LFN IPCA Report - Appendices"
-  author: "BEACONs Project"
-  date: "2026-04-09"
-  chapters:
-    - index.qmd
-    - data.qmd
-    - segments.qmd
-    - ranges.qmd
-    - corridors.qmd
+website: 
+  page-navigation: true
+  search: true
+  site-url: https://beaconsproject.github.io/caribou_workbook
+  repo-url: https://github.com/beaconsproject/caribou_workbook 
+  repo-actions: [edit, issue]
+  
+  sidebar:
+    title: "Caribou Analysis Workbook"
+    pinned: true
+    align: left
+    
+    style: "docked"
+    search: false
+    collapse-level: 2
+    contents:
+      - href: index.qmd
+        text: Home
+      - ---
+      - section: "Little Rancheria"
+        contents:
+        - href: little_rancheria/overview.qmd
+          text: Overview
+        - href:
+          text: Migration segments
+        - href:
+          text: Seasonal ranges
+        - href:
+          text: Seasonal corridors
+        - href:
+          text: Habitat selection
+      - ---
+      - section: "Appendices"
+        contents:
+        - href: appendices/segments.qmd
+          text: Segmenting data
+        - href: appendices/ranges.qmd
+          text: Estimating ranges
+        - href: appendices/corridors.qmd
+          text: Mapping corridors
 
 format:
   html:
-    theme: default
+    theme: cosmo
+    code-copy: true
+    code-fold: true
+    code-overflow: wrap
     toc: true
-    number-sections: false
+    css: styles.css
+
+execute:
+  freeze: auto

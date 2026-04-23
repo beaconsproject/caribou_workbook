@@ -1,0 +1,45 @@
+In ecology, particularly in animal movement studies, an "NSD vs. time of year plot" describes the Net Squared Displacement (NSD) of an individual animal over the course of a year.
+
+Let's break down what that means:
+
+- Net Squared Displacement (NSD): This is a measure of how far an animal has moved from its initial starting point.
+
+- You take the straight-line distance between the animal's first recorded location and each subsequent location.
+- Then, you square that distance.
+- So, at any given time, NSD represents the squared straight-line distance from the very beginning of the tracking period.
+
+- Time of Year: This refers to the progression of days, weeks, or months within a calendar year.
+
+What an NSD vs. time of year plot describes:
+
+When you plot NSD on the y-axis against the time of year (or simply time since the start of tracking) on the x-axis, you create a visual representation of an animal's movement patterns throughout the year. This type of plot is particularly useful for:
+
+1. Identifying Migration:
+
+- Migratory animals: An NSD plot for a migratory animal will often show a characteristic "double sigmoid" or "S-shaped" curve.
+
+- It starts low, then increases as the animal moves to its seasonal range (e.g., summering grounds).
+- It will then plateau when the animal is settled in that range.
+- Later in the year, as the animal begins its return migration, the NSD will decrease, eventually approaching zero (or close to zero) if the animal returns to its original starting location.
+
+- The shape of the curve helps to identify the timing, duration, and extent (distance) of migration events.
+
+3. Distinguishing Movement Strategies:
+
+- Range Residency (Sedentary behavior): If an animal is relatively sedentary and stays within a defined home range, the NSD plot will show a rapid increase initially, then quickly plateau and remain relatively flat over time. This indicates the animal is staying within a limited area.
+- Dispersal: For dispersing animals (those permanently moving to a new area), the NSD plot will typically show a continuous increase, eventually leveling off at a new, higher plateau, but not returning to the initial displacement.
+- Nomadism: Nomadic animals, which constantly move without fixed home ranges or predictable return patterns, might show a more linear or erratic increase in NSD over time.
+
+Why it's useful:
+
+- Objective Classification: NSD provides an objective and quantitative way to categorize different movement behaviors (migration, range residency, dispersal, nomadism) without requiring subjective interpretation of maps or visual inspection of paths.
+- Parameter Estimation: By fitting mathematical models (like sigmoid functions) to the NSD data, researchers can estimate key parameters of movement, such as:
+
+- The timing of migration (start and end dates).
+- The duration of migratory phases.
+- The distance covered during migration.
+- The size of a home range.
+
+- Comparative Studies: It allows for easy comparison of movement patterns between different individuals, populations, or species, as well as how these patterns might change across different years or in response to environmental factors.
+
+In summary, an NSD vs. time of year plot is a powerful tool in movement ecology that graphically represents an animal's cumulative displacement from its starting point over time, helping researchers understand and quantify various movement strategies, especially migration.

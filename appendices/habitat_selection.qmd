@@ -1,0 +1,49 @@
+Workflow:
+
+**Step 1 - Species data**
+- Upload dataset as an asset in GEE
+
+**Step 2 - Preprocessing**
+- Determine extent and resolution
+- Keep one presence location per pixel (per year)
+
+**Step 3 - Predictor variables**
+- GEE based datasets (some multiyear)
+- Other datasets
+
+**Step 4 - Presence and background**
+- multiple sets of pseudoabsences (or background data) can be created randomly within a predefined area
+- Match presence and background locations to temporal variables
+
+**Step 5 - Model fitting and evaluation (and testing)**
+- Multiple block cross-validation technique to partition data for model training and validation n times
+- Multiple classifier algorithms available
+
+**Step 6 - Model predictions**
+- Model predictions
+- Average of all single model predictions
+- Presence/absence map: majority vote or threshold that maximizes sensitivity and specificity
+
+
+Box 1 (ref?): Guidelines for getting the basics right in habitat selection analyses
+
+1. Think thoroughly about the question(s) of interest and the appropriate geographic and temporal scales in the specific study system before data collection begins.
+  a. Which groups or classes are of interest in your system? Are you planning to break up the dataset by age/sex class/study area? How many individuals of each group must be sampled?
+2. Define availability and determine whether you want to fit a HSF or SSF
+  a. Are you interested in identifying where individuals select home ranges (second order HSF) or locations within that home range (third order HSF) or along a movement path (SSF)?
+3. Decide whether you are interested in inference or prediction and how that impacts model building
+  a. Inference is most straightforward when a single model is used with all relevant variables that capture the hypotheses of interest; it is important that the mechanisms motivating variables are given great thought. Prediction will often be improved by considering many models and does not necessarily require clear mechanisms behind including variables.
+4. Understand and acknowledge the assumptions underlying your specific analysis
+  a. Assumption of an exponential selection function that forces inference to the relative intensity of selection or relative probability of selection.
+  b. Logistic regression and conditional logistic regression are used to approximate the underlying spatial or spatio-temporal point process model, respectively.
+5. Conduct a sensitivity analysis for availability sample size.
+  a. Fit the model, examine the estimated selection coefficients, and then do the whole exercise again with a larger number of sampled available points. If the selection coefficients do not change, the original number of available points sampled was sufficient. If they do change, keep repeating the exercise until they do not.
+6. Account for animal behavior and heterogeneity in your analysis
+  a. How quickly can the animal of interest move? Available locations from an animal location that are more than this distance within the considered time frame are not realistically available to the animal.
+  b. Is it reasonable to consider consecutive points on an individual’s track independent or are they temporally autocorrelated? It is important to account for this autocorrelation either by using a SSF, weighting techniques (Alston et al. 2022), or data thinning.
+  c. Ecological literature leads us to a priori consider individual variation, which is an important source of variation, and thus our main sampling unit is the individual. When individuals are tracked, pooling data across individuals and ignoring individual variation leads to poor statistical conclusions. Accounting for individual level differences can be accounted for using a full random effects (intercept and slopes) structure.
+  d. Consider all animal locations with regard to behavior and contextual environments (e.g., diel period, life stage, reproductive behaviors, etc.), which may require interactions among variables.
+7. Correctly interpret your model parameters and inference
+  a. To compute predicted values, we need to remove the intercept from the selection model (𝛽𝛽0) and exponentiate the summed combinations of effects and variable values (𝑒𝑒(𝛽𝛽1×𝑋𝑋1+𝛽𝛽2×𝑋𝑋2...+𝛽𝛽𝑛𝑛∗𝑋𝑋𝑛𝑛)) where e can be implemented in R using the exp() function and the X1, X2,...Xn values are the new values of predictor variables (i.e., not the original data input into the model).
+  b. Inferring population density from habitat selection is most robust when there is auxiliary or additional validation of population density.
+8. Decide whether model selection is necessary. It is reasonable to focus on fitting one model that captures all the variables that represent the complete hypotheses of interest. Do not assume model selection is a requirement.

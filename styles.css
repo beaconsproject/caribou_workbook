@@ -1,0 +1,35 @@
+body{
+  /*font-size: 12px;*/
+}
+td {
+  /*font-size: 8px;*/
+}
+h1.title {
+  font-size: 24px;
+  font-weight: normal;
+  color: black;
+}
+h1 {
+  font-size: 22px;
+  font-weight: normal;
+  color: black;
+}
+h2 {
+  font-size: 20px;
+  font-weight: normal;
+  color: blue;
+}
+h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+code.r{
+    font-size: 14px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+.navbar-dark, .navbar-light, .navbar {
+  background-color: #212529;
+}

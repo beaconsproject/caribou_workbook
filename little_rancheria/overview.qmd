@@ -1,0 +1,78 @@
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(sf)
+library(amt)
+library(tmap)
+library(knitr)
+library(tidyverse)
+```
+
+### View movement data
+
+The table displays the first 10 rows of the caribou movement data. Attributes include caribou id, timestamp, longitude, latitude, and year for each GPS relocation.
+
+```{r}
+#| echo: TRUE
+#| warning: false
+#| message: false
+gps <- read_csv('../../data/little_rancheria/caribou.csv') 
+gps_sf <- gps |>
+  st_as_sf(coords=c("longitude", "latitude"), crs=4326, remove=FALSE) |>
+  mutate(year=as.factor(year))
+gps
+```
+The map shows all 157,046 GPS relocations for the 38 individuals that were monitored between 2020-26.
+
+```{r}
+#| echo: TRUE
+#| warning: false
+#| message: false
+tm_basemap("Esri.WorldTopoMap") +
+tm_shape(gps_sf) +
+  tm_dots()
+```
+
+### Number of individuals
+
+The table below tabulates the number of individual caribou by season/migration and year.
+
+```{r}
+#| echo: TRUE
+#| message: FALSE
+#| warning: FALSE
+row_order <- c("Early winter", "Late winter", "Calving", "Summer", "Fall rut", "Spring migration", "Fall migration")
+season_tbl <- gps |>
+  group_by(year, season) |>
+  summarise(n_ids = n_distinct(id), .groups = "drop") |>
+  pivot_wider(names_from = year, values_from = n_ids) |>
+  rename(`Season/migration` = season)
+migration_tbl <- gps |>
+  filter(migration %in% c("Spring migration", "Fall migration")) |>
+  group_by(year, migration) |>
+  summarise(n_ids = n_distinct(id), .groups = "drop") |>
+  pivot_wider(names_from = year, values_from = n_ids) |>
+  rename(`Season/migration` = migration)
+#migration_tbl <- x |>
+#  filter(grepl("migration", `Season/migration`, ignore.case = TRUE)) |>
+#  select(-Total)
+combined_tbl <- bind_rows(season_tbl, migration_tbl) |>
+  mutate(`Season/migration` = factor(`Season/migration`, levels = row_order)) |>
+  arrange(`Season/migration`) |>
+  mutate(Total = rowSums(pick(where(is.numeric)), na.rm = TRUE))
+knitr::kable(combined_tbl)
+```
+
+### Make tracks from GPS
+
+Tracks are the basic building blocks of movement analysis in the `amt` package. They allow us to estimate annual and seasonal ranges as well as identify migration pathways. So, we first use the `make_track` function for convert our data.frame into tracks. Note that we have to specify the crs of the data which, in this case, is lat-long or "EPSG:4326". We can then project our coordinates to the Yukon Albers projection using the `transform_coords` function.
+
+```{r}
+#| echo: TRUE
+#| warning: FALSE
+#| message: FALSE
+trk <- make_track(gps, longitude, latitude, timestamp, id=id, year=year, season=season, crs=4326)
+trk
+```

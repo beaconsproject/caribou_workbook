@@ -11,8 +11,7 @@ For all home range analyses (annual and seasonal), we used seasons that were def
 #| message: FALSE
 #| warning: FALSE
 #| tbl-cap: Table 1. Seasons and date ranges for northern mountain caribou.
-x <- readr::read_csv("../report/tables/seasons.csv") |>
-  dplyr::select("Season", "Date range")
+x <- readr::read_csv("../../code/1_movement_data/seasons.csv")
 knitr::kable(x)
 ```
 

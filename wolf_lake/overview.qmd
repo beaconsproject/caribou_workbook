@@ -1,22 +1,6 @@
----
-title: "Caribou Analysis and Modelling"
-subtitle: "Seasonal movements, habitat selection, and landscape connectivity"
-author: "BEACONs Project"
-date: "2026-04-22"
-format: 
-  html:
-    toc: false
----
-
 ### Introduction
 
 Caribou play an important role for LFN, serving as a keystone species in local ecosystems and having cultural significance for Indigenous communities. Ecologically, caribou contribute to the health of boreal forests by influencing vegetation patterns and providing food for predators. Culturally, caribou provide food, materials for clothing and tools, and are a central part of local traditions and knowledge. Consequently, the conservation of their seasonal ranges, including winter foraging grounds and summer calving and grazing areas, is important for the health and long-term persistence of the population. However, these habitats are increasingly threatened by human activities and disturbances, particularly large-scale resource development like mining, which leads to habitat fragmentation and landscape alteration.
 
 The establishment of Indigenous Protected and Conserved Areas (IPCAs) and other protected lands are important tools for ensuring the long-term survival of caribou populations, as they allow for the management of these threats. These areas enable collaborative stewardship, respect traditional ecological knowledge, and support sustainable use, thus contributing to the persistence of caribou and their habitats. By prioritizing both ecological integrity and cultural continuity, IPCAs can thus strengthen conservation and sustainable land management now and in the future. As part of this project, we will evaluate the contribution of the proposed IPCAs to seasonal movements, habitat selection, and landscape connectivity.
 
-### Northern mountain caribou
-
-There are 26 herds of Northern Mountain caribou in Yukon occupying most of the south and central regions (Environment Yukon 2016). Twelve of the herds intersect the LFN area of interest (Figure 1), with four herds crossing over into British Columbia (Swan Lake, Little Rancheria, Horseranch, and Liard Plateau). Each herd is managed based on its unique range and population characteristics (Ref). Population monitoring relies on aerial surveys and long-term data to assess herd status, recruitment (calf survival), and sex ratios.
-
-![](pics/fig_herds.png)<br>
-Figure 1. Distribution caribou herds intersecting the LFN planning area.

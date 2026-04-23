@@ -14,7 +14,7 @@ library(tidyverse)
 #| echo: false
 #| warning: false
 #| message: false
-gps <- read_csv('../data/little_rancheria/caribou.csv')
+gps <- read_csv('../../data/little_rancheria/caribou.csv')
 gps_sf <- gps |>
   st_as_sf(coords=c("longitude", "latitude"), crs=4326, remove=FALSE) |>
   mutate(year=as.factor(year))
@@ -38,9 +38,9 @@ We can compare the overlap in estimated ranges between the two methods:
 ```{r}
 #| warning: false
 #| message: false
-hr_isopleths(mcp1)
-hr_overlap(mcp1, kde1)
-hr_overlap(kde1, mcp1)
+#hr_isopleths(mcp1)
+#hr_overlap(mcp1, kde1)
+#hr_overlap(kde1, mcp1)
 ```
 
 
