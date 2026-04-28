@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="BEACONs Project">
-<meta name="dcterms.date" content="2026-04-22">
+<meta name="dcterms.date" content="2026-04-28">
 
 <title>Caribou Analysis and Modelling</title>
 <style>
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -40,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-6ef75a0fa32a0ab5c67dbc0e0e72a034.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -125,17 +160,17 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">Migration segments</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./little_rancheria/ranges.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seasonal ranges</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">Seasonal ranges</span>
-  </li>
-          <li class="sidebar-item">
- <span class="menu-text">Seasonal corridors</span>
-  </li>
-          <li class="sidebar-item">
- <span class="menu-text">Habitat selection</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./little_rancheria/corridors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seasonal corridors</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -164,6 +199,18 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./appendices/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mapping corridors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendices/covariates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Habitat covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendices/hsf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
       </ul>
@@ -197,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 22, 2026</p>
+      <p class="date">April 28, 2026</p>
     </div>
   </div>
   
@@ -217,7 +264,40 @@ ul.task-list li input[type="checkbox"] {
 <section id="northern-mountain-caribou" class="level3">
 <h3 class="anchored" data-anchor-id="northern-mountain-caribou">Northern mountain caribou</h3>
 <p>There are 26 herds of Northern Mountain caribou in Yukon occupying most of the south and central regions (Environment Yukon 2016). Twelve of the herds intersect the LFN area of interest (Figure 1), with four herds crossing over into British Columbia (Swan Lake, Little Rancheria, Horseranch, and Liard Plateau). Each herd is managed based on its unique range and population characteristics (Ref). Population monitoring relies on aerial surveys and long-term data to assess herd status, recruitment (calf survival), and sex ratios.</p>
-<p><img src="pics/fig_herds.png" class="img-fluid"><br> Figure 1. Distribution caribou herds intersecting the LFN planning area.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>kdtt <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"../data/dashboard.gpkg"</span>, <span class="st">"kdtt"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Name=</span><span class="st">"KDTT"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>herds <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"../data/dashboard.gpkg"</span>, <span class="st">"KDTT_all_mtn_herds"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>combined_extent <span class="ot">&lt;-</span> <span class="fu">st_union</span>(kdtt) <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_buffer</span>(<span class="dv">20000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_bbox</span>()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(herds, <span class="at">bbox =</span> combined_extent) <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill=</span><span class="st">"HERD"</span>, <span class="at">fill_alpha=</span><span class="fl">0.5</span>, <span class="at">col=</span><span class="st">"grey"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill.scale =</span> <span class="fu">tm_scale_categorical</span>(<span class="at">values=</span><span class="st">"tol.rainbow"</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title=</span><span class="st">"Caribou herd"</span>)) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_labels</span>(<span class="at">text=</span><span class="st">"HERD"</span>, <span class="at">size=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(kdtt) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill_alpha=</span><span class="dv">0</span>, <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"KDTT"</span>)) <span class="sc">+</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">bbox =</span> combined_extent) <span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Figure 1. Distribution caribou herds intersecting the KDTT.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>

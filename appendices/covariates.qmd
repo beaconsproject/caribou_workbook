@@ -1,3 +1,5 @@
+## Habitat covariates
+
 In caribou ecology, "covariates" are the specific environmental and human factors used in statistical models (like Resource Selection Functions) to predict habitat use and population health. For Northern Mountain Caribou, these variables are unique because of their reliance on rugged terrain and vertical migration.
 
 Researchers typically group these into four main categories:

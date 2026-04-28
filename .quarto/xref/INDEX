@@ -37,5 +37,26 @@
   },
   "workflow/ranges.qmd": {
     "ranges.html": "802451a9"
+  },
+  "little_rancheria/ranges.qmd": {
+    "ranges.html": "7fd10774"
+  },
+  "appendices/ranges.qmd": {
+    "ranges.html": "89e32218"
+  },
+  "little_rancheria/corridors.qmd": {
+    "corridors.html": "7f48b6db"
+  },
+  "appendices/segments.qmd": {
+    "segments.html": "7ad819e8"
+  },
+  "appendices/covariates.qmd": {
+    "covariates.html": "d4635729"
+  },
+  "appendices/corridors.qmd": {
+    "corridors.html": "6493768a"
+  },
+  "appendices/hsf.qmd": {
+    "hsf.html": "81d928ab"
   }
 }

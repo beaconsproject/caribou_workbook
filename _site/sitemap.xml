@@ -1,43 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://beaconsproject.github.io/little_rancheria/index.html</loc>
-    <lastmod>2026-04-21T04:57:53.881Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/little_rancheria/methods/corridors.html</loc>
-    <lastmod>2026-04-17T23:41:07.379Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/little_rancheria/methods/ranges.html</loc>
-    <lastmod>2026-04-17T23:39:57.890Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/little_rancheria/little_rancheria/overview.html</loc>
-    <lastmod>2026-04-20T23:04:52.321Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/little_rancheria/horseranch/overview.html</loc>
-    <lastmod>2026-04-20T23:04:52.321Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/little_rancheria/wolf_lake/overview.html</loc>
-    <lastmod>2026-04-20T23:04:52.321Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/index.html</loc>
-    <lastmod>2026-04-22T21:35:59.396Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/workflow/segments.html</loc>
-    <lastmod>2026-04-21T15:55:29.137Z</lastmod>
+    <loc>https://beaconsproject.github.io/caribou_workbook/wolf_lake/overview.html</loc>
+    <lastmod>2026-04-27T23:12:15.772Z</lastmod>
   </url>
   <url>
     <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/overview.html</loc>
-    <lastmod>2026-04-23T00:10:21.090Z</lastmod>
+    <lastmod>2026-04-28T22:03:29.584Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/workflow/ranges.html</loc>
-    <lastmod>2026-04-21T15:58:58.446Z</lastmod>
+    <loc>https://beaconsproject.github.io/caribou_workbook/index.html</loc>
+    <lastmod>2026-04-28T22:08:49.310Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/segments.html</loc>
+    <lastmod>2026-04-21T15:55:29.137Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/hsf.html</loc>
+    <lastmod>2026-04-28T20:58:49.933Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/corridors.html</loc>
+    <lastmod>2026-04-28T21:01:20.643Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/covariates.html</loc>
+    <lastmod>2026-04-28T20:55:16.936Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/ranges.html</loc>
+    <lastmod>2026-04-28T18:44:38.244Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/horseranch/overview.html</loc>
+    <lastmod>2026-04-20T23:04:52.321Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/corridors.html</loc>
+    <lastmod>2026-04-28T20:35:16.496Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/ranges.html</loc>
+    <lastmod>2026-04-28T20:11:27.317Z</lastmod>
   </url>
 </urlset>
