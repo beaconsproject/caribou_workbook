@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Pierre Vernier">
+<meta name="dcterms.date" content="2026-04-29">
 
-<title>corridors</title>
+<title>Seasonal Migration Pathways</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,8 +69,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../appendices/covariates.html" rel="next">
-<link href="../appendices/ranges.html" rel="prev">
+<link href="../little_rancheria/corridors.html" rel="next">
+<link href="../little_rancheria/ranges.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/corridors.html">Mapping corridors</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/segments.html">Migration segments</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -132,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/corridors.html" class="sidebar-item-text sidebar-link active">
+  <a href="../appendices/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mapping corridors</span></a>
   </div>
 </li>
@@ -162,13 +199,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Little Rancheria</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../little_rancheria/overview.html" class="sidebar-item-text sidebar-link">
@@ -183,7 +220,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../little_rancheria/segments.html" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/segments.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Migration segments</span></a>
   </div>
 </li>
@@ -212,44 +249,139 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#identifying-seasonal-migration-corridors" id="toc-identifying-seasonal-migration-corridors" class="nav-link active" data-scroll-target="#identifying-seasonal-migration-corridors">Identifying seasonal migration corridors</a></li>
+  <li><a href="#read-caribou-movement-gps-data" id="toc-read-caribou-movement-gps-data" class="nav-link active" data-scroll-target="#read-caribou-movement-gps-data">Read caribou movement (gps) data</a></li>
+  <li><a href="#spring-migration-pathways" id="toc-spring-migration-pathways" class="nav-link" data-scroll-target="#spring-migration-pathways">Spring migration pathways</a></li>
+  <li><a href="#fall-migration-pathways" id="toc-fall-migration-pathways" class="nav-link" data-scroll-target="#fall-migration-pathways">Fall migration pathways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/corridors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/segments.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/corridors.html">Mapping corridors</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/segments.html">Migration segments</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Seasonal Migration Pathways</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="identifying-seasonal-migration-corridors" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-seasonal-migration-corridors">Identifying seasonal migration corridors</h2>
-<p>The process for mapping and classifying seasonal migration corridors involves four primary steps:</p>
-<p><strong>1. Identify migration periods</strong></p>
-<p>To understand when an individual caribou is actually migrating (instead of just wandering around its seasonal range), we looked at how far it moves from a starting point over time. Using the Net Squared Displacement (NSD) method, which measures the straight-line distance an animal travels from a fixed starting point, we identified when an individual:</p>
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Pierre Vernier </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 29, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>herd <span class="ot">&lt;-</span> <span class="st">"little_rancheria"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="read-caribou-movement-gps-data" class="level3">
+<h3 class="anchored" data-anchor-id="read-caribou-movement-gps-data">Read caribou movement (gps) data</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">paste0</span>(<span class="st">"../../data/"</span>,herd,<span class="st">"/caribou.gpkg"</span>), <span class="st">"gps"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>spring <span class="ot">&lt;-</span> y <span class="sc">|&gt;</span> <span class="fu">filter</span>(migration<span class="sc">==</span><span class="st">"Spring migration"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fall <span class="ot">&lt;-</span> y <span class="sc">|&gt;</span> <span class="fu">filter</span>(migration<span class="sc">==</span><span class="st">"Fall migration"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="spring-migration-pathways" class="level3">
+<h3 class="anchored" data-anchor-id="spring-migration-pathways">Spring migration pathways</h3>
+<p>Each panel shows one individual’s spring migration tracks, with years distinguished by color. A few things worth noting from a quick scan:</p>
 <ul>
-<li>Leaves its winter or summer range,</li>
-<li>Travels in a clear direction, and</li>
-<li>Settles into the next seasonal range.</li>
+<li>Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.</li>
+<li>A few IDs only have data for one or two years (e.g., some of the later-numbered animals).</li>
+<li>Dark2 has 8 colors, so 6 years are comfortably distinguishable.</li>
 </ul>
-<p>These “breakpoints” identify the start and end of each migration period. We identified them using the Movement Mapper app.</p>
-<p><strong>2. Map each caribou’s route</strong></p>
-<p>Instead of simply connecting caribou locations with a line, we used the Brownian Bridge Movement Model (BBMM) to create a more realistic “heat map” that highlights the areas an individual used most during its migration. Specifically, the map shows:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>spring <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year, timestamp) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(longitude, latitude, <span class="at">color =</span> <span class="fu">factor</span>(year), <span class="at">group =</span> <span class="fu">interaction</span>(id, year))) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>id, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>, <span class="at">name =</span> <span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Spring migration"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">6</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="segments_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fall-migration-pathways" class="level3">
+<h3 class="anchored" data-anchor-id="fall-migration-pathways">Fall migration pathways</h3>
+<p>Each panel shows one individual’s fall migration tracks, with years distinguished by color. A few things worth noting from a quick scan:</p>
 <ul>
-<li>The likely corridor an individual followed, and</li>
-<li>Where it spent extra time resting or feeding (stopovers).</li>
+<li>Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.</li>
+<li>A few IDs only have data for one or two years (e.g., some of the later-numbered animals).</li>
+<li>Dark2 has 8 colors, so 6 years are comfortably distinguishable.</li>
 </ul>
-<p><strong>3. Combine individual routes</strong></p>
-<p>To understand the movement the entire herd, we combined (stacked) individual maps through a three-step averaging process: 1. Average each individual’s migration paths over multiple years (e.g., 2020-26); 2. Identify the main area (footprint) where each caribou usually travels, typically representing the area containing 95-99% of its probable locations; 3. Combine all individuals’ footprints on top of one another to show how many different individuals passed through any given area (e.g., a 50m pixel).</p>
-<p><strong>4. Classify migration corridors</strong></p>
-<p>The final step is to classify the stacked maps (seasonal corridors) based on how heavily they were used:</p>
-<ul>
-<li>Low use – at least one caribou passed through</li>
-<li>Medium use – used by 10–20% of individuals</li>
-<li>High use – used by more than 20% of individuals</li>
-</ul>
-<p>We also identified key stopovers where caribou consistently paused to rest and feed. These are important areas to protect within the seasonal corridors.</p>
-<p><img src="pics/methods_corridors.png" class="img-fluid"><br></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fall <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year, timestamp) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(longitude, latitude, <span class="at">color =</span> <span class="fu">factor</span>(year), <span class="at">group =</span> <span class="fu">interaction</span>(id, year))) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>id, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>, <span class="at">name =</span> <span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fall migration"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>, <span class="at">y =</span> <span class="st">"Latitude"</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">6</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="segments_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -657,13 +789,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../appendices/ranges.html" class="pagination-link" aria-label="Estimating ranges">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Estimating ranges</span>
+      <a href="../little_rancheria/ranges.html" class="pagination-link" aria-label="Seasonal ranges">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Seasonal ranges</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../appendices/covariates.html" class="pagination-link" aria-label="Habitat covariates">
-        <span class="nav-page-text">Habitat covariates</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../little_rancheria/corridors.html" class="pagination-link" aria-label="Migration corridors">
+        <span class="nav-page-text">Migration corridors</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -672,4 +804,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/corridors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/segments.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

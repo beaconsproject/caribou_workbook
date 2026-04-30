@@ -1,39 +1,6 @@
 ## Habitat Selection
 
-### Workflow:
-
-**Step 1 - Species data**
-
-- Upload dataset as an asset in GEE
-
-**Step 2 - Preprocessing**
-
-- Determine extent and resolution
-- Keep one presence location per pixel (per year)
-
-**Step 3 - Predictor variables**
-
-- GEE based datasets (some multiyear)
-- Other datasets
-
-**Step 4 - Presence and background**
-
-- multiple sets of pseudoabsences (or background data) can be created randomly within a predefined area
-- Match presence and background locations to temporal variables
-
-**Step 5 - Model fitting and evaluation (and testing)**
-
-- Multiple block cross-validation technique to partition data for model training and validation n times
-- Multiple classifier algorithms available
-
-**Step 6 - Model predictions**
-
-- Model predictions
-- Average of all single model predictions
-- Presence/absence map: majority vote or threshold that maximizes sensitivity and specificity
-
-
-### Guidelines for getting the basics right (Gerber et al. preprint)
+Guidelines for getting the basics right (Gerber et al. preprint)
 
 1. Think thoroughly about the question(s) of interest and the appropriate geographic and temporal scales in the specific study system before data collection begins.
   - Which groups or classes are of interest in your system? Are you planning to break up the dataset by age/sex class/study area? How many individuals of each group must be sampled?

@@ -1,0 +1,91 @@
+---
+title: Seasonal Migration Pathways
+date: 2026-04-29
+author: Pierre Vernier
+---
+  
+```{r}
+#| echo: TRUE
+#| warning: FALSE
+#| message: FALSE
+library(sf)
+library(tidyverse)
+library(patchwork)
+herd <- "little_rancheria"
+```
+
+### Read caribou movement (gps) data
+
+```{r}
+#| echo: TRUE
+#| warning: FALSE
+#| message: FALSE
+y <- st_read(paste0("../../data/",herd,"/caribou.gpkg"), "gps", quiet=TRUE)
+spring <- y |> filter(migration=="Spring migration")
+fall <- y |> filter(migration=="Fall migration")
+```
+
+### Spring migration pathways
+
+Each panel shows one individual's spring migration tracks, with years distinguished by color. A few things worth noting from a quick scan:
+
+- Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.
+- A few IDs only have data for one or two years (e.g., some of the later-numbered animals).
+- Dark2 has 8 colors, so 6 years are comfortably distinguishable.
+
+```{r}
+#| echo: TRUE
+#| warning: FALSE
+#| message: FALSE
+#| fig-width: 10
+#| fig-height: 8
+spring |>
+  st_drop_geometry() |>
+  arrange(id, year, timestamp) |>
+  ggplot(aes(longitude, latitude, color = factor(year), group = interaction(id, year))) +
+  geom_path(linewidth = 0.4) +
+  facet_wrap(~id, scales = "free") +
+  scale_color_brewer(palette = "Dark2", name = "Year") +
+  labs(
+    title = "Spring migration",
+    x = "Longitude", y = "Latitude"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    strip.text = element_text(size = 6),
+    axis.text  = element_text(size = 5)
+  )
+```
+
+### Fall migration pathways
+
+Each panel shows one individual's fall migration tracks, with years distinguished by color. A few things worth noting from a quick scan:
+
+- Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.
+- A few IDs only have data for one or two years (e.g., some of the later-numbered animals).
+- Dark2 has 8 colors, so 6 years are comfortably distinguishable.
+
+```{r}
+#| echo: TRUE
+#| warning: FALSE
+#| message: FALSE
+#| fig-width: 10
+#| fig-height: 8
+fall |>
+  st_drop_geometry() |>
+  arrange(id, year, timestamp) |>
+  ggplot(aes(longitude, latitude, color = factor(year), group = interaction(id, year))) +
+  geom_path(linewidth = 0.4) +
+  facet_wrap(~id, scales = "free") +
+  scale_color_brewer(palette = "Dark2", name = "Year") +
+  labs(
+    title = "Fall migration",
+    x = "Longitude", y = "Latitude"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    strip.text = element_text(size = 6),
+    axis.text  = element_text(size = 5)
+  )
+```
+

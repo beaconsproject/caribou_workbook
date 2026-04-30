@@ -1,0 +1,17 @@
+{
+  "hash": "be95699eed26e3601646be208f9212ae",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Seasonal Migration Pathways\ndate: 2026-04-29\nauthor: Pierre Vernier\n---\n  \n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(patchwork)\nherd <- \"little_rancheria\"\n```\n:::\n\n\n### Read caribou movement (gps) data\n\n\n::: {.cell}\n\n```{.r .cell-code}\ny <- st_read(paste0(\"../../data/\",herd,\"/caribou.gpkg\"), \"gps\", quiet=TRUE)\nspring <- y |> filter(migration==\"Spring migration\")\nfall <- y |> filter(migration==\"Fall migration\")\n```\n:::\n\n\n### Spring migration pathways\n\nEach panel shows one individual's spring migration tracks, with years distinguished by color. A few things worth noting from a quick scan:\n\n- Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.\n- A few IDs only have data for one or two years (e.g., some of the later-numbered animals).\n- Dark2 has 8 colors, so 6 years are comfortably distinguishable.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nspring |>\n  st_drop_geometry() |>\n  arrange(id, year, timestamp) |>\n  ggplot(aes(longitude, latitude, color = factor(year), group = interaction(id, year))) +\n  geom_path(linewidth = 0.4) +\n  facet_wrap(~id, scales = \"free\") +\n  scale_color_brewer(palette = \"Dark2\", name = \"Year\") +\n  labs(\n    title = \"Spring migration\",\n    x = \"Longitude\", y = \"Latitude\"\n  ) +\n  theme_bw(base_size = 8) +\n  theme(\n    strip.text = element_text(size = 6),\n    axis.text  = element_text(size = 5)\n  )\n```\n\n::: {.cell-output-display}\n![](segments_files/figure-html/unnamed-chunk-3-1.png){width=960}\n:::\n:::\n\n\n### Fall migration pathways\n\nEach panel shows one individual's fall migration tracks, with years distinguished by color. A few things worth noting from a quick scan:\n\n- Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.\n- A few IDs only have data for one or two years (e.g., some of the later-numbered animals).\n- Dark2 has 8 colors, so 6 years are comfortably distinguishable.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nfall |>\n  st_drop_geometry() |>\n  arrange(id, year, timestamp) |>\n  ggplot(aes(longitude, latitude, color = factor(year), group = interaction(id, year))) +\n  geom_path(linewidth = 0.4) +\n  facet_wrap(~id, scales = \"free\") +\n  scale_color_brewer(palette = \"Dark2\", name = \"Year\") +\n  labs(\n    title = \"Fall migration\",\n    x = \"Longitude\", y = \"Latitude\"\n  ) +\n  theme_bw(base_size = 8) +\n  theme(\n    strip.text = element_text(size = 6),\n    axis.text  = element_text(size = 5)\n  )\n```\n\n::: {.cell-output-display}\n![](segments_files/figure-html/unnamed-chunk-4-1.png){width=960}\n:::\n:::\n\n\n",
+    "supporting": [
+      "segments_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

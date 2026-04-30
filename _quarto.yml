@@ -20,16 +20,7 @@ website:
       - href: index.qmd
         text: Home
       - ---
-      - section: "Little Rancheria"
-        contents:
-        - href: little_rancheria/overview.qmd
-          text: Overview
-        - href: little_rancheria/ranges.qmd
-          text: Seasonal ranges
-        - href: little_rancheria/corridors.qmd
-          text: Seasonal corridors
-      - ---
-      - section: "Appendices"
+      - section: "Methods"
         contents:
         - href: appendices/segments.qmd
           text: Segmenting data
@@ -41,6 +32,21 @@ website:
           text: Habitat covariates
         - href: appendices/hsf.qmd
           text: Habitat selection
+      - ---
+      - section: Herds
+        contents:
+        - section: "Little Rancheria"
+          contents:
+          - href: little_rancheria/overview.qmd
+            text: Overview
+          - href: little_rancheria/ranges.qmd
+            text: Seasonal ranges
+          - href: little_rancheria/segments.qmd
+            text: Migration segments
+          - href: little_rancheria/corridors.qmd
+            text: Migration corridors
+      - ---
+      - section: "Appendices"
 
 format:
   html:

@@ -1,8 +1,8 @@
 ## Habitat covariates
 
-In caribou ecology, "covariates" are the specific environmental and human factors used in statistical models (like Resource Selection Functions) to predict habitat use and population health. For Northern Mountain Caribou, these variables are unique because of their reliance on rugged terrain and vertical migration.
+Habitat covariates refer to the specific environmental and human factors used in statistical models (like HSFs) to predict habitat use and population health. For Northern Mountain Caribou, these variables are unique because of their reliance on rugged terrain and vertical migration.
 
-Researchers typically group these into four main categories:
+Covariates can be grouped into four main categories:
 
 **1. Topographic & Environmental Covariates**
 
@@ -45,5 +45,3 @@ These account for the "risk" on the landscape.
 | Human      | Distance to roads, Mine sites | Negative (strong avoidance)                        |
 | Natural    | Fire history (<40 years)      | Negative (avoidance due to lack of forage)         |
 | Predation  | Distance to linear features   | Negative (avoidance due to high risk)              |
-
-Would you like me to help you draft a Resource Selection Function (RSF) model structure based on these variables, or perhaps look into the specific "Zone of Influence" distances for a particular herd?
