@@ -10,6 +10,7 @@ author: Pierre Vernier
 #| message: FALSE
 library(sf)
 library(tidyverse)
+library(patchwork)
 library(leaflet)
 library(htmlwidgets)
 library(htmltools)
@@ -21,18 +22,17 @@ herd <- "little_rancheria"
 #| echo: FALSE
 #| warning: FALSE
 #| message: FALSE
-make_season_map <- function(data, label) {
-  years_all <- sort(unique(data$year))
-  n_col     <- max(3, length(years_all))
-  yr_colors <- brewer.pal(n_col, "Dark2")[seq_along(years_all)]
-  year_pal  <- colorFactor(yr_colors, domain = as.character(years_all))
+# Shared year colour palette (used by both seasons)
+make_season_map <- function(data, select_id, label) {
+  years_all  <- sort(unique(data$year))
+  n_col      <- max(3, length(years_all))
+  yr_colors  <- brewer.pal(n_col, "Dark2")[seq_along(years_all)]
+  year_pal   <- colorFactor(yr_colors, domain = as.character(years_all))
 
   ids <- sort(unique(data$id))
 
   m <- leaflet(options = leafletOptions(minZoom = 4)) |>
-    addProviderTiles(providers$CartoDB.Positron,   group = "Carto Light") |>
-    addProviderTiles(providers$Esri.WorldImagery,  group = "ESRI Imagery") |>
-    addProviderTiles(providers$Esri.WorldTopoMap,  group = "ESRI Topo")
+    addProviderTiles(providers$CartoDB.Positron)
 
   for (id_val in ids) {
     id_data <- data |> filter(id == id_val) |> arrange(year, timestamp)
@@ -54,13 +54,6 @@ make_season_map <- function(data, label) {
     m <- m |> hideGroup(as.character(id_val))
   }
 
-  m <- m |>
-    addLayersControl(
-      position = "topleft",
-      baseGroups = c("Carto Light", "ESRI Imagery", "ESRI Topo"),
-      options    = layersControlOptions(collapsed = TRUE)
-    )
-
   m <- m |> addLegend(
     position = "bottomright",
     colors   = yr_colors,
@@ -69,61 +62,40 @@ make_season_map <- function(data, label) {
     opacity  = 0.85
   )
 
-  ids_json  <- jsonlite::toJSON(as.character(ids))
-  label_esc <- gsub("'", "\\\\'", label)
-
-  m |> onRender(sprintf("
+  ids_json <- jsonlite::toJSON(as.character(ids))
+  m <- m |> onRender(sprintf("
     function(el, x) {
-      var map = this;
-      var ids = %s;
-
-      // Build a custom Leaflet control containing the dropdown
-      var DropdownControl = L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function(m) {
-          var div = L.DomUtil.create('div');
-          div.style.cssText = [
-            'background:white',
-            'padding:6px 10px',
-            'border-radius:4px',
-            'box-shadow:0 1px 5px rgba(0,0,0,0.4)',
-            'font-size:13px'
-          ].join(';');
-
-          var lbl = L.DomUtil.create('span', '', div);
-          lbl.textContent = '%s ';
-          lbl.style.fontWeight = '600';
-
-          var sel = L.DomUtil.create('select', '', div);
-          ids.forEach(function(id) {
-            var opt = document.createElement('option');
-            opt.value = id;
-            opt.textContent = id;
-            sel.appendChild(opt);
-          });
-
-          L.DomEvent.on(sel, 'change', function() {
-            var chosen = sel.value;
-            ids.forEach(function(id) {
-              var fg = map.layerManager.getLayerGroup(id, false);
-              if (!fg) return;
-              if (id === chosen) {
-                map.addLayer(fg);
-              } else {
-                map.removeLayer(fg);
-              }
-            });
-          });
-
-          L.DomEvent.disableClickPropagation(div);
-          L.DomEvent.disableScrollPropagation(div);
-          return div;
-        }
+      var map  = this;
+      var ids  = %s;
+      var sel  = document.getElementById('%s');
+      sel.addEventListener('change', function() {
+        var chosen = this.value;
+        ids.forEach(function(id) {
+          if (id === chosen) {
+            map.layerManager.showGroup(id);
+          } else {
+            map.layerManager.hideGroup(id);
+          }
+        });
       });
-
-      new DropdownControl().addTo(map);
     }
-  ", ids_json, label_esc))
+  ", ids_json, select_id))
+
+  browsable(tagList(
+    tags$div(
+      style = "margin: 6px 0 4px 0;",
+      tags$label(
+        label,
+        style = "font-weight:600; margin-right:8px;"
+      ),
+      tags$select(
+        id    = select_id,
+        style = "font-size:13px; padding:2px 6px;",
+        lapply(ids, function(id_val) tags$option(value = id_val, id_val))
+      )
+    ),
+    m
+  ))
 }
 ```
 
@@ -140,10 +112,11 @@ fall <- y |> filter(migration=="Fall migration")
 
 ### Spring migration pathways
 
-Each panel shows one individual's spring migration tracks, with years distinguished by color. A couple things worth noting:
+Each panel shows one individual's spring migration tracks, with years distinguished by color. A few things worth noting from a quick scan:
 
-- Most individuals show a fairly consistent southwest-to-northeast trajectory across years, though the routes vary.
+- Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.
 - A few IDs only have data for one or two years (e.g., some of the later-numbered animals).
+- Dark2 has 8 colors, so 6 years are comfortably distinguishable.
 
 ```{r}
 #| echo: TRUE
@@ -173,15 +146,16 @@ spring |>
 #| echo: FALSE
 #| warning: FALSE
 #| message: FALSE
-make_season_map(spring, "Individual:")
+make_season_map(spring, "spring_id_select", "Spring individual:")
 ```
 
 ### Fall migration pathways
 
-Each panel shows one individual's fall migration tracks, with years distinguished by color. A couple things worth noting:
+Each panel shows one individual's fall migration tracks, with years distinguished by color. A few things worth noting from a quick scan:
 
-- Most individuals show a fairly consistent northeast-to-southwest trajectory across years, though the routes vary.
+- Most individuals show a fairly consistent north-to-northeast trajectory across years, though the routes vary.
 - A few IDs only have data for one or two years (e.g., some of the later-numbered animals).
+- Dark2 has 8 colors, so 6 years are comfortably distinguishable.
 
 ```{r}
 #| echo: TRUE
@@ -207,9 +181,3 @@ fall |>
   )
 ```
 
-```{r}
-#| echo: FALSE
-#| warning: FALSE
-#| message: FALSE
-make_season_map(fall, "Individual:")
-```
