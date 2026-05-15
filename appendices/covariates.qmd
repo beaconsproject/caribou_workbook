@@ -8,15 +8,15 @@ Covariates can be grouped into four main categories:
 
 Because Northern Mountain Caribou move vertically between seasons, elevation is the primary driver of their behavior.
 
-- Elevation: Used to track seasonal shifts (up to alpine areas in summer to avoid heat/insects, and down to sub-alpine forests in winter).    
-- Slope and Aspect: Caribou often select steeper, wind-swept ridges in winter because the wind blows snow away, making it easier to reach lichens.    
-- Snow Depth (SWE): A critical covariate for winter survival; excessive snow increases the metabolic cost of travel and limits access to food.    
+- Elevation: Used to track seasonal shifts (up to alpine areas in summer to avoid heat/insects, and down to sub-alpine forests in winter).\
+- Slope and Aspect: Caribou often select steeper, wind-swept ridges in winter because the wind blows snow away, making it easier to reach lichens.\
+- Snow Depth (SWE): A critical covariate for winter survival; excessive snow increases the metabolic cost of travel and limits access to food.
 
 **2. Forage & Vegetation Covariates**
 
 These identify the "food energy" available on the landscape.
 
-- Lichen Abundance: Specifically terrestrial lichens (_Cladonia_ spp.) and arboreal lichens in old-growth forests.
+- Lichen Abundance: Specifically terrestrial lichens (*Cladonia* spp.) and arboreal lichens in old-growth forests.
 - Land Cover Type: Distinguishes between alpine tundra, sub-alpine fir, and spruce-lichen woodlands.
 - NDVI (Normalized Difference Vegetation Index): Used in summer to measure the "greenness" or quality of emerging forage, which is vital for lactating cows.
 
@@ -24,24 +24,24 @@ These identify the "food energy" available on the landscape.
 
 These measure how much "space" caribou lose to human activity or environmental changes.
 
-- Distance to Roads/Infrastructure: Caribou show a strong "Zone of Influence" (ZOI) avoidance, often staying several kilometers away from active mines or high-use roads.    
-- Linear Feature Density: The concentration of seismic lines or pipelines. Even if narrow, these act as "highways" for predators like wolves.    
-- Fire Age: Caribou generally avoid burned areas for 40–60 years because fire destroys the slow-growing lichen they depend on.    
+- Distance to Roads/Infrastructure: Caribou show a strong "Zone of Influence" (ZOI) avoidance, often staying several kilometers away from active mines or high-use roads.\
+- Linear Feature Density: The concentration of seismic lines or pipelines. Even if narrow, these act as "highways" for predators like wolves.\
+- Fire Age: Caribou generally avoid burned areas for 40-60 years because fire destroys the slow-growing lichen they depend on.
 
 **4. Biological & Predation Covariates**
 
 These account for the "risk" on the landscape.
 
 - Predator Density/Risk: Often modeled as the probability of encountering wolves or bears.
-- Alternative Prey Density: Covariates for moose or deer are used to measure "apparent competition"—higher moose numbers often bring in more wolves, which then incidentally prey on caribou.    
+- Alternative Prey Density: Covariates for moose or deer are used to measure "apparent competition"?higher moose numbers often bring in more wolves, which then incidentally prey on caribou.\
 - Reproductive State: Whether a cow has a calf significantly changes her selection; "cow-with-calf" is a common categorical covariate because these individuals prioritize safety (high elevation) over the best food.
 
 **Summary Table: Key Covariates**
 
-| Category   | Key Variables                 | Typical Effect on Selection                        |
-| ---------- | ----------------------------- | -------------------------------------------------- |
-| Topography | Elevation, Slope, Aspect      | Positive (selection of high/steep areas in winter) |
-| Forage     | Lichen cover, Forest age      | Positive (prefer old-growth/high lichen density)   |
-| Human      | Distance to roads, Mine sites | Negative (strong avoidance)                        |
-| Natural    | Fire history (<40 years)      | Negative (avoidance due to lack of forage)         |
-| Predation  | Distance to linear features   | Negative (avoidance due to high risk)              |
+| Category | Key Variables | Typical Effect on Selection |
+|---------------|--------------------|-------------------------------------|
+| Topography | Elevation, Slope, Aspect | Positive (selection of high/steep areas in winter) |
+| Forage | Lichen cover, Forest age | Positive (prefer old-growth/high lichen density) |
+| Human | Distance to roads, Mine sites | Negative (strong avoidance) |
+| Natural | Fire history (\<40 years) | Negative (avoidance due to lack of forage) |
+| Predation | Distance to linear features | Negative (avoidance due to high risk) |

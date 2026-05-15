@@ -137,6 +137,28 @@ tm_basemap("Esri.WorldTopoMap") +
     title = "KDE", labels = c("Core (50%)", "Overall (95%)"), fill=c("yellow","darkgreen"), fill_alpha=0.75, position = tm_pos_in(pos.v = "bottom", pos.h="right"))
 ```
 
+**Autocorrelated KDE (AKDE)**
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 8
+akde1 <- hr_akde(trk1, levels=c(0.5, 0.95)) # uses an iid ctmm
+#akde1 <- hr_akde(trk1, model = fit_ctmm(trk1, "ou")) # uses an OU ctmm
+akde1i <- akde1 |>
+  hr_isopleths()
+tm_basemap("Esri.WorldTopoMap") +
+  tm_shape(akde1i) +
+  tm_borders(col="black", lwd=2, lty="dashed") +
+  tm_polygons( 
+    fill="level", fill.scale=tm_scale(values=c("yellow","darkgreen")),
+    fill_alpha=0.5, fill.legend = tm_legend_hide()) +
+  tm_add_legend(
+    title = "KDE", labels = c("Core (50%)", "Overall (95%)"), fill=c("yellow","darkgreen"), fill_alpha=0.75, position = tm_pos_in(pos.v = "bottom", pos.h="right"))
+```
+
 #### Step 4. Compare estimates
 
 ```{r}
@@ -181,3 +203,5 @@ tibble(
   `Overall area (50%)` = c(round(ovr1$overlap[2]*100,1), round(ovr2$overlap[2]*100,1))) |>
   kable()
 ```
+
+#

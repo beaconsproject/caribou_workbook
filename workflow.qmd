@@ -1,0 +1,50 @@
+# Caribou Analysis Workflow
+# Updated: 2026-04-29
+
+The workflow is divided into six broad steps which do not have to been implemented linearly. Additional steps to the workflow will be added in the future e.g., connectivity analysis.
+
+## 1. Movement data
+
+- Use **get_movement_data_XXH.R** to acquire and prepare movement data for each herd XXH
+  - Download, clean, modify (e.g., create AOI, HRs), and save data as csv and gpkg files
+  - Create additional attributes and layers
+    - Add new attributes: elevation, season based on YG, migration based on YG
+    - Create new layers: AOI based on 100% KDE, preliminary annual and seasonal ranges
+  
+## 2. Partition data
+
+- Use **gen_migration_segments.R** to create empty migration_segments table (fields: id, year, migration) for herds with no migration periods
+- Use the **Movement Mapper** app to identify start and end dates for spring and fall migration periods
+- Use **add_migration_field.R** to add or update "migration" attribute in caribou.csv and caribou.gpkg ("gps")
+- Use **view_migration_segments.R** to view segments and visually identify groups of caribou with similar movement patterns during spring and fall migration periods
+
+## 3. Seasonal ranges
+
+- Use Movement Explorer app to decide on estimation method and parameter values
+- Use the amt package to estimate annual and seasonal range (overall=0.95, core=0.50)
+  - Do this for each individual/year, for each population/year, and overall individual and population
+- Add output to Range Explorer app
+  - App: **range_viewer**
+
+## 4. Seasonal corridors
+
+- Use the amt package to identify spring and fall migration corridors (overall, stopovers)
+  - Do this for each individual/year, for each population/year, and overall individual and population
+  - Script: **gen_corridors.R**
+- Add output to Corridor Explorer app
+  - App: **path_viewer**
+
+## 5. Covariate data
+
+- Extract disturbance data for each herd
+  - Script: **get_disturbance_data.R**
+- Extract 2020 landcover data for each herd
+  - Script: **get_landcover_data.R**
+- Extract topography, hydrology, and ecology data for each herd
+  - Script: 
+
+## 6. Habitat models
+
+- Develop annual and seasonal habitat models (from simple selection ratios to RSFs)
+  - Do this for each individual/year, for each population/year, and overall individual and population
+- Add output to Habitat Explorer app

@@ -20,6 +20,10 @@ website:
     contents:
       - href: index.qmd
         text: Home
+      - href: workplan.qmd
+        text: Workplan
+      - href: workflow.qmd
+        text: Workflow (R)
       - ---
       - section: "Methods"
         contents:
@@ -46,8 +50,19 @@ website:
             text: Migration segments
           - href: little_rancheria/corridors.qmd
             text: Migration corridors
+          - href: little_rancheria/hsf.qmd
+            text: Habitat selection
+        - section: "Wolf Lake"
+          contents:
+          - href: wolf_lake/overview.qmd
+            text: Overview
       - ---
       - section: "Appendices"
+        contents:
+        - href: issues.qmd
+          text: Issues
+        - href: references.qmd
+          text: References
 
 format:
   html:

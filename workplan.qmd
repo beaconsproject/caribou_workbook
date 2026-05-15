@@ -1,0 +1,298 @@
+# Caribou Analysis Workplan
+
+## Seasonal movements, habitat selection, and landscape connectivity
+
+Updated: Mar 10, 2026
+
+NOTE: This is a living document that changes regularly and is used to guide analyses and record notes/issues. Please do not share without contacting the BEACONs project.
+
+# Introduction
+
+Objectives:
+
+* Identify annual and seasonal ranges (population- and individual-level).  
+* Identify seasonal corridors/movement paths (population- and individual-level).  
+* Develop habitat models and generate predictive maps.  
+* Develop resistance surfaces and generate connectivity maps.
+
+# Methods
+
+Study system: This study uses GPS telemetry data from two herds of woodland caribou (*Rangifer tarandus caribou*), the Little Rancheria and Wolf Lake herds, in Yukon, Canada. More herds will be included over time. GPS collar data were provided by the Yukon Government (YG) via the Movebank data repository. All GPS collars were programmed to a standard sampling interval of approximately 6 hours.
+
+## 1\. Prepare movement data for analysis
+
+Objective: Ensure raw GPS data is clean, accurate, and ready for analysis by removing errors, standardizing formats, and adding relevant attributes.
+
+Workflow:
+
+* Data import and initial inspection:  
+  * Import GPS data from Movebank into R  
+  * Convert to standardized formats (CSV and GPKG) with minimum required attributes: individual ID, longitude, latitude, timestamp, elevation, season, and migration  
+  * Perform visual inspection of tracks using interactive maps to identify obvious outliers or errors  
+  * Document number of individuals, date ranges, and sample sizes per individual  
+* Data cleaning and filtering:  
+  * Remove duplicate observations based on identical timestamps and coordinates.  
+  * Identify and remove outliers using multiple criteria:  
+    * Geographic outliers e.g., points \>50km outside known caribou range  
+    * Speed-based outliers e.g., points requiring \>10km/hr travel speed between consecutive locations  
+    * Sensor malfunction indicators e.g., clusters of stationary points with identical coordinates  
+    * Temporal gaps e.g., \>24 hours (\>4 consecutive missing fixes)  
+  * Gap-filling approach: Do not interpolate positions during gaps; instead flag these periods for exclusion from certain analyses (e.g., step selection functions)  
+* Projection and coordinate systems:  
+  * Reproject all data to NAD83 / Yukon Albers (EPSG:3578) for accurate distance and area calculations.  
+* Add additional attribute information:  
+  * Parse timestamps to extract date, time, year, month, and day of year for seasonal analyses.  
+  * Extract elevation information for each location  
+  * Calculate movement metrics between consecutive points: step length, turning angles, and speed (optional step \- necessary if iSSF models are to be developed in step 5\)
+
+Output:
+
+* Clean (analysis-ready) GPS dataset in CSV format with all attributes  
+* GPKG spatial layer for GIS visualization
+
+Notes/issues:
+
+* Depending on the “cleanliness” of the datasets, not all of the above data preparation steps are required.
+
+## 2\. Segment data into seasons and migration periods
+
+Objective: Identify biologically meaningful seasonal boundaries and migration periods for each individual caribou using movement-based metrics, accounting for individual variation in timing.
+
+| Season / Migration | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 | Total |
+| :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Early winter | 29 | 29 | 32 | 24 | 23 | 21 | 7 | 37 |
+| Late winter | — | 29 | 33 | 24 | 23 | 21 | 7 | 38 |
+| Summer | — | 25 | 27 | 24 | 22 | 19 | — | 33 |
+| Fall rut | — | 24 | 24 | 24 | 22 | 15 | — | 32 |
+| Spring migration | — | 28 | 32 | 24 | 23 | 19 | — | 37 |
+| Fall migration | — | 24 | 24 | 24 | 22 | 16 | — | 32 |
+
+### 2.1 Identifying migration periods
+
+Approach: Use Net Squared Displacement (NSD) analysis combined with visual inspection via the BEACONs Movement Mapper app to identify spring and fall migration start and end dates for each individual in each year.
+
+Definitions:
+
+* Spring migration: Movement from winter range to summer range (generally northeast direction), beginning when individuals depart the winter range and ending upon arrival at summer range  
+* Fall migration: Movement from summer range to winter range (generally southwest direction), beginning when individuals depart the summer range and ending upon arrival at winter range  
+* Geographic migrant: Individual exhibiting distinct seasonal ranges separated by, for example, \>20 km straight-line distance  
+* Geographic resident: Individual lacking distinct seasonal movement, remaining within, for example, 20 km radius year-round
+
+Workflow:
+
+* Use Movement Mapper app for each individual/year/season:  
+  * Visualize movement tracks on map with seasonal color coding  
+* Review NSD vs. day-of-year plots  
+* Identify migration periods using these criteria:  
+  * Spring migration start: First sustained increase in NSD (e.g., \>20% increase maintained for \>7 days)  
+  * Spring migration end: NSD plateau or reversal indicating arrival at summer range  
+  * Fall migration start: First sustained decrease in NSD from summer range  
+  * Fall migration end: NSD plateau indicating establishment on winter range  
+* Adjust date sliders to refine start/end dates based on visual assessment  
+* Classify migration status:  
+  * If clear spring and fall migrations exist: Record start/end dates for both periods  
+  * If no evidence of migration: Classify as "Geographic resident" and assign NA to migration dates  
+  * If partial migration (e.g., only spring or only fall): Document pattern in notes field  
+* Quality control:  
+  * Have 20% of classifications reviewed independently by second analyst  
+  * Resolve discrepancies through discussion and establish decision rules  
+  * Document ambiguous cases with comments in the notes field
+
+Output:
+
+* CSV table: Individual-level migration periods with columns: Individual\_ID, Year, Migration\_Type (Spring/Fall), Start\_Date, End\_Date, Migrant\_Status (Migrant/Resident), Distance\_Traveled (km), Notes  
+* Summary statistics: Proportion of migrants vs. residents by herd and year  
+* Visualization: Population-level distribution of migration timing (start/end dates) by year
+
+Notes/issues:
+
+* Seasonal migration corridors can be defined using migration periods defined a priori by YG or by looking at the data for each individual/year using the Movement Mapper app to define start and end dates. Although more time consuming, the latter approach better  accounts for individual variation in movement. So far, we have tested the latter approach for 25 individuals from the Little Rancheria herd. and, for now, will continue with the former periods given they are good approximations. To do: compare output maps based on the two approaches e.g., similar to the comparison of ranges (see below).  
+* Consider using flexible start dates for calculating NSD (rather than arbitrary dates):  
+  * For spring: Use estimated winter range centroid e.g., mean of December-February locations  
+  * For fall: Use estimated summer range centroid e.g., mean of June-August locations  
+* Acceptable date ranges:  
+  * Spring migration: March 15 \- June 15  
+  * Fall migration: August 15 \- December 15  
+  * Flag migrations outside these ranges for review but don’t exclude automatically  
+* Minimum distance threshold: Require \>20 km net displacement to classify as migration (straight-line distance between seasonal range centroids); currently, we have not classified individuals based on geographic status  
+* Consider using additional metrics for defining periods e.g., elevation and speed  
+* Consider using smooth NSD curves using 7-day rolling average to reduce noise
+
+### 2.2 Delineating seasonal ranges
+
+Approach: Define summer and winter periods based on migration timing, using different approaches for migrants and residents.
+
+Workflow:
+
+* For geographic migrants:  
+  * Winter season: From end of fall migration to start of spring migration  
+  * Summer season: From end of spring migration to start of fall migration  
+* For geographic residents:  
+  * Calculate population-level migration timing percentiles from geographic migrants within same herd and year:  
+    * Spring migration window: 25th percentile of spring start dates to 75th percentile of spring end dates  
+    * Fall migration window: 25th percentile of fall start dates to 75th percentile of fall end dates  
+  * Define resident seasons to align with migrant patterns:  
+    * Summer season: From 75th percentile of spring migration end dates to 25th percentile of fall migration start dates  
+    * Winter season: From 75th percentile of fall migration end dates to 25th percentile of spring migration start dates  
+  * If insufficient migrants exist for percentile calculations (n\<5), use fixed calendar dates:  
+    * Summer: June 1 \- September 30  
+    * Winter: November 1 \- March 31
+
+Output:
+
+* CSV table: Seasonal assignments for each GPS location with columns: Location\_ID, Individual\_ID, Timestamp, Season (Winter/Spring\_Migration/Summer/Fall\_Migration), Year  
+* Summary table: Seasonal date ranges by individual and year  
+* Comparison table: Population-level seasonal timing statistics by herd
+
+Notes/issues:
+
+* This section is currently considered to be optional as it only allows broad summer and winter seasons to be defined whereas the YG classes contain 4 seasons. We tested this approach using the 25 individuals for which we defined seasonal migration periods but then reverted to the seasons as defined by YG. See lhr\_compare.qmd document for a comparison of approaches.  
+* Future refinements: Consider subdividing seasons to identify calving, post-calving, and fall rut periods.
+
+### 2.3 Adding seasonal and migration periods to movement data
+
+Workflow:
+
+* Join seasonal classification tables to GPS location data based on timestamp  
+* Verify that all locations are assigned to a season or migration period  
+* Flag any unassigned periods for review
+
+Output:
+
+* GPS dataset (CSV and GPKG) with Season and Migration period attributes added  
+* Summary statistics showing number of locations per individual/year/season
+
+## 3\. Estimate annual and seasonal ranges
+
+Objective: Estimate and map annual seasonal ranges at the individual- and population levels using the summer and winter range periods identified for each individual/year/season.
+
+Workflow:
+
+* Individual-level range estimation:  
+  * For each individual/year/season, use the Kernel Density Estimation (KDE) method to estimate probability density functions of animal locations, resulting in utilization distributions.  
+    * Parameters: Select appropriate smoothing parameters (e.g., h-value) using methods like Likelihood Cross-Validation (LCV) or reference bandwidth.  
+    * Output: Generate 95% and 50% (or other relevant contours) utilization distributions (UDs) for annual and seasonal ranges for each individual for each year.  The former (95%) represents the overall annual or seasonal range while the latter (50% isopleths) represents core or high use areas.  
+* Population-level range estimation:  
+  * Method 1 \- Union of individual ranges: Combine individual ranges (e.g., 95% KDEs) to visualize the total area used by the population annually and seasonally.  
+  * Method 2 \- Population-level estimates: Pool all individual locations for a given period and estimate a single population-level range that represents the overall utilization distribution.
+
+Output:
+
+* Interactive dashboard to assist in visualizing 1\) individual- and population-level annual and seasonal range estimates and 2\) variation in range estimates between individuals, years, and seasons.
+
+Notes/issues:
+
+* Although we have generated both individual- and population-level ranges, our current focus is on the latter.  
+* We are currently using method 2 to generate population-level ranges.  
+* To do: evaluate the sensitivity of range estimates to variation in the model parameters used.
+
+## 4\. Identify seasonal corridors (movement paths)
+
+Objective: Identify and map seasonal corridors and hotspots within the corridors at the individual- and population-levels using the spring and fall migration periods identified for each individual/year/season.
+
+Workflow:
+
+* Individual-level paths:  
+  * Plot individual GPS tracks, particularly during identified migration periods, to visualize their paths.  
+  * For each individual/year/migration period, develop Brownian Bridge Movement Models (BBMMs) to generate probability surfaces showing the most likely paths taken between sequential GPS locations (i.e., occurrence distributions; ODs). These can be particularly useful for visualizing high-use movement corridors. From the BBMMs, estimate occurrence distributions (rasters) and footprints of use (vectors).  
+* Population-level corridors:  
+  * Combine individual BBMMs or high-density movement paths across all individuals for a given migration period to identify areas of concentrated movement.  
+    * For each individual caribou, merge the multiple ODs across years and seasons, for example by taking the mean across all ODs i.e., calculating a mean by year and then by season, or by calculating a mean by season and then by year.  
+    * Once an OD is calculated for each individual, an individual-level footprint is delineated based on a user-specified contour (e.g. 99% contour around the volume of the OD).  
+    * To calculate a movement corridor for the population, individual footprints can be stacked to create a grid representing the proportion of individuals in a population moving through an area i.e., a raster heatmap with values representing the number of individuals.  
+  * Use the population-level corridor (grid) to:  
+    * Delineate the most important areas where a significant number of animals move (e.g. a contour delineating where more than 20% of a population moves).  
+    * Identify bottlenecks by overlaying population movement corridors with topographical features or human infrastructure to identify potential pinch points or barriers.  
+    * Evaluate the effectiveness of movement paths at connecting seasonal core areas e.g., summer and winter core ranges.
+
+Output:
+
+* Interactive dashboard to assist in visualizing 1\) individual- and population-level seasonal movements corridors and 2\) variation in corridors between individuals and years.
+
+Notes/issues:
+
+* As with the range analysis section, the focus is on population-level corridors. In contrast, though, we develop population-level corridors from individual-level pathways.
+
+## 5\. Develop habitat models and generate predictive maps
+
+NOTE: This section is currently incomplete.
+
+This step connects caribou locations to environmental features to develop habitat selection functions that can be used to generate annual and seasonal predictive maps of habitat suitability.
+
+* Extract environmental covariates:  
+  * Identify relevant covariates: Based on caribou ecology, identify environmental variables important for habitat selection (e.g., vegetation type, elevation, slope, aspect, snow depth, distance to roads/disturbances, forest cover, fire history).  
+  * Acquire spatial data: Obtain high-resolution spatial layers for selected covariates (e.g., DEMs, land cover maps, disturbance layers).  
+  * Extract covariate values: For each GPS location (and a random sample of available locations), extract the values of the relevant environmental covariates. Note that the definition of availability and subsequent selection of representative points is a key step.  
+* Model habitat selection:  
+  * Annual and seasonal (summer and winter) habitat selection. Develop resource selection functions (RSFs) to model the probability of caribou using a particular habitat given its availability. Methods include generalized linear models (GLMs), generalized linear mixed models, and random forest models. Coefficients from the models indicate habitat preferences/avoidance and can be used to generate predictive maps.  
+  * Habitat selection during migration. Optionally, develop integrated step selection functions (iSSFs) to model habitat selection based on movement steps, comparing actual steps taken to random alternative steps available from the same starting point.  
+  * Assess model performance using techniques like k-fold cross-validation, AUC, or by evaluating predictions against independent data.  
+* Map predicted habitat:  
+  * Apply the developed habitat models to the entire study area (using the spatial covariate layers) to generate predictive maps of habitat suitability or probability of use.  
+  * Classify these continuous probability maps into discrete habitat suitability classes (e.g., high, medium, low) for easier interpretation and management.  
+* Output: Predicted probability of occurrence maps in TIF format and an interactive dashboard to assist in visualizing maps annually and by season.
+
+Notes/issues:
+
+* Filtering occurrences  
+  * Geographic or environmental thinning  
+  * Should we reduce occurrences to 1 per pixel (30m and 900m)? An alternative is to thin by distance e.g., occurrences should be a minimum of 10km apart.  
+* Selecting background points  
+  * What should we consider the available area to be? Should it be the same for all models i.e., should summer and winter ranges use the same background e.g., annual range? Or should availability be seasonal e.g., summer or winter ranges?  
+  * Whatever approach is used, should we create the available boundary using i) a buffer around points, ii) the minimum convex polygon (MCP), iii) a buffer around the MCP, or iv) using a mask e.g., a boundary of ecological relevance.  
+  * How many background points should be selected? 1:10 ratio? What if this exceeds the number of pixels? Take maximum pixels?  
+* Reducing collinearity among the predictors  
+  * Correlation, principal component analysis, variance inflation factor  
+* Data partitioning  
+  * Splitting data into testing and training groups is a key step in building models.  
+* Scaling covariates  
+  * All numeric covariates should be scaled (standardized and ?). Make sure that when the models are used to make predictions that the same transformations are used.
+
+### 5.1 Effects of climate change on seasonal ranges
+
+Objective: To evaluate the effects of climate change on seasonal ranges within i) the LFN planning area and ii) the proposed IPCAs.
+
+Workflow:
+
+* Download current and future climate data from worldclim.org  
+* Prepare caribou and climate data for modelling  
+* Develop species distribution models for summer and winter seasons using climate predictors  
+  * Select seasonal range boundaries (see Step 2\)  
+  * Thin gps locations to deal with spatial and temporal autocorrelation  
+  * Select background (available) locations  
+  * Develop models using multiple methods (glm, brt, rf, maxent, svm)  
+* Predict/project habitat suitability in current and future times using ensemble models. (Predict the current distribution of the species (habitat suitability) and project its distribution into a future climatic scenario for the year 2100).  
+* Assess range shift in response to climate change. (Given the habitat suitability maps in both the current and future times, we can assess the magnitude and distribution of changes, and quantitatively measure range shifts due to climate change.)
+
+### 5.2 Effects of climate change on seasonal corridors
+
+Objective: To evaluate the effects of climate change on seasonal corridors within i) the LFN planning area and ii) the proposed IPCAs.
+
+Workflow:
+
+* Download current and future climate data from [worldclim.org](http://worldclim.org)  
+* Prepare caribou and climate data for modelling  
+* Develop species distribution models for spring and fall migration corridors using climate predictors  
+  * Select seasonal corridor boundaries (see Step 3\)  
+  * Thin gps locations to deal with spatial and temporal autocorrelation  
+  * Select background (available) locations  
+  * Develop models using multiple methods (glm, brt, rf, maxent, svm)  
+* Predict/project habitat suitability in current and future times using ensemble models. (Predict the current distribution of the species (habitat suitability) and project its distribution into a future climatic scenario for the year 2100).  
+* Assess range shift in response to climate change. (Given the habitat suitability maps in both the current and future times, we can assess the magnitude and distribution of changes, and quantitatively measure range shifts due to climate change.)
+
+## 6\. Develop resistance surfaces and generate connectivity maps
+
+NOTE: This section is currently incomplete.
+
+This step focuses on understanding how the landscape facilitates or impedes caribou movement.
+
+* Develop resistance surfaces:  
+  * Invert or transform the habitat suitability maps to create resistance surfaces. Areas of high habitat suitability would have low resistance to movement, while areas of low suitability (e.g., human disturbances, unsuitable vegetation) would have high resistance.  
+* Generate connectivity maps:  
+  * Use least-cost path (LCP) analysis to identify the single lowest resistance path between two points or areas (e.g., between summer and winter core areas ).  
+  * Use circuit theory to identify all possible movement paths and highlight areas of high current flow (important corridors) and bottlenecks (pinch points).  
+    * Tools: Omniscape  
+* Identify connectivity bottlenecks and opportunities:  
+  * Overlay connectivity maps with land use plans, human infrastructure, and conservation areas to identify critical areas for conservation efforts (e.g., overpasses, habitat protection) and potential threats to movement.  
+* Output: Resistance surfaces and connectivity maps in TIF format and an interactive dashboard to assist in visualizing maps annually and by season.
+

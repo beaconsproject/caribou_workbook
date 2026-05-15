@@ -1,0 +1,350 @@
+---
+title: Connectivity Mapping Workflow Using amt
+---
+
+## Objective
+
+Estimate and map connectivity between seasonal ranges for caribou using:
+
+- GPS telemetry,
+- integrated step-selection functions (iSSF),
+- landcover and burn-history covariates,
+- and resistance-based corridor modeling.
+
+## 1. Load packages
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+library(amt)
+library(sf)
+library(terra)
+library(dplyr)
+library(lubridate)
+library(survival)
+library(gdistance)
+library(tmap)
+```
+
+## 2. Load telemetry data
+
+Assume columns:
+
+- id
+- timestamp
+- longitude
+- latitude
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+tele <- read.csv("caribou_fall_migration.csv")
+
+tele$timestamp <- ymd_hms(tele$timestamp)
+
+# Convert to sf
+tele_sf <- st_as_sf(
+  tele,
+  coords = c("longitude", "latitude"),
+  crs = 4326
+)
+
+# Project to UTM
+utm_crs <- 3578   # example only — change if needed
+
+tele_sf <- st_transform(tele_sf, crs = utm_crs)
+
+coords <- st_coordinates(tele_sf)
+
+tele$X <- coords[,1]
+tele$Y <- coords[,2]
+
+trk <- tele |> make_track(.x=longitude, .y=latitude, .t=timestamp, id=id, year=year, crs=4326) |>
+  transform_coords("EPSG:3578")
+xbnd <- hr_kde(trk, levels=0.999) |>
+  hr_isopleths()
+
+```
+
+
+## 3. Load covariate rasters
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+# Forest proportion
+lcc <- rast("../../data/little_rancheria/nalc2020.tif") |>
+  crop(xbnd, mask=TRUE)
+forest <- ifel(lcc<4, 1, 0)
+for500 <- focal(forest, w=29, fun="sum")
+
+# Distance to footprint
+fp <- st_read("../../data/little_rancheria/disturbances.gpkg", "footprint_500m", quiet=TRUE)
+fp.dist <- rasterize(fp, lcc) |>
+  distance() |>
+  crop(xbnd, mask=TRUE)
+
+# Distance to burn
+burn <- rast("../../data/little_rancheria/burns.tif") |>
+  resample(lcc)
+burn.dist <- burn |> distance() |>
+  crop(xbnd, mask=TRUE)
+
+# Stack rasters
+covs <- c(for500, fp.dist, burn.dist) # |> scale()
+names(covs) <- c("for500", "fp.dist", "burn.dist")
+```
+
+## 4. Create movement track
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+trk <- make_track(
+  tele,
+  .x = X,
+  .y = Y,
+  .t = timestamp,
+  id = id,
+  crs = utm_crs
+)
+```
+
+## 5. Resample telemetry
+
+Choose interval appropriate for migration behavior.
+
+Example: 6-hour fixes.
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+trk_rs <- trk %>%
+  track_resample(
+    rate = hours(6),
+    tolerance = minutes(30)
+  ) %>%
+  filter_min_n_burst()
+```
+
+## 6. Generate observed + random steps
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+steps <- steps_by_burst(trk_rs)
+
+# Generate 20 available steps per used step
+rand_steps <- random_steps(
+  steps,
+  n = 20
+)
+```
+
+## 7. Extract covariates
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+steps_cov <- extract_covariates(
+  rand_steps,
+  covs
+)
+```
+
+## 8. Prepare covariates
+
+Convert landcover to factor if necessary.
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+steps_cov <- steps_cov %>%
+  mutate(
+    #landcover = factor(landcover),
+    log_sl = log(sl_),
+    cos_ta = cos(ta_)
+  )
+```
+
+## 9. Fit integrated Step Selection Function (iSSF)
+
+Example model:
+
+movement kernel:
+- step length
+- turning angle
+
+habitat selection:
+- forest cover proportion
+- distance to fooprint
+- distance to burned area
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+# "for500", "fp.dist", "burn.dist"
+issf_fit <- fit_issf(
+  case_ ~
+    for500 +
+    fp.dist +
+    burn.dist +
+    log_sl +
+    cos_ta +
+    strata(step_id_),
+  data = steps_cov
+)
+
+summary(issf_fit)
+```
+
+## 10. Interpret coefficients
+
+Typical interpretation:
+
+- positive burn coefficient:
+  - selection for burned areas
+- negative burn coefficient:
+  - avoidance of burns
+- landcover coefficients:
+  - relative selection among vegetation types
+
+## 11. Build habitat suitability / movement surface
+
+Predict relative movement probability across landscape.
+
+Extract raster values
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+#cov_df <- as.data.frame(covs, xy = TRUE, na.rm = FALSE)
+cov_df <- as.data.frame(covs, xy = TRUE, na.rm = TRUE)
+#cov_df$landcover <- factor(cov_df$landcover)
+```
+
+## 12. Predict linear predictor
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+cov_df$log_sl <- mean(steps_cov$log_sl, na.rm = TRUE)
+cov_df$cos_ta <- mean(steps_cov$cos_ta, na.rm = TRUE)
+
+beta <- coef(issf_fit)
+cov_df$pred <- as.numeric(as.matrix(cov_df[, names(beta)]) %*% beta)
+```
+
+
+## 13. Convert to resistance surface
+
+Higher predicted movement probability:
+ --> lower resistance
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+cov_df$resistance <- exp(-cov_df$pred)
+```
+
+## 14. Convert back to raster
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+res_rast <- rast(
+  cov_df,
+  type = "xyz",
+  crs = crs(covs)
+)
+#names(res_rast) <- "resistance"
+```
+
+## 15. Define seasonal ranges
+
+You can:
+
+- use MCP,
+- kernel UD,
+- or manually defined polygons.
+
+Example using start/end migration locations:
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+spring_pts <- tele_sf %>%
+  filter(month(timestamp) %in% 4:5)
+
+fall_pts <- tele_sf %>%
+  filter(month(timestamp) %in% 9:10)
+
+spring_centroid <- st_centroid(st_union(spring_pts))
+fall_centroid <- st_centroid(st_union(fall_pts))
+```
+
+
+## 16. Least-cost connectivity
+
+Create transition object
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+tr <- transition(
+  1 / raster(res_rast$resistance),
+  transitionFunction = mean,
+  directions = 8
+)
+
+tr <- geoCorrection(tr)
+```
+
+## 17. Compute least-cost path
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+spring_xy <- st_coordinates(spring_centroid)
+fall_xy <- st_coordinates(fall_centroid)
+
+corridor <- shortestPath(
+  tr,
+  origin = spring_xy,
+  goal = fall_xy,
+  output = "SpatialLines"
+)
+```
+
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+
+```
+
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+
+```
+

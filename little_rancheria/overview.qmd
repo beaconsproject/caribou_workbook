@@ -9,11 +9,13 @@ library(tmap)
 library(knitr)
 library(patchwork)
 library(tidyverse)
+herd_dir <- "little_rancheria"
+herd_name <- "Little Rancheria"
 ```
 
 ## Introduction
 
-The Little Rancheria caribou herd stradles the BC-Yukon border.
+The `r herd_name` caribou herd stradles the BC-Yukon border.
 
 ```{r}
 #| echo: TRUE
@@ -24,7 +26,7 @@ The Little Rancheria caribou herd stradles the BC-Yukon border.
 kdtt <- st_read("../../data/dashboard.gpkg", "kdtt", quiet=TRUE) |>
   mutate(Name="KDTT")
 herd <- st_read("../../data/dashboard.gpkg", "KDTT_all_mtn_herds", quiet=TRUE) |>
-  filter(HERD=="Little Rancheria")
+  filter(HERD==herd_name)
 #combined_extent <- st_union(kdtt) |>
 #  st_buffer(20000) |>
 #  st_bbox()
@@ -49,7 +51,7 @@ The table displays the first 10 rows of the caribou movement data. Attributes in
 #| echo: TRUE
 #| warning: FALSE
 #| message: FALSE
-gps <- read_csv('../../data/little_rancheria/caribou.csv') 
+gps <- read_csv(paste0("../../data/",herd_dir,"/caribou.csv")) 
 gps_sf <- gps |>
   st_as_sf(coords=c("longitude", "latitude"), crs=4326, remove=FALSE) |>
   mutate(year=as.factor(year))

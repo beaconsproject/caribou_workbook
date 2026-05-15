@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ranges</title>
+<title>hsf</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../appendices/corridors.html" rel="next">
-<link href="../appendices/segments.html" rel="prev">
+<link href="../wolf_lake/overview.html" rel="next">
+<link href="../little_rancheria/corridors.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/ranges.html">Estimating ranges</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/hsf.html">Habitat selection</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -138,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/ranges.html" class="sidebar-item-text sidebar-link active">
+  <a href="../appendices/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating ranges</span></a>
   </div>
 </li>
@@ -174,13 +174,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Little Rancheria</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../little_rancheria/overview.html" class="sidebar-item-text sidebar-link">
@@ -207,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../little_rancheria/hsf.html" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/hsf.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
@@ -266,41 +266,156 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#estimating-ranges" id="toc-estimating-ranges" class="nav-link active" data-scroll-target="#estimating-ranges">Estimating ranges</a>
+  <li><a href="#traditional-habitat-selection" id="toc-traditional-habitat-selection" class="nav-link active" data-scroll-target="#traditional-habitat-selection">Traditional Habitat Selection</a>
   <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#prepare-data" id="toc-prepare-data" class="nav-link" data-scroll-target="#prepare-data">Prepare data</a></li>
+  <li><a href="#first-model" id="toc-first-model" class="nav-link" data-scroll-target="#first-model">First model</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/ranges.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/hsf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/ranges.html">Estimating ranges</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/hsf.html">Habitat selection</a></li></ol></nav></header>
 
 
 
 
-<section id="estimating-ranges" class="level2">
-<h2 class="anchored" data-anchor-id="estimating-ranges">Estimating ranges</h2>
-<section id="overview" class="level3">
-<h3 class="anchored" data-anchor-id="overview">Overview</h3>
-<p>Estimating the boundaries of seasonal and annual caribou ranges is an important step in effective wildlife conservation and management. Defining these spatial limits allows managers to identify core habitat areas, including calving grounds and winter foraging areas. This information is fundamental for land use planning, as it ensures that development and human activities are regulated to minimize disturbance and avoid habitat loss and fragmentation within these key areas. Ultimately, understanding and mapping caribou ranges provides the necessary baseline data to implement targeted conservation measures, monitor population health in relation to their environment, and support sustainable resource management for the long-term persistence of the herds.</p>
-<p>We estimated annual and seasonal ranges using locations collected from many caribou over multiple years. To understand how herds use the landscape across the year, we grouped these locations into biologically meaningful seasons: annual, early winter, late winter, summer, and the fall rut. For each season, we used a statistical mapping approach called a kernel density estimator (KDE), implemented in R using the <code>amt</code> package. This method creates smooth contours around clusters of points, showing where caribou spend most of their time. The outer contour (the 95% isopleth) represents the broader seasonal range, while the inner contour (the 50% isopleth) highlights the core areas most heavily used.</p>
-<p>This approach provides a consistent way to compare how different herds use space and how their ranges shift across seasons. Because it summarizes many individual movement paths into a single population‑level map, it helps identify key habitats and areas that may require conservation attention. The graphic below illustrates the concept, showing points, the estimated 95% range boundary, and the 50% core area for an example herd.</p>
-<p><strong>Individual-level range estimation</strong></p>
-<p>For each individual/year/season, use the Kernel Density Estimation (KDE) method to estimate probability density functions of animal locations, resulting in utilization distributions.</p>
-<p>Parameters: Select appropriate smoothing parameters (e.g., h-value) using methods like Likelihood Cross-Validation (LCV) or reference bandwidth.</p>
-<p>Output: Generate 95% and 50% (or other relevant contours) utilization distributions (UDs) for annual and seasonal ranges for each individual for each year. The former (95%) represents the overall annual or seasonal range while the latter (50% isopleths) represents core or high use areas.</p>
-<p><strong>Population-level range estimation</strong></p>
-<p>There are two broad approaches that could be used to estimate population-level annual and seasonal ranges:</p>
-<ul>
-<li>Method 1 - Union of individual ranges: Combine individual ranges (e.g., 95% KDEs) to visualize the total area used by the population annually and seasonally.</li>
-<li>Method 2 - Population-level estimates: Pool all individual locations for a given period and estimate a single population-level range that represents the overall utilization distribution.</li>
-</ul>
-<p>We used the second method to estimate population-level ranges and the resulting maps are available in the main section of the report (Section 9).</p>
-<p><strong>Interactive dashboard</strong></p>
-<p>In addition, to the maps in the report, we developed an interactive dashboard to assist in visualizing 1) individual- and population-level annual and seasonal range estimates and 2) variation in range estimates between individuals, years, and seasons.</p>
+<section id="traditional-habitat-selection" class="level2">
+<h2 class="anchored" data-anchor-id="traditional-habitat-selection">Traditional Habitat Selection</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>Fitting models to estimate traditional habitat selection functions (HSF) at the third-order of selection (e.g.&nbsp;selection within the home range).</p>
+</section>
+<section id="prepare-data" class="level3">
+<h3 class="anchored" data-anchor-id="prepare-data">Prepare data</h3>
+<p>Note: This section can be moved to its own file eventually</p>
+<p><strong>Movement data</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hsf_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Prepare covariates</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hsf_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Extract covariates</strong></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 75,856 × 5
+   id           for500 fp.dist burn.dist status
+   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+ 1 SKRATALR0015 -0.745  -0.263   -0.0261      1
+ 2 SKRATALR0015 -1.15   -0.281   -0.0679      1
+ 3 SKRATALR0015 -1.22   -0.295   -0.0934      1
+ 4 SKRATALR0015 -1.45   -0.310   -0.165       1
+ 5 SKRATALR0015 -0.279  -0.636   -0.0368      1
+ 6 SKRATALR0015 -0.182  -0.630   -0.279       1
+ 7 SKRATALR0015 -0.194  -0.631   -0.259       1
+ 8 SKRATALR0015  0.657  -0.826    0.236       1
+ 9 SKRATALR0015  0.450  -0.763    1.16        1
+10 SKRATALR0015  0.688  -0.477    2.29        1
+# ℹ 75,846 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="first-model" class="level3">
+<h3 class="anchored" data-anchor-id="first-model">First model</h3>
+<p>Let’s fit a model to one individual’s used and available data</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: binomial  ( logit )
+Formula:          status ~ for500 + fp.dist + burn.dist
+Data: i18
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   5183.3    5212.0   -2587.7    5175.3      9677 
 
 
+Conditional model:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -2.76892    0.04991  -55.47   &lt;2e-16 ***
+for500      -0.70083    0.04112  -17.04   &lt;2e-16 ***
+fp.dist     -0.07078    0.04523   -1.56    0.118    
+burn.dist    0.53709    0.04192   12.81   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Let’s first consider the “Intercept”. This parameter is largely the ratio of used to available sample. If we increase our available sample, this estimate will get smaller. Its value has a lot to do with how we setup the data to approximate the true underlying model. It has no biological interpretation, so we can skip it.</p>
+<p>Next, we have estimated the effect of “for500” as -0.68. This estimate is negative, indicating that as the value of “for500” increases from its mean (defined at 0) while the values of <code>forest</code> and <code>shrub</code> (the other variables in the model) are held at their mean that habitat selection decreases. In other words, habitat use relative to what is available to this individual (as we defined it!) decreases the greater the proportion of forest. That’s a lot of qualifiers to understand this estimate. These are important though. In terms of evidence of an effect, we can say that at a defined probability of Type I error of 0.05, we have a <a href="https://doi.org/10.1111/2041-210X.13159">statistically clear</a> effect and that that it is not likely zero. The evidence of this is the very small p-value of ?.</p>
+<p>Next, we have estimated the effect of <code>forest</code> as 0.12. This estimate is positive, indicating that as the value of <code>forest</code> increases from its mean (defined at 0) while the values of <code>dist.dev</code> and <code>shrub</code> (the other variables in the model) are held at their mean that habitat selection increases relative to what is available to this individual. At our defined Type I error we do not have statistical clarity and there is a reasonable chance that it is zero. (p-value = 0.4665834).</p>
+<p>Next, we have estimated the effect of <code>shrub</code> as 0.88. This estimate is positive, indicating that as the value of <code>shrub</code> increases from its mean (defined at 0) while the values of <code>dist.dev</code> and <code>forest</code> (the other variables in the model) are held at their mean that habitat selection increases relative to what is available to this individual. At our defined Type I error we do have statistical clarity of an effect that is not zero (p-value = 8.2627753^{-7}).</p>
+<p><strong>Relative Selection</strong></p>
+<p>How do we quantitatively evaluate two locations in terms of habitat selection using our model results? We can do so using Equation 8 of Fieberg et al.&nbsp;2021.</p>
+<p>Perhaps we want to compare a location that is very near development (dist.dev = -2) at high forest and shrub cover (forest = 2, shrub = 2) with that of a location far from development (dist.dev = 2) and also at high forest but low shrub cover (forest =2, shrub = -2).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  for500 
+141.4126 </code></pre>
+</div>
+</div>
+<p>If given equivalent availability between these two types of sites ( 1) near development at high forest and shrub cover, 2) far from development at high forest and shrub cover ), this individual would relatively select the first location by a factor of 2801.05.</p>
+<p>Why are we exponentiating our linear combinations of terms (additions of covariates times estimated coefficients)? This is because in this setup, we have assumed the habitat selection process follows an exponential form (see section 10. The model being approximated) and equation 1 of Gerber and Northrup, 2020.</p>
+<p>Relative Selection Strength</p>
+<p>Avgar et al.&nbsp;2017 refers to the relative selection strength (RSS) as the exponentiation of each coefficient.</p>
+<p>For example,</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  fp.dist 
+0.9316645 </code></pre>
+</div>
+</div>
+<p>Given two locations that differ by 1 standard deviation of dist.dev, but are otherwise equal, this individual would be 1.1324727 as likely to choose the location with higher dist.dev (or, equivalently, 0.8830235 times more likely to choose the location with the lower dist.dev.</p>
+<section id="prediction" class="level4">
+<h4 class="anchored" data-anchor-id="prediction">Prediction</h4>
+<p>Lets combine our covariates now to predict relative habitat selection over more scenarios. To do this, we need to remember we used generalized linear modeling functions to approximate our model. We need to take care when predicting. First, we need to remember to drop the intercept. Second, we need to remember our true link function for relative habitat selection is the log-link (inverse-link is the exponential function) and not the logit-link, which is the default when fitting logistic regression models.</p>
+<p><strong>fp.dist</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hsf_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We see that for this individual, given equal availability and <code>forest</code> and <code>shrub</code> at their mean values, avoid areas far from development (high values on x-axis) and select for areas close to development (low values on x-axis).</p>
+<p>We can use this same process to extract values across spatial layers to predict relative habitat selection that is mapped.</p>
+<p><strong>burn.dist</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hsf_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>for500</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hsf_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
 </section>
 </section>
 
@@ -707,13 +822,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../appendices/segments.html" class="pagination-link" aria-label="Segmenting data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Segmenting data</span>
+      <a href="../little_rancheria/corridors.html" class="pagination-link" aria-label="Migration corridors">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Migration corridors</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../appendices/corridors.html" class="pagination-link" aria-label="Mapping corridors">
-        <span class="nav-page-text">Mapping corridors</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../wolf_lake/overview.html" class="pagination-link" aria-label="Overview">
+        <span class="nav-page-text">Overview</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -722,4 +837,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/ranges.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/hsf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
