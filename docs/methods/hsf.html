@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>covariates</title>
+<title>hsf</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -32,8 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../appendices/hsf.html" rel="next">
-<link href="../appendices/corridors.html" rel="prev">
+<link href="../methods/covariates.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/covariates.html">Habitat covariates</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methods/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../methods/hsf.html">Habitat selection</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -110,14 +109,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../workplan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workplan</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflow (R)</span></a>
+ <span class="menu-text">Workflow</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -132,31 +125,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/segments.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/segments.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Segmenting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/ranges.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating ranges</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/corridors.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mapping corridors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/covariates.html" class="sidebar-item-text sidebar-link active">
+  <a href="../methods/covariates.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat covariates</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/hsf.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/hsf.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
@@ -211,6 +204,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../little_rancheria/issf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step selection</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -244,13 +243,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../issues.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/issues.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Issues</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -266,95 +265,69 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#habitat-covariates" id="toc-habitat-covariates" class="nav-link active" data-scroll-target="#habitat-covariates">Habitat covariates</a></li>
+  <li><a href="#habitat-selection" id="toc-habitat-selection" class="nav-link active" data-scroll-target="#habitat-selection">Habitat Selection</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/covariates.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/methods/hsf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/covariates.html">Habitat covariates</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methods/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../methods/hsf.html">Habitat selection</a></li></ol></nav></header>
 
 
 
 
-<section id="habitat-covariates" class="level2">
-<h2 class="anchored" data-anchor-id="habitat-covariates">Habitat covariates</h2>
-<p>Habitat covariates refer to the specific environmental and human factors used in statistical models (like HSFs) to predict habitat use and population health. For Northern Mountain Caribou, these variables are unique because of their reliance on rugged terrain and vertical migration.</p>
-<p>Covariates can be grouped into four main categories:</p>
-<p><strong>1. Topographic &amp; Environmental Covariates</strong></p>
-<p>Because Northern Mountain Caribou move vertically between seasons, elevation is the primary driver of their behavior.</p>
+<section id="habitat-selection" class="level2">
+<h2 class="anchored" data-anchor-id="habitat-selection">Habitat Selection</h2>
+<p>Guidelines for getting the basics right (Gerber et al.&nbsp;preprint)</p>
+<ol type="1">
+<li>Think thoroughly about the question(s) of interest and the appropriate geographic and temporal scales in the specific study system before data collection begins.</li>
+</ol>
 <ul>
-<li>Elevation: Used to track seasonal shifts (up to alpine areas in summer to avoid heat/insects, and down to sub-alpine forests in winter).<br>
-</li>
-<li>Slope and Aspect: Caribou often select steeper, wind-swept ridges in winter because the wind blows snow away, making it easier to reach lichens.<br>
-</li>
-<li>Snow Depth (SWE): A critical covariate for winter survival; excessive snow increases the metabolic cost of travel and limits access to food.</li>
+<li>Which groups or classes are of interest in your system? Are you planning to break up the dataset by age/sex class/study area? How many individuals of each group must be sampled?</li>
 </ul>
-<p><strong>2. Forage &amp; Vegetation Covariates</strong></p>
-<p>These identify the “food energy” available on the landscape.</p>
+<ol start="2" type="1">
+<li>Define availability and determine whether you want to fit a HSF or SSF</li>
+</ol>
 <ul>
-<li>Lichen Abundance: Specifically terrestrial lichens (<em>Cladonia</em> spp.) and arboreal lichens in old-growth forests.</li>
-<li>Land Cover Type: Distinguishes between alpine tundra, sub-alpine fir, and spruce-lichen woodlands.</li>
-<li>NDVI (Normalized Difference Vegetation Index): Used in summer to measure the “greenness” or quality of emerging forage, which is vital for lactating cows.</li>
+<li>Are you interested in identifying where individuals select home ranges (second order HSF) or locations within that home range (third order HSF) or along a movement path (SSF)?</li>
 </ul>
-<p><strong>3. Disturbance Covariates (Anthropogenic &amp; Natural)</strong></p>
-<p>These measure how much “space” caribou lose to human activity or environmental changes.</p>
+<ol start="3" type="1">
+<li>Decide whether you are interested in inference or prediction and how that impacts model building</li>
+</ol>
 <ul>
-<li>Distance to Roads/Infrastructure: Caribou show a strong “Zone of Influence” (ZOI) avoidance, often staying several kilometers away from active mines or high-use roads.<br>
-</li>
-<li>Linear Feature Density: The concentration of seismic lines or pipelines. Even if narrow, these act as “highways” for predators like wolves.<br>
-</li>
-<li>Fire Age: Caribou generally avoid burned areas for 40-60 years because fire destroys the slow-growing lichen they depend on.</li>
+<li>Inference is most straightforward when a single model is used with all relevant variables that capture the hypotheses of interest; it is important that the mechanisms motivating variables are given great thought. Prediction will often be improved by considering many models and does not necessarily require clear mechanisms behind including variables.</li>
 </ul>
-<p><strong>4. Biological &amp; Predation Covariates</strong></p>
-<p>These account for the “risk” on the landscape.</p>
+<ol start="4" type="1">
+<li>Understand and acknowledge the assumptions underlying your specific analysis</li>
+</ol>
 <ul>
-<li>Predator Density/Risk: Often modeled as the probability of encountering wolves or bears.</li>
-<li>Alternative Prey Density: Covariates for moose or deer are used to measure “apparent competition”?higher moose numbers often bring in more wolves, which then incidentally prey on caribou.<br>
-</li>
-<li>Reproductive State: Whether a cow has a calf significantly changes her selection; “cow-with-calf” is a common categorical covariate because these individuals prioritize safety (high elevation) over the best food.</li>
+<li>Assumption of an exponential selection function that forces inference to the relative intensity of selection or relative probability of selection.</li>
+<li>Logistic regression and conditional logistic regression are used to approximate the underlying spatial or spatio-temporal point process model, respectively.</li>
 </ul>
-<p><strong>Summary Table: Key Covariates</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 27%">
-<col style="width: 51%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Category</th>
-<th>Key Variables</th>
-<th>Typical Effect on Selection</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Topography</td>
-<td>Elevation, Slope, Aspect</td>
-<td>Positive (selection of high/steep areas in winter)</td>
-</tr>
-<tr class="even">
-<td>Forage</td>
-<td>Lichen cover, Forest age</td>
-<td>Positive (prefer old-growth/high lichen density)</td>
-</tr>
-<tr class="odd">
-<td>Human</td>
-<td>Distance to roads, Mine sites</td>
-<td>Negative (strong avoidance)</td>
-</tr>
-<tr class="even">
-<td>Natural</td>
-<td>Fire history (&lt;40 years)</td>
-<td>Negative (avoidance due to lack of forage)</td>
-</tr>
-<tr class="odd">
-<td>Predation</td>
-<td>Distance to linear features</td>
-<td>Negative (avoidance due to high risk)</td>
-</tr>
-</tbody>
-</table>
+<ol start="5" type="1">
+<li>Conduct a sensitivity analysis for availability sample size.</li>
+</ol>
+<ul>
+<li>Fit the model, examine the estimated selection coefficients, and then do the whole exercise again with a larger number of sampled available points. If the selection coefficients do not change, the original number of available points sampled was sufficient. If they do change, keep repeating the exercise until they do not.</li>
+</ul>
+<ol start="6" type="1">
+<li>Account for animal behavior and heterogeneity in your analysis</li>
+</ol>
+<ul>
+<li>How quickly can the animal of interest move? Available locations from an animal location that are more than this distance within the considered time frame are not realistically available to the animal.</li>
+<li>Is it reasonable to consider consecutive points on an individual’s track independent or are they temporally autocorrelated? It is important to account for this autocorrelation either by using a SSF, weighting techniques (Alston et al.&nbsp;2022), or data thinning.</li>
+<li>Ecological literature leads us to a priori consider individual variation, which is an important source of variation, and thus our main sampling unit is the individual. When individuals are tracked, pooling data across individuals and ignoring individual variation leads to poor statistical conclusions. Accounting for individual level differences can be accounted for using a full random effects (intercept and slopes) structure.</li>
+<li>Consider all animal locations with regard to behavior and contextual environments (e.g., diel period, life stage, reproductive behaviors, etc.), which may require interactions among variables.</li>
+</ul>
+<ol start="7" type="1">
+<li>Correctly interpret your model parameters and inference</li>
+</ol>
+<ul>
+<li>To compute predicted values, we need to remove the intercept from the selection model (𝛽𝛽0) and exponentiate the summed combinations of effects and variable values (𝑒𝑒(𝛽𝛽1×𝑋𝑋1+𝛽𝛽2×𝑋𝑋2…+𝛽𝛽𝑛𝑛∗𝑋𝑋𝑛𝑛)) where e can be implemented in R using the exp() function and the X1, X2,…Xn values are the new values of predictor variables (i.e., not the original data input into the model).</li>
+<li>Inferring population density from habitat selection is most robust when there is auxiliary or additional validation of population density.</li>
+</ul>
+<ol start="8" type="1">
+<li>Decide whether model selection is necessary. It is reasonable to focus on fitting one model that captures all the variables that represent the complete hypotheses of interest. Do not assume model selection is a requirement.</li>
+</ol>
 
 
 </section>
@@ -762,14 +735,11 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../appendices/corridors.html" class="pagination-link" aria-label="Mapping corridors">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Mapping corridors</span>
+      <a href="../methods/covariates.html" class="pagination-link" aria-label="Habitat covariates">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Habitat covariates</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../appendices/hsf.html" class="pagination-link" aria-label="Habitat selection">
-        <span class="nav-page-text">Habitat selection</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -777,4 +747,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/covariates.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/methods/hsf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

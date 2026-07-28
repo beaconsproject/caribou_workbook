@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>hsf</title>
+<title>Habitat selection function</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -32,7 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../wolf_lake/overview.html" rel="next">
+<link href="../little_rancheria/issf.html" rel="next">
 <link href="../little_rancheria/corridors.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -110,14 +110,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../workplan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workplan</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflow (R)</span></a>
+ <span class="menu-text">Workflow</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -132,31 +126,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/segments.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/segments.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Segmenting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/ranges.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating ranges</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/corridors.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mapping corridors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/covariates.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/covariates.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat covariates</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/hsf.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/hsf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
@@ -211,6 +205,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../little_rancheria/issf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step selection</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -244,13 +244,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../issues.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/issues.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Issues</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -266,9 +266,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#traditional-habitat-selection" id="toc-traditional-habitat-selection" class="nav-link active" data-scroll-target="#traditional-habitat-selection">Traditional Habitat Selection</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#prepare-data" id="toc-prepare-data" class="nav-link" data-scroll-target="#prepare-data">Prepare data</a></li>
   <li><a href="#first-model" id="toc-first-model" class="nav-link" data-scroll-target="#first-model">First model</a></li>
   </ul></li>
@@ -276,17 +275,30 @@ ul.task-list li input[type="checkbox"] {
 <div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/hsf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/hsf.html">Habitat selection</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/hsf.html">Habitat selection</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Habitat selection function</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="traditional-habitat-selection" class="level2">
-<h2 class="anchored" data-anchor-id="traditional-habitat-selection">Traditional Habitat Selection</h2>
-<section id="introduction" class="level3">
-<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Fitting models to estimate traditional habitat selection functions (HSF) at the third-order of selection (e.g.&nbsp;selection within the home range).</p>
-</section>
 <section id="prepare-data" class="level3">
 <h3 class="anchored" data-anchor-id="prepare-data">Prepare data</h3>
 <p>Note: This section can be moved to its own file eventually</p>
@@ -302,6 +314,16 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p><strong>Prepare covariates</strong></p>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          
+
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -313,19 +335,19 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Extract covariates</strong></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 75,856 × 5
-   id           for500 fp.dist burn.dist status
-   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
- 1 SKRATALR0015 -0.745  -0.263   -0.0261      1
- 2 SKRATALR0015 -1.15   -0.281   -0.0679      1
- 3 SKRATALR0015 -1.22   -0.295   -0.0934      1
- 4 SKRATALR0015 -1.45   -0.310   -0.165       1
- 5 SKRATALR0015 -0.279  -0.636   -0.0368      1
- 6 SKRATALR0015 -0.182  -0.630   -0.279       1
- 7 SKRATALR0015 -0.194  -0.631   -0.259       1
- 8 SKRATALR0015  0.657  -0.826    0.236       1
- 9 SKRATALR0015  0.450  -0.763    1.16        1
-10 SKRATALR0015  0.688  -0.477    2.29        1
+<pre><code># A tibble: 75,856 × 8
+   id           for500 fp.dist burn.dist    elev  slope aspect status
+   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1 SKRATALR0015 -0.745  -0.263   -0.0261 -0.0713 -0.161 -0.242      1
+ 2 SKRATALR0015 -1.15   -0.281   -0.0679 -0.0932 -0.856 -0.483      1
+ 3 SKRATALR0015 -1.22   -0.295   -0.0934 -0.0674 -0.189  0.980      1
+ 4 SKRATALR0015 -1.45   -0.310   -0.165  -0.0308 -0.703  1.38       1
+ 5 SKRATALR0015 -0.279  -0.636   -0.0368 -0.0464 -0.711  1.67       1
+ 6 SKRATALR0015 -0.182  -0.630   -0.279   0.165  -0.172  0.518      1
+ 7 SKRATALR0015 -0.194  -0.631   -0.259   0.156  -0.509  0.832      1
+ 8 SKRATALR0015  0.657  -0.826    0.236  -0.144   0.580 -1.66       1
+ 9 SKRATALR0015  0.450  -0.763    1.16   -0.376  -0.861  1.09       1
+10 SKRATALR0015  0.688  -0.477    2.29   -0.574  -0.822 -0.126      1
 # ℹ 75,846 more rows</code></pre>
 </div>
 </div>
@@ -336,19 +358,22 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: binomial  ( logit )
-Formula:          status ~ for500 + fp.dist + burn.dist
+Formula:          status ~ for500 + fp.dist + burn.dist + elev + slope + aspect
 Data: i18
 
       AIC       BIC    logLik -2*log(L)  df.resid 
-   5183.3    5212.0   -2587.7    5175.3      9677 
+   4319.8    4369.8   -2152.9    4305.8      9436 
 
 
 Conditional model:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -2.76892    0.04991  -55.47   &lt;2e-16 ***
-for500      -0.70083    0.04112  -17.04   &lt;2e-16 ***
-fp.dist     -0.07078    0.04523   -1.56    0.118    
-burn.dist    0.53709    0.04192   12.81   &lt;2e-16 ***
+(Intercept) -3.69823    0.08944  -41.35  &lt; 2e-16 ***
+for500      -1.14216    0.06283  -18.18  &lt; 2e-16 ***
+fp.dist     -0.54651    0.06004   -9.10  &lt; 2e-16 ***
+burn.dist    0.60515    0.04934   12.26  &lt; 2e-16 ***
+elev        -0.10118    0.07878   -1.28 0.199024    
+slope       -1.95400    0.12821  -15.24  &lt; 2e-16 ***
+aspect       0.14377    0.04025    3.57 0.000355 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -363,7 +388,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  for500 
-141.4126 </code></pre>
+1084.895 </code></pre>
 </div>
 </div>
 <p>If given equivalent availability between these two types of sites ( 1) near development at high forest and shrub cover, 2) far from development at high forest and shrub cover ), this individual would relatively select the first location by a factor of 2801.05.</p>
@@ -374,19 +399,38 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  fp.dist 
-0.9316645 </code></pre>
+0.5789681 </code></pre>
 </div>
 </div>
 <p>Given two locations that differ by 1 standard deviation of dist.dev, but are otherwise equal, this individual would be 1.1324727 as likely to choose the location with higher dist.dev (or, equivalently, 0.8830235 times more likely to choose the location with the lower dist.dev.</p>
 <section id="prediction" class="level4">
 <h4 class="anchored" data-anchor-id="prediction">Prediction</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hsf_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hsf_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction-1" class="level4">
+<h4 class="anchored" data-anchor-id="prediction-1">Prediction</h4>
 <p>Lets combine our covariates now to predict relative habitat selection over more scenarios. To do this, we need to remember we used generalized linear modeling functions to approximate our model. We need to take care when predicting. First, we need to remember to drop the intercept. Second, we need to remember our true link function for relative habitat selection is the log-link (inverse-link is the exponential function) and not the logit-link, which is the default when fitting logistic regression models.</p>
 <p><strong>fp.dist</strong></p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hsf_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="hsf_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -398,7 +442,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hsf_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="hsf_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -408,7 +452,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hsf_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="hsf_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -827,8 +871,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../wolf_lake/overview.html" class="pagination-link" aria-label="Overview">
-        <span class="nav-page-text">Overview</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../little_rancheria/issf.html" class="pagination-link" aria-label="Step selection">
+        <span class="nav-page-text">Step selection</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

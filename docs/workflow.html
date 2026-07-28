@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>workflow</title>
+<title>Caribou Analysis Workflow</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -32,7 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./workplan.html" rel="prev">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow.html">Workflow (R)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow.html">Workflow</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -109,14 +109,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./workplan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workplan</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./workflow.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Workflow (R)</span></a>
+ <span class="menu-text">Workflow</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -131,31 +125,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendices/segments.html" class="sidebar-item-text sidebar-link">
+  <a href="./methods/segments.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Segmenting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendices/ranges.html" class="sidebar-item-text sidebar-link">
+  <a href="./methods/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating ranges</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendices/corridors.html" class="sidebar-item-text sidebar-link">
+  <a href="./methods/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mapping corridors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendices/covariates.html" class="sidebar-item-text sidebar-link">
+  <a href="./methods/covariates.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat covariates</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendices/hsf.html" class="sidebar-item-text sidebar-link">
+  <a href="./methods/hsf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
@@ -210,6 +204,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./little_rancheria/issf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step selection</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -243,13 +243,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./issues.html" class="sidebar-item-text sidebar-link">
+  <a href="./appendices/issues.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Issues</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
+  <a href="./appendices/references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -265,31 +265,38 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#caribou-analysis-workflow" id="toc-caribou-analysis-workflow" class="nav-link active" data-scroll-target="#caribou-analysis-workflow">Caribou Analysis Workflow</a></li>
-  <li><a href="#updated-2026-04-29" id="toc-updated-2026-04-29" class="nav-link" data-scroll-target="#updated-2026-04-29">Updated: 2026-04-29</a>
-  <ul class="collapse">
-  <li><a href="#movement-data" id="toc-movement-data" class="nav-link" data-scroll-target="#movement-data">1. Movement data</a></li>
-  <li><a href="#partition-data" id="toc-partition-data" class="nav-link" data-scroll-target="#partition-data">2. Partition data</a></li>
+  <li><a href="#movement-data" id="toc-movement-data" class="nav-link active" data-scroll-target="#movement-data">1. Movement data</a></li>
+  <li><a href="#partition-segment-data" id="toc-partition-segment-data" class="nav-link" data-scroll-target="#partition-segment-data">2. Partition (segment) data</a></li>
   <li><a href="#seasonal-ranges" id="toc-seasonal-ranges" class="nav-link" data-scroll-target="#seasonal-ranges">3. Seasonal ranges</a></li>
   <li><a href="#seasonal-corridors" id="toc-seasonal-corridors" class="nav-link" data-scroll-target="#seasonal-corridors">4. Seasonal corridors</a></li>
   <li><a href="#covariate-data" id="toc-covariate-data" class="nav-link" data-scroll-target="#covariate-data">5. Covariate data</a></li>
   <li><a href="#habitat-models" id="toc-habitat-models" class="nav-link" data-scroll-target="#habitat-models">6. Habitat models</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/workflow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Caribou Analysis Workflow</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="caribou-analysis-workflow" class="level1">
-<h1>Caribou Analysis Workflow</h1>
-</section>
-<section id="updated-2026-04-29" class="level1">
-<h1>Updated: 2026-04-29</h1>
-<p>The workflow is divided into six broad steps which do not have to been implemented linearly. Additional steps to the workflow will be added in the future e.g., connectivity analysis.</p>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The workflow described in this section divided into six broad steps, which do not have to been implemented linearly. Additional details on each step in the workflow can be found in the original <a href="https://docs.google.com/document/d/1p0pAv9950JJwcaKug6WJn6BYHQrtLv95NQadZrdo8iE/edit?usp=sharing">workplan</a>.</p>
 <section id="movement-data" class="level2">
 <h2 class="anchored" data-anchor-id="movement-data">1. Movement data</h2>
 <ul>
@@ -304,8 +311,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 </section>
-<section id="partition-data" class="level2">
-<h2 class="anchored" data-anchor-id="partition-data">2. Partition data</h2>
+<section id="partition-segment-data" class="level2">
+<h2 class="anchored" data-anchor-id="partition-segment-data">2. Partition (segment) data</h2>
 <ul>
 <li>Use <strong>gen_migration_segments.R</strong> to create empty migration_segments table (fields: id, year, migration) for herds with no migration periods</li>
 <li>Use the <strong>Movement Mapper</strong> app to identify start and end dates for spring and fall migration periods</li>
@@ -369,7 +376,6 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -775,8 +781,8 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./workplan.html" class="pagination-link" aria-label="Workplan">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Workplan</span>
+      <a href="./index.html" class="pagination-link" aria-label="Home">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Home</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

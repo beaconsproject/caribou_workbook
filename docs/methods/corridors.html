@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>segments</title>
+<title>corridors</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -32,7 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../appendices/ranges.html" rel="next">
+<link href="../methods/covariates.html" rel="next">
+<link href="../methods/ranges.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -84,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/segments.html">Segmenting data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methods/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../methods/corridors.html">Mapping corridors</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -109,14 +110,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../workplan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workplan</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflow (R)</span></a>
+ <span class="menu-text">Workflow</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -131,31 +126,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/segments.html" class="sidebar-item-text sidebar-link active">
+  <a href="../methods/segments.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Segmenting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/ranges.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating ranges</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/corridors.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/corridors.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Mapping corridors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/covariates.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/covariates.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat covariates</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/hsf.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/hsf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
@@ -210,6 +205,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../little_rancheria/issf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step selection</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -243,13 +244,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../issues.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/issues.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Issues</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -265,108 +266,46 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#defining-segments" id="toc-defining-segments" class="nav-link active" data-scroll-target="#defining-segments">Defining segments</a>
-  <ul class="collapse">
-  <li><a href="#seasonal-ranges" id="toc-seasonal-ranges" class="nav-link" data-scroll-target="#seasonal-ranges">Seasonal ranges</a></li>
-  <li><a href="#seasonal-migrations" id="toc-seasonal-migrations" class="nav-link" data-scroll-target="#seasonal-migrations">Seasonal migrations</a></li>
-  </ul></li>
+  <li><a href="#identifying-seasonal-migration-corridors" id="toc-identifying-seasonal-migration-corridors" class="nav-link active" data-scroll-target="#identifying-seasonal-migration-corridors">Identifying seasonal migration corridors</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/segments.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/methods/corridors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../appendices/segments.html">Segmenting data</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methods/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../methods/corridors.html">Mapping corridors</a></li></ol></nav></header>
 
 
 
 
-<section id="defining-segments" class="level2">
-<h2 class="anchored" data-anchor-id="defining-segments">Defining segments</h2>
-<p>Prior to conducting any analyses, we classified GPS locations based on seasons and migration periods. For northern mountain caribou, behaviour and movement is generally divided into 4-5 seasons: calving, summer (post-calving), fall rut, and winter (early and late).</p>
-<section id="seasonal-ranges" class="level3">
-<h3 class="anchored" data-anchor-id="seasonal-ranges">Seasonal ranges</h3>
-<p>For all home range analyses (annual and seasonal), we used seasons that were defined by the Yukon Government (Table 1).</p>
-<div class="cell" data-tbl-cap="Table 1. Seasons and date ranges for northern mountain caribou.">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Table 1. Seasons and date ranges for northern mountain caribou.</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">season</th>
-<th style="text-align: left;">start</th>
-<th style="text-align: left;">end</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Early winter</td>
-<td style="text-align: left;">21-Oct</td>
-<td style="text-align: left;">31-Jan</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Late winter</td>
-<td style="text-align: left;">01-Feb</td>
-<td style="text-align: left;">14-May</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Calving</td>
-<td style="text-align: left;">15-May</td>
-<td style="text-align: left;">15-Jun</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Summer</td>
-<td style="text-align: left;">16-Jun</td>
-<td style="text-align: left;">14-Sep</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Fall rut</td>
-<td style="text-align: left;">15-Sep</td>
-<td style="text-align: left;">20-Oct</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="seasonal-migrations" class="level3">
-<h3 class="anchored" data-anchor-id="seasonal-migrations">Seasonal migrations</h3>
-<p>Although the Yukon Government also provides definitions fpr spring and fall migration periods, we decided, due to the large variation in movement patterns, to identify seasonal migration periods for each individual for each year. To do this we used Net Squared Displacement (NSD) analysis combined with visual inspection of the spatial distribution of GPS locations using the BEACONs Movement Mapper app to identify spring and fall migration start and end dates for each individual in each year. Migration periods were defined as follows:</p>
+<section id="identifying-seasonal-migration-corridors" class="level2">
+<h2 class="anchored" data-anchor-id="identifying-seasonal-migration-corridors">Identifying seasonal migration corridors</h2>
+<p>The process for mapping and classifying seasonal migration corridors involves four primary steps:</p>
+<p><strong>1. Identify migration periods</strong></p>
+<p>To understand when an individual caribou is actually migrating (instead of just wandering around its seasonal range), we looked at how far it moves from a starting point over time. Using the Net Squared Displacement (NSD) method, which measures the straight-line distance an animal travels from a fixed starting point, we identified when an individual:</p>
 <ul>
-<li>Spring migration: Movement from winter range to summer range (generally northeast direction), beginning when individuals depart the winter range and ending upon arrival at summer range</li>
-<li>Fall migration: Movement from summer range to winter range (generally southwest direction), beginning when individuals depart the summer range and ending upon arrival at winter range</li>
+<li>Leaves its winter or summer range,</li>
+<li>Travels in a clear direction, and</li>
+<li>Settles into the next seasonal range.</li>
 </ul>
-<section id="workflow" class="level4">
-<h4 class="anchored" data-anchor-id="workflow">Workflow</h4>
-<p>We used the Movement Mapper app to identify start and end dates for spring and fall migration periods for each individual in each year.</p>
+<p>These “breakpoints” identify the start and end of each migration period. We identified them using the Movement Mapper app.</p>
+<p><strong>2. Map each caribou’s route</strong></p>
+<p>Instead of simply connecting caribou locations with a line, we used the Brownian Bridge Movement Model (BBMM) to create a more realistic “heat map” that highlights the areas an individual used most during its migration. Specifically, the map shows:</p>
 <ul>
-<li>For each individual/year:
-<ul>
-<li>Visualize movement tracks on map with seasonal color coding</li>
-<li>Review NSD vs.&nbsp;day-of-year plots</li>
-<li>Identify migration periods using these criteria:
-<ul>
-<li>Spring migration start: First sustained increase in NSD (e.g., &gt;20% increase maintained for &gt;7 days)</li>
-<li>Spring migration end: NSD plateau or reversal indicating arrival at summer range</li>
-<li>Fall migration start: First sustained decrease in NSD from summer range</li>
-<li>Fall migration end: NSD plateau indicating establishment on winter range</li>
-</ul></li>
-<li>Adjust date sliders to refine start/end dates based on visual assessment</li>
-<li>If clear spring and fall migrations exist: Record start/end dates for both periods</li>
-<li>If no evidence of migration assign NA to migration dates</li>
-<li>Document ambiguous cases with comments in the notes field</li>
-</ul></li>
+<li>The likely corridor an individual followed, and</li>
+<li>Where it spent extra time resting or feeding (stopovers).</li>
 </ul>
-<p>Notes:</p>
-<p>The first challenge in mapping a migration is figuring out when an animal is actually migrating versus when it is simply living in its seasonal home range. An individual caribou might wander for several kilometres in its summer territory, but that isn’t the same as its focused, directional journey between seasons. To solve this, we can use analytical tool called Net Squared Displacement (NSD). In simple terms, NSD measures the straight-line distance an animal is from a fixed starting point, which is typically set near the beginning of the biological year (e.g., January 1) within the animal’s winter range, and then squares that value. When plotted on a graph over a full year, the NSD curve for a migrating animal reveals a distinct, three-phase pattern:</p>
+<p><strong>3. Combine individual routes</strong></p>
+<p>To understand the movement the entire herd, we combined (stacked) individual maps through a three-step averaging process: 1. Average each individual’s migration paths over multiple years (e.g., 2020-26); 2. Identify the main area (footprint) where each caribou usually travels, typically representing the area containing 95-99% of its probable locations; 3. Combine all individuals’ footprints on top of one another to show how many different individuals passed through any given area (e.g., a 50m pixel).</p>
+<p><strong>4. Classify migration corridors</strong></p>
+<p>The final step is to classify the stacked maps (seasonal corridors) based on how heavily they were used:</p>
 <ul>
-<li>In the starting range: When an individual is settled in its winter or summer range, it stays relatively close to the starting point. The NSD value fluctuates a little but remains low, creating a relatively flat line on the graph.</li>
-<li>During migration: As the individual begins its journey to its summer or winter range, it moves steadily away from the starting point. This causes the NSD value to increase sharply and consistently, creating a steep upward slope on the graph.</li>
-<li>In the target range: Once the individual arrives and settles in its summer or winter range, it is far from the starting point, so the NSD value is high. However, because it is no longer moving in a single direction, the value stabilizes and flattens out again at this new, higher level.</li>
+<li>Low use – at least one caribou passed through</li>
+<li>Medium use – used by 10–20% of individuals</li>
+<li>High use – used by more than 20% of individuals</li>
 </ul>
-<p>The “clear breakpoints” on the graph – where the line begins to rise and where it flattens out – allow us to identify the exact start and end dates of the spring and fall migrations. All the locations recorded between these dates are then grouped together, forming a single “migration sequence” for that animal in that year.</p>
+<p>We also identified key stopovers where caribou consistently paused to rest and feed. These are important areas to protect within the seasonal corridors.</p>
+<p><img src="pics/methods_corridors.png" class="img-fluid"><br></p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -772,10 +711,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../methods/ranges.html" class="pagination-link" aria-label="Estimating ranges">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Estimating ranges</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../appendices/ranges.html" class="pagination-link" aria-label="Estimating ranges">
-        <span class="nav-page-text">Estimating ranges</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../methods/covariates.html" class="pagination-link" aria-label="Habitat covariates">
+        <span class="nav-page-text">Habitat covariates</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -784,4 +726,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/appendices/segments.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/methods/corridors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

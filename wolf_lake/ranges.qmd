@@ -30,7 +30,7 @@ library(tidyverse)
 #| message: false
 #| fig-width: 10
 #| fig-height: 8
-gps <- read_csv('../../data/little_rancheria/caribou.csv')
+gps <- read_csv('../../data/wolf_lake/caribou.csv')
 gps1 <- gps |> filter(id=="SKRATALR0043" & year==2022)
 gps1_sf <- gps1 |>
   st_as_sf(coords=c("longitude", "latitude"), crs=4326, remove=FALSE) |>

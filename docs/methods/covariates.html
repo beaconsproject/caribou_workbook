@@ -2,14 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="BEACONs Project">
-<meta name="dcterms.date" content="2026-05-22">
 
-<title>Caribou Analysis and Modelling</title>
+<title>covariates</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,61 +23,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./workflow.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6ef75a0fa32a0ab5c67dbc0e0e72a034.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../methods/hsf.html" rel="next">
+<link href="../methods/corridors.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6ef75a0fa32a0ab5c67dbc0e0e72a034.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -109,10 +73,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-sidebar docked fullcontent quarto-light">
+<body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,7 +85,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methods/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../methods/covariates.html">Habitat covariates</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -133,20 +97,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Caribou Analysis Workbook</a> 
+      <a href="../">Caribou Analysis Workbook</a> 
     </div>
       </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./workflow.html" class="sidebar-item-text sidebar-link">
+  <a href="../workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Workflow</span></a>
   </div>
 </li>
@@ -162,31 +126,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./methods/segments.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/segments.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Segmenting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./methods/ranges.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating ranges</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./methods/corridors.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mapping corridors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./methods/covariates.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/covariates.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Habitat covariates</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./methods/hsf.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/hsf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
@@ -213,37 +177,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./little_rancheria/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./little_rancheria/ranges.html" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Seasonal ranges</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./little_rancheria/segments.html" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/segments.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Migration segments</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./little_rancheria/corridors.html" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Migration corridors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./little_rancheria/hsf.qmd" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/hsf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./little_rancheria/issf.qmd" class="sidebar-item-text sidebar-link">
+  <a href="../little_rancheria/issf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Step selection</span></a>
   </div>
 </li>
@@ -260,24 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./wolf_lake/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">Horseranch</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./horseranch/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../wolf_lake/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
@@ -288,29 +235,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendices/issues.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/issues.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Issues</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendices/references.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./apps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Apps &amp; dashboards</span></a>
   </div>
 </li>
       </ul>
@@ -320,84 +261,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
-<!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Caribou Analysis and Modelling</h1>
-<p class="subtitle lead">Seasonal movements, habitat selection, and landscape connectivity</p>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>BEACONs Project </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">May 22, 2026</p>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#habitat-covariates" id="toc-habitat-covariates" class="nav-link active" data-scroll-target="#habitat-covariates">Habitat covariates</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/methods/covariates.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
-  </div>
-  
-    
-  </div>
-  
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methods/segments.html">Methods</a></li><li class="breadcrumb-item"><a href="../methods/covariates.html">Habitat covariates</a></li></ol></nav></header>
 
 
-</header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Caribou play an important role for LFN, serving as a keystone species in local ecosystems and having cultural significance for Indigenous communities. Ecologically, caribou contribute to the health of boreal forests by influencing vegetation patterns and providing food for predators. Culturally, caribou provide food, materials for clothing and tools, and are a central part of local traditions and knowledge. Consequently, the conservation of their seasonal ranges, including winter foraging grounds and summer calving and grazing areas, is important for the health and long-term persistence of the population. However, these habitats are increasingly threatened by human activities and disturbances, particularly large-scale resource development like mining, which leads to habitat fragmentation and landscape alteration.</p>
-<p>The establishment of Indigenous Protected and Conserved Areas (IPCAs) and other protected lands are important tools for ensuring the long-term survival of caribou populations, as they allow for the management of these threats. These areas enable collaborative stewardship, respect traditional ecological knowledge, and support sustainable use, thus contributing to the persistence of caribou and their habitats. By prioritizing both ecological integrity and cultural continuity, IPCAs can thus strengthen conservation and sustainable land management now and in the future. As part of this project, we will evaluate the contribution of the proposed IPCAs to seasonal movements, habitat selection, and landscape connectivity.</p>
-</section>
-<section id="northern-mountain-caribou" class="level2">
-<h2 class="anchored" data-anchor-id="northern-mountain-caribou">Northern mountain caribou</h2>
-<p>There are 26 herds of Northern Mountain caribou in Yukon occupying most of the south and central regions (Environment Yukon 2016). Twelve of the herds intersect the LFN area of interest (Figure 1), with four herds crossing over into British Columbia (Swan Lake, Little Rancheria, Horseranch, and Liard Plateau). Each herd is managed based on its unique range and population characteristics (Ref). Population monitoring relies on aerial surveys and long-term data to assess herd status, recruitment (calf survival), and sex ratios.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>kdtt <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"../data/dashboard.gpkg"</span>, <span class="st">"kdtt"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Name=</span><span class="st">"KDTT"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>herds <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"../data/dashboard.gpkg"</span>, <span class="st">"KDTT_all_mtn_herds"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>combined_extent <span class="ot">&lt;-</span> <span class="fu">st_union</span>(kdtt) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_buffer</span>(<span class="dv">20000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_bbox</span>()</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(herds, <span class="at">bbox =</span> combined_extent) <span class="sc">+</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill=</span><span class="st">"HERD"</span>, <span class="at">fill_alpha=</span><span class="fl">0.5</span>, <span class="at">col=</span><span class="st">"grey"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill.scale =</span> <span class="fu">tm_scale_categorical</span>(<span class="at">values=</span><span class="st">"tol.rainbow"</span>),</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title=</span><span class="st">"Caribou herd"</span>)) <span class="sc">+</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_labels</span>(<span class="at">text=</span><span class="st">"HERD"</span>, <span class="at">size=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(kdtt) <span class="sc">+</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill_alpha=</span><span class="dv">0</span>, <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"KDTT"</span>)) <span class="sc">+</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">bbox =</span> combined_extent) <span class="sc">+</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="960"></p>
-<figcaption>Figure 1. Distribution caribou herds intersecting the KDTT.</figcaption>
-</figure>
-</div>
-</div>
-</div>
+<section id="habitat-covariates" class="level2">
+<h2 class="anchored" data-anchor-id="habitat-covariates">Habitat covariates</h2>
+<p>Habitat covariates refer to the specific environmental and human factors used in statistical models (like HSFs) to predict habitat use and population health. For Northern Mountain Caribou, these variables are unique because of their reliance on rugged terrain and vertical migration.</p>
+<p>Covariates can be grouped into four main categories:</p>
+<p><strong>1. Topographic &amp; Environmental Covariates</strong></p>
+<p>Because Northern Mountain Caribou move vertically between seasons, elevation is the primary driver of their behavior.</p>
+<ul>
+<li>Elevation: Used to track seasonal shifts (up to alpine areas in summer to avoid heat/insects, and down to sub-alpine forests in winter).<br>
+</li>
+<li>Slope and Aspect: Caribou often select steeper, wind-swept ridges in winter because the wind blows snow away, making it easier to reach lichens.<br>
+</li>
+<li>Snow Depth (SWE): A critical covariate for winter survival; excessive snow increases the metabolic cost of travel and limits access to food.</li>
+</ul>
+<p><strong>2. Forage &amp; Vegetation Covariates</strong></p>
+<p>These identify the “food energy” available on the landscape.</p>
+<ul>
+<li>Lichen Abundance: Specifically terrestrial lichens (<em>Cladonia</em> spp.) and arboreal lichens in old-growth forests.</li>
+<li>Land Cover Type: Distinguishes between alpine tundra, sub-alpine fir, and spruce-lichen woodlands.</li>
+<li>NDVI (Normalized Difference Vegetation Index): Used in summer to measure the “greenness” or quality of emerging forage, which is vital for lactating cows.</li>
+</ul>
+<p><strong>3. Disturbance Covariates (Anthropogenic &amp; Natural)</strong></p>
+<p>These measure how much “space” caribou lose to human activity or environmental changes.</p>
+<ul>
+<li>Distance to Roads/Infrastructure: Caribou show a strong “Zone of Influence” (ZOI) avoidance, often staying several kilometers away from active mines or high-use roads.<br>
+</li>
+<li>Linear Feature Density: The concentration of seismic lines or pipelines. Even if narrow, these act as “highways” for predators like wolves.<br>
+</li>
+<li>Fire Age: Caribou generally avoid burned areas for 40-60 years because fire destroys the slow-growing lichen they depend on.</li>
+</ul>
+<p><strong>4. Biological &amp; Predation Covariates</strong></p>
+<p>These account for the “risk” on the landscape.</p>
+<ul>
+<li>Predator Density/Risk: Often modeled as the probability of encountering wolves or bears.</li>
+<li>Alternative Prey Density: Covariates for moose or deer are used to measure “apparent competition”?higher moose numbers often bring in more wolves, which then incidentally prey on caribou.<br>
+</li>
+<li>Reproductive State: Whether a cow has a calf significantly changes her selection; “cow-with-calf” is a common categorical covariate because these individuals prioritize safety (high elevation) over the best food.</li>
+</ul>
+<p><strong>Summary Table: Key Covariates</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 27%">
+<col style="width: 51%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Key Variables</th>
+<th>Typical Effect on Selection</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Topography</td>
+<td>Elevation, Slope, Aspect</td>
+<td>Positive (selection of high/steep areas in winter)</td>
+</tr>
+<tr class="even">
+<td>Forage</td>
+<td>Lichen cover, Forest age</td>
+<td>Positive (prefer old-growth/high lichen density)</td>
+</tr>
+<tr class="odd">
+<td>Human</td>
+<td>Distance to roads, Mine sites</td>
+<td>Negative (strong avoidance)</td>
+</tr>
+<tr class="even">
+<td>Natural</td>
+<td>Fire history (&lt;40 years)</td>
+<td>Negative (avoidance due to lack of forage)</td>
+</tr>
+<tr class="odd">
+<td>Predation</td>
+<td>Distance to linear features</td>
+<td>Negative (avoidance due to high risk)</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
@@ -805,10 +762,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../methods/corridors.html" class="pagination-link" aria-label="Mapping corridors">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Mapping corridors</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./workflow.html" class="pagination-link" aria-label="Workflow">
-        <span class="nav-page-text">Workflow</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../methods/hsf.html" class="pagination-link" aria-label="Habitat selection">
+        <span class="nav-page-text">Habitat selection</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -817,4 +777,4 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/methods/covariates.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

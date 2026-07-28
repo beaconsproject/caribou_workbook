@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>corridors</title>
+<title>Identifying corridors</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -110,14 +145,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../workplan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workplan</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflow (R)</span></a>
+ <span class="menu-text">Workflow</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -132,31 +161,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/segments.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/segments.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Segmenting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/ranges.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/ranges.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating ranges</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/corridors.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/corridors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mapping corridors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/covariates.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/covariates.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat covariates</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/hsf.html" class="sidebar-item-text sidebar-link">
+  <a href="../methods/hsf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
@@ -211,6 +240,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Habitat selection</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../little_rancheria/issf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step selection</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -244,13 +279,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../issues.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/issues.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Issues</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -266,35 +301,62 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#identifying-corridors" id="toc-identifying-corridors" class="nav-link active" data-scroll-target="#identifying-corridors">Identifying corridors</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#walkthrough" id="toc-walkthrough" class="nav-link" data-scroll-target="#walkthrough">Walkthrough</a>
   <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#walkthrough" id="toc-walkthrough" class="nav-link" data-scroll-target="#walkthrough">Walkthrough</a></li>
+  <li><a href="#step-1.-identify-migration-periods" id="toc-step-1.-identify-migration-periods" class="nav-link" data-scroll-target="#step-1.-identify-migration-periods">Step 1. Identify migration periods</a></li>
+  <li><a href="#step-2.-map-individual-paths" id="toc-step-2.-map-individual-paths" class="nav-link" data-scroll-target="#step-2.-map-individual-paths">Step 2. Map individual paths</a></li>
+  <li><a href="#step-3.-average-individual-paths" id="toc-step-3.-average-individual-paths" class="nav-link" data-scroll-target="#step-3.-average-individual-paths">Step 3. Average individual paths</a></li>
+  <li><a href="#step-4.-classify-corridors" id="toc-step-4.-classify-corridors" class="nav-link" data-scroll-target="#step-4.-classify-corridors">Step 4. Classify corridors</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/corridors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/corridors.html">Migration corridors</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Herds</li><li class="breadcrumb-item"><a href="../little_rancheria/overview.html">Little Rancheria</a></li><li class="breadcrumb-item"><a href="../little_rancheria/corridors.html">Migration corridors</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Identifying corridors</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="identifying-corridors" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-corridors">Identifying corridors</h2>
-<section id="overview" class="level3">
-<h3 class="anchored" data-anchor-id="overview">Overview</h3>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>Overview of the importance of identifying and mapping seasonal movement corridors for caribou.</p>
 </section>
-<section id="walkthrough" class="level3">
-<h3 class="anchored" data-anchor-id="walkthrough">Walkthrough</h3>
+<section id="walkthrough" class="level2">
+<h2 class="anchored" data-anchor-id="walkthrough">Walkthrough</h2>
 <p>In this section we describe the steps used to estimate individual home ranges using the KDE approach and compare it to another commonly used method, the minimum convex hull (MCP). We illustrate the approach for one individual caribou.</p>
-<section id="step-1.-identify-migration-periods" class="level4">
-<h4 class="anchored" data-anchor-id="step-1.-identify-migration-periods">Step 1. Identify migration periods</h4>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(amt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="step-1.-identify-migration-periods" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.-identify-migration-periods">Step 1. Identify migration periods</h3>
 <p>This step is described in “Seasonal migrations” in the “Defining segments” section.</p>
 </section>
-<section id="step-2.-map-individual-paths" class="level4">
-<h4 class="anchored" data-anchor-id="step-2.-map-individual-paths">Step 2. Map individual paths</h4>
+<section id="step-2.-map-individual-paths" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.-map-individual-paths">Step 2. Map individual paths</h3>
 <p>Simply connecting the dots of a migration sequence with a straight line gives a rough idea of the route, but it’s an oversimplification. It doesn’t reveal the true width of the path or, more importantly, the specific areas where an animal stopped-over to rest and feed. To build a more realistic map, we used a statistical method called the Brownian Bridge Movement Model (BBMM). This model is incorporates a key parameter called the Brownian motion variance (BMV), which is a statistical estimate of an individual’s mobility, making the resulting map more realistic. The output of this model is a utilization distribution (UD), which is essentially a “heat map” or “probability surface.” Instead of just showing a line, the UD shows the likelihood of an individual having been in any given location along its route. The “hotter” the color, the more time the individual likely spent there.</p>
 <p>Using a BBMM to create a utilization distribution has two major benefits:</p>
 <ul>
@@ -302,6 +364,43 @@ ul.task-list li input[type="checkbox"] {
 <li>Identifies stopover sites: The “hottest” parts of the heat map are incredibly valuable. They reveal stopover sites - critical areas where animals spend extended time foraging and resting during their long journey. These sites are as important to the success of a migration as the path itself.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gps <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../data/little_rancheria/caribou.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aoi <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"../../data/little_rancheria/corridors.gpkg"</span>, <span class="st">"aoi"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Spring</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gps1s <span class="ot">&lt;-</span> gps <span class="sc">|&gt;</span> <span class="fu">filter</span>(id<span class="sc">==</span><span class="st">"SKRATALR0018"</span> <span class="sc">&amp;</span> year<span class="sc">==</span><span class="dv">2021</span> <span class="sc">&amp;</span> migration<span class="sc">==</span><span class="st">"Spring migration"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>gps1s_sf <span class="ot">&lt;-</span> gps1s <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords=</span><span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs=</span><span class="dv">4326</span>, <span class="at">remove=</span><span class="cn">FALSE</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"../../data/little_rancheria/corridors.gpkg"</span>, <span class="st">"bbmm95"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(id<span class="sc">==</span><span class="st">"43141"</span> <span class="sc">&amp;</span> year<span class="sc">==</span><span class="dv">2021</span> <span class="sc">&amp;</span> migration<span class="sc">==</span><span class="st">"Spring migration"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Fall</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>gps1f <span class="ot">&lt;-</span> gps <span class="sc">|&gt;</span> <span class="fu">filter</span>(id<span class="sc">==</span><span class="st">"SKRATALR0018"</span> <span class="sc">&amp;</span> year<span class="sc">==</span><span class="dv">2021</span> <span class="sc">&amp;</span> migration<span class="sc">==</span><span class="st">"Fall migration"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gps1f_sf <span class="ot">&lt;-</span> gps1f <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords=</span><span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs=</span><span class="dv">4326</span>, <span class="at">remove=</span><span class="cn">FALSE</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>xf <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"../../data/little_rancheria/corridors.gpkg"</span>, <span class="st">"bbmm95"</span>, <span class="at">quiet=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(id<span class="sc">==</span><span class="st">"43141"</span> <span class="sc">&amp;</span> year<span class="sc">==</span><span class="dv">2021</span> <span class="sc">&amp;</span> migration<span class="sc">==</span><span class="st">"Fall migration"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aoi) <span class="sc">+</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(xs) <span class="sc">+</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill.legend =</span> <span class="fu">tm_legend_hide</span>()) <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(gps1s_sf) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Spring migration"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>mf <span class="ot">&lt;-</span> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aoi) <span class="sc">+</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(xf) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill.legend =</span> <span class="fu">tm_legend_hide</span>()) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(gps1f_sf) <span class="sc">+</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Fall migration"</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(ms, mf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -312,8 +411,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="step-3.-average-individual-paths" class="level4">
-<h4 class="anchored" data-anchor-id="step-3.-average-individual-paths">Step 3. Average individual paths</h4>
+<section id="step-3.-average-individual-paths" class="level3">
+<h3 class="anchored" data-anchor-id="step-3.-average-individual-paths">Step 3. Average individual paths</h3>
 <p>To protect a migration, we need to see the main corridor used by the entire population, not just the path of one individual. This can be achieved this by combining all the individual maps into a single, comprehensive view of the herd’s movement. This involves a three step process:</p>
 <ul>
 <li>Average individual migrations: First, for each individual, we took all of its yearly migration UDs (the heat maps) and average them together. This creates a single map representing the typical migration path for that specific animal over time.</li>
@@ -321,6 +420,26 @@ ul.task-list li input[type="checkbox"] {
 <li>Stack the footprints: All of these individual footprints are then layered, or “stacked” on top of one another. The result is a map where every pixel on the grid has a value corresponding to how many different individuals passed through it.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rs <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"../../data/little_rancheria/spring_migration.tif"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aoi) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(rs) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.legend =</span> <span class="fu">tm_legend</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Caribou use"</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="at">pos.v =</span> <span class="st">"bottom"</span>, <span class="at">pos.h=</span><span class="st">"right"</span>))) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Spring migration"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"../../data/little_rancheria/fall_migration.tif"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>mf <span class="ot">&lt;-</span> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aoi) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(rf) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.legend =</span> <span class="fu">tm_legend</span>(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Caribou use"</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="at">pos.v =</span> <span class="st">"bottom"</span>, <span class="at">pos.h=</span><span class="st">"right"</span>))) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Fall migration"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(ms, mf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -331,8 +450,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="step-4.-classify-corridors" class="level4">
-<h4 class="anchored" data-anchor-id="step-4.-classify-corridors">Step 4. Classify corridors</h4>
+<section id="step-4.-classify-corridors" class="level3">
+<h3 class="anchored" data-anchor-id="step-4.-classify-corridors">Step 4. Classify corridors</h3>
 <p>Finally, we can classify the resultant stacked map to visualize how 1) intensely different parts of the corridor are used by the herd and 2) where the key stopovers areas are located. This allows us to distinguish between occasional and essential parts of the corridor.</p>
 <p><strong>Output 1: Corridor use intensity</strong></p>
 <p>The levels of corridor use are typically defined as follows:</p>
@@ -370,6 +489,26 @@ ul.task-list li input[type="checkbox"] {
 <p><br> <strong>Output 2: High use areas</strong></p>
 <p>High use areas or stopovers are areas where animals spend extended time foraging and resting during migration. They are defined as the top 10% of use values from the propulation-level probability map. Protecting these high-use areas is as important as protecting the connectivity between them.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rs <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"../../data/little_rancheria/spring_highuse.tif"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aoi) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(rs) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.legend =</span> <span class="fu">tm_legend</span>(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"High use"</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="at">pos.v =</span> <span class="st">"bottom"</span>, <span class="at">pos.h=</span><span class="st">"right"</span>))) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Spring migration"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"../../data/little_rancheria/fall_highuse.tif"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>mf <span class="ot">&lt;-</span> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aoi) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(rf) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.legend =</span> <span class="fu">tm_legend</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"High use"</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="at">pos.v =</span> <span class="st">"bottom"</span>, <span class="at">pos.h=</span><span class="st">"right"</span>))) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Fall migration"</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(ms, mf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -381,7 +520,6 @@ ul.task-list li input[type="checkbox"] {
 </div>
 
 
-</section>
 </section>
 </section>
 

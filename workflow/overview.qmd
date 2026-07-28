@@ -1,7 +1,3 @@
----
-title: "Overview"
----
-
 ```{r}
 #| echo: false
 #| warning: false
@@ -12,13 +8,13 @@ library(tmap)
 library(knitr)
 library(patchwork)
 library(tidyverse)
-herd_dir <- "little_rancheria"
-herd_name <- "Little Rancheria"
+herd_dir <- params$herd
+herd_name <- params$herd |> gsub("_", " ", x = _) |> tools::toTitleCase()
 ```
 
 ## Introduction
 
-The `r herd_name` caribou herd stradles the BC-Yukon border.
+The `r herd_name` caribou herd.
 
 ```{r}
 #| echo: TRUE

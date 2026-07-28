@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/workplan.html</loc>
-    <lastmod>2026-05-04T14:39:09.698Z</lastmod>
+    <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/hsf.html</loc>
+    <lastmod>2026-05-22T05:15:37.786Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/wolf_lake/overview.html</loc>
-    <lastmod>2026-05-04T14:53:04.778Z</lastmod>
+    <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/issf.html</loc>
+    <lastmod>2026-05-22T05:15:10.592Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/ranges.html</loc>
+    <lastmod>2026-05-22T05:22:20.063Z</lastmod>
   </url>
   <url>
     <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/segments.html</loc>
@@ -14,58 +18,58 @@
   </url>
   <url>
     <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/overview.html</loc>
-    <lastmod>2026-05-04T14:47:04.278Z</lastmod>
+    <lastmod>2026-05-21T13:51:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/corridors.html</loc>
-    <lastmod>2026-04-28T20:35:16.496Z</lastmod>
+    <lastmod>2026-05-22T05:23:32.300Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/workflow.html</loc>
+    <lastmod>2026-05-21T11:34:20.746Z</lastmod>
   </url>
   <url>
     <loc>https://beaconsproject.github.io/caribou_workbook/index.html</loc>
-    <lastmod>2026-04-28T22:08:49.310Z</lastmod>
+    <lastmod>2026-05-22T06:12:25.621Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/segments.html</loc>
+    <loc>https://beaconsproject.github.io/caribou_workbook/methods/segments.html</loc>
     <lastmod>2026-04-21T15:55:29.137Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/hsf.html</loc>
+    <loc>https://beaconsproject.github.io/caribou_workbook/methods/hsf.html</loc>
     <lastmod>2026-04-29T23:42:12.762Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/corridors.html</loc>
+    <loc>https://beaconsproject.github.io/caribou_workbook/methods/corridors.html</loc>
     <lastmod>2026-04-30T00:10:18.109Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/covariates.html</loc>
+    <loc>https://beaconsproject.github.io/caribou_workbook/methods/covariates.html</loc>
     <lastmod>2026-05-01T23:20:46.477Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/ranges.html</loc>
+    <loc>https://beaconsproject.github.io/caribou_workbook/methods/ranges.html</loc>
     <lastmod>2026-04-28T18:44:38.244Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/references.html</loc>
+    <lastmod>2026-05-21T11:52:59.819Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/appendices/issues.html</loc>
+    <lastmod>2026-05-21T11:53:25.095Z</lastmod>
+  </url>
+  <url>
+    <loc>https://beaconsproject.github.io/caribou_workbook/wolf_lake/overview.html</loc>
+    <lastmod>2026-05-04T14:53:04.778Z</lastmod>
   </url>
   <url>
     <loc>https://beaconsproject.github.io/caribou_workbook/horseranch/overview.html</loc>
     <lastmod>2026-04-20T23:04:52.321Z</lastmod>
   </url>
   <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/issues.html</loc>
-    <lastmod>2026-05-04T14:41:44.612Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/hsf.html</loc>
-    <lastmod>2026-05-11T04:57:33.664Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/little_rancheria/ranges.html</loc>
-    <lastmod>2026-05-13T09:09:50.923Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/references.html</loc>
-    <lastmod>2026-05-04T14:39:17.598Z</lastmod>
-  </url>
-  <url>
-    <loc>https://beaconsproject.github.io/caribou_workbook/workflow.html</loc>
-    <lastmod>2026-04-29T18:21:29.538Z</lastmod>
+    <loc>https://beaconsproject.github.io/caribou_workbook/apps.html</loc>
+    <lastmod>2026-07-28T20:47:52.171Z</lastmod>
   </url>
 </urlset>

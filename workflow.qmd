@@ -1,7 +1,8 @@
-# Caribou Analysis Workflow
-# Updated: 2026-04-29
+---
+title: "Caribou Analysis Workflow"
+---
 
-The workflow is divided into six broad steps which do not have to been implemented linearly. Additional steps to the workflow will be added in the future e.g., connectivity analysis.
+The workflow described in this section divided into six broad steps, which do not have to been implemented linearly. Additional details on each step in the workflow can be found in the original [workplan](https://docs.google.com/document/d/1p0pAv9950JJwcaKug6WJn6BYHQrtLv95NQadZrdo8iE/edit?usp=sharing).
 
 ## 1. Movement data
 
@@ -11,7 +12,7 @@ The workflow is divided into six broad steps which do not have to been implement
     - Add new attributes: elevation, season based on YG, migration based on YG
     - Create new layers: AOI based on 100% KDE, preliminary annual and seasonal ranges
   
-## 2. Partition data
+## 2. Partition (segment) data
 
 - Use **gen_migration_segments.R** to create empty migration_segments table (fields: id, year, migration) for herds with no migration periods
 - Use the **Movement Mapper** app to identify start and end dates for spring and fall migration periods

@@ -20,22 +20,20 @@ website:
     contents:
       - href: index.qmd
         text: Home
-      - href: workplan.qmd
-        text: Workplan
       - href: workflow.qmd
-        text: Workflow (R)
+        text: Workflow
       - ---
       - section: "Methods"
         contents:
-        - href: appendices/segments.qmd
+        - href: methods/segments.qmd
           text: Segmenting data
-        - href: appendices/ranges.qmd
+        - href: methods/ranges.qmd
           text: Estimating ranges
-        - href: appendices/corridors.qmd
+        - href: methods/corridors.qmd
           text: Mapping corridors
-        - href: appendices/covariates.qmd
+        - href: methods/covariates.qmd
           text: Habitat covariates
-        - href: appendices/hsf.qmd
+        - href: methods/hsf.qmd
           text: Habitat selection
       - ---
       - section: Herds
@@ -52,17 +50,25 @@ website:
             text: Migration corridors
           - href: little_rancheria/hsf.qmd
             text: Habitat selection
+          - href: little_rancheria/issf.qmd
+            text: Step selection
         - section: "Wolf Lake"
           contents:
           - href: wolf_lake/overview.qmd
             text: Overview
+        - section: "Horseranch"
+          contents:
+          - href: horseranch/overview.qmd
+            text: Overview
       - ---
       - section: "Appendices"
         contents:
-        - href: issues.qmd
+        - href: appendices/issues.qmd
           text: Issues
-        - href: references.qmd
+        - href: appendices/references.qmd
           text: References
+        - href: apps.qmd
+          text: Apps & dashboards
 
 format:
   html:

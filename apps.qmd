@@ -1,0 +1,30 @@
+---
+title: "Apps and Dashboards"
+---
+
+We are currently developing several shiny apps and dashboards to support the analysis and visualizing of caribou movement data.
+
+## Apps
+
+As part of the project, we are developing some interactive apps that can be used to support some of the analysis steps. The apps are intended to be general so that they can eventually be used for other study areas and species.
+
+**Movement Mapper:**
+
+- Tool to assist in defining seasonal migration segments (periods)
+- Online: https://beaconsproject.shinyapps.io/movement_mapper
+- Github: https://github.com/beaconsproject/movement_mapper
+
+**Movement Explorer:**
+
+- Tool to visualize movement data, define segments, estimate seasonal and annual ranges, and identify movement corridors. Note: for define segments, the Movement Mapper is preferred.
+- Online: https://beaconsproject.shinyapps.io/movement_explorer
+- Github: https://github.com/beaconsproject/movement_explorer
+
+## Dashboards
+
+To aid in visualizing and interpreting some of the components of the analysis, we are developing dashboards that can be used to view the results interactively. The four dashboards are linked together through menu buttons located at the top of each dashboard.
+
+- [Movement data](https://beaconsproject.shinyapps.io/caribou_movement_data) - Dashboard for visualizing caribou movement data and animations
+- [Migration segments](https://beaconsproject.shinyapps.io/caribou_movement_data) - Dashboard for visualizing the spring and fall migration segments that were defined using the **Movement Mapper** app.
+- [Seasonal ranges](https://beaconsproject.shinyapps.io/caribou_seasonal_ranges) - Dashboard for visualizing the output of the seasonal and annual ranges analysis
+- [Seasonal corridors](https://beaconsproject.shinyapps.io/caribou_seasonal_corridors) - Dashboard for visualing the output of the movement paths (corridors) analysis

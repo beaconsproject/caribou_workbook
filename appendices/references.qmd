@@ -1,4 +1,6 @@
-## References
+---
+title: "References"
+---
 
 To do: Update references
 
