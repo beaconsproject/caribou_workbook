@@ -48,10 +48,8 @@ website:
             text: Migration segments
           - href: little_rancheria/corridors.qmd
             text: Migration corridors
-          - href: little_rancheria/hsf.qmd
+          - href: little_rancheria/rsf.qmd
             text: Habitat selection
-          - href: little_rancheria/issf.qmd
-            text: Step selection
         - section: "Wolf Lake"
           contents:
           - href: wolf_lake/overview.qmd

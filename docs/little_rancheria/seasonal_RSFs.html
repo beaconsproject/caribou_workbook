@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Seasonal Resource Selection Functions</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6ef75a0fa32a0ab5c67dbc0e0e72a034.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  </ul></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#movement-data-and-study-area" id="toc-movement-data-and-study-area" class="nav-link" data-scroll-target="#movement-data-and-study-area">Movement data and study area</a></li>
+  <li><a href="#terrain-covariates" id="toc-terrain-covariates" class="nav-link" data-scroll-target="#terrain-covariates">Terrain covariates</a></li>
+  <li><a href="#home-ranges-and-availability-sampling" id="toc-home-ranges-and-availability-sampling" class="nav-link" data-scroll-target="#home-ranges-and-availability-sampling">Home ranges and availability sampling</a></li>
+  <li><a href="#rsf-models" id="toc-rsf-models" class="nav-link" data-scroll-target="#rsf-models">RSF models</a></li>
+  <li><a href="#spatial-prediction" id="toc-spatial-prediction" class="nav-link" data-scroll-target="#spatial-prediction">Spatial prediction</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#nd-order-results" id="toc-nd-order-results" class="nav-link" data-scroll-target="#nd-order-results">2nd-order results</a></li>
+  <li><a href="#rd-order-results" id="toc-rd-order-results" class="nav-link" data-scroll-target="#rd-order-results">3rd-order results</a></li>
+  </ul></li>
+  <li><a href="#discussion-and-conclusions" id="toc-discussion-and-conclusions" class="nav-link" data-scroll-target="#discussion-and-conclusions">Discussion and conclusions</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/seasonal_RSFs.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Seasonal Resource Selection Functions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The Little Rancheria caribou herd occupies a range spanning several seasonal phases (calving, summer, fall rut, early winter, late winter), each associated with potentially distinct habitat requirements. Resource selection functions (RSFs) provide a statistical framework for quantifying how strongly animals select landscape features relative to their availability, and are commonly estimated at multiple spatial scales, or “orders of selection” (Johnson 1980): <strong>2nd-order</strong> selection describes placement of an individual’s home range within the broader study area, while <strong>3rd-order</strong> selection describes use of locations within that home range.</p>
+<p>This report summarizes seasonal 2nd- and 3rd-order RSFs fit for the Little Rancheria herd from GPS telemetry data and terrain covariates derived from a regional digital elevation model (DEM).</p>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<ul>
+<li>Characterize seasonal patterns of topographic habitat selection (elevation, ruggedness, terrain position, and slope orientation) at both the home-range (2nd-order) and within-home-range (3rd-order) scales.</li>
+<li>Fit weighted mixed-effects RSFs that account for repeated sampling of individuals and the used:available design.</li>
+<li>Generate spatial predictions of relative probability of use across the herd range for each season, to support habitat mapping and management applications.</li>
+</ul>
+</section>
+</section>
+<section id="methods" class="level1">
+<h1>Methods</h1>
+<p>The full analysis workflow is implemented in <code>little_rancheria_rsf_workflow.R</code>, run once per season by setting the <code>season1</code> variable (<code>"Calving"</code>, <code>"Summer"</code>, <code>"Fall rut"</code>, <code>"Early winter"</code>, <code>"Late winter"</code>, or <code>"Annual"</code>) and re-running the script; outputs are written to a folder named for that season. The sections below summarize the workflow; code shown is illustrative (<code>eval: false</code>) rather than re-executed in this report.</p>
+<section id="movement-data-and-study-area" class="level2">
+<h2 class="anchored" data-anchor-id="movement-data-and-study-area">Movement data and study area</h2>
+<p>GPS telemetry fixes (<code>caribou.csv</code>) were filtered to the season of interest using a <code>phase</code> column, parsed to timestamps, and converted to <code>amt</code> tracks per individual (<code>make_track()</code>), reprojected to match the CRS of a regional DEM (<code>mrdem.tif</code>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>trk_all <span class="ot">&lt;-</span> caribou_raw <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">make_track</span>(x, y, t, <span class="at">id =</span> id, <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform_coords</span>(<span class="at">crs_to =</span> target_crs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="terrain-covariates" class="level2">
+<h2 class="anchored" data-anchor-id="terrain-covariates">Terrain covariates</h2>
+<p>The DEM was cropped to the telemetry extent plus a 5 km buffer (to keep raster processing tractable and ensure coverage for available points near the range edge), then used to derive five topographic covariates with <code>terra::terrain()</code>:</p>
+<ul>
+<li><strong>elevation</strong> (m)</li>
+<li><strong>TRI</strong> (terrain ruggedness index)</li>
+<li><strong>TPI</strong> (topographic position index)</li>
+<li><strong>northness</strong> and <strong>eastness</strong> (cosine/sine of aspect, used in place of circular aspect degrees)</li>
+</ul>
+<p>Slope and roughness were dropped as redundant with TRI (all three capture local ruggedness).</p>
+</section>
+<section id="home-ranges-and-availability-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="home-ranges-and-availability-sampling">Home ranges and availability sampling</h2>
+<p>Home ranges were estimated per individual with both MCP and KDE (<code>amt::hr_mcp()</code>, <code>amt::hr_kde()</code>; 95% level) as a sanity check on area estimates. Autocorrelated KDE (aKDE) was deliberately not used, since it assumes range residency that does not hold for this herd.</p>
+<p>Used-available data were generated at two scales, with a 1:10 used:available ratio:</p>
+<ul>
+<li><strong>3rd order</strong>: available points drawn within each individual’s own KDE home range (<code>amt::random_points()</code>).</li>
+<li><strong>2nd order</strong>: available points drawn from the union of all individuals’ MCPs (a stand-in herd/study-area extent).</li>
+</ul>
+<p>Covariates were extracted at all used and available points and standardized (z-scores) prior to model fitting. Collinearity among the five (unstandardized) covariates was checked separately for each order’s dataset with <code>usdm::vifstep()</code> (threshold VIF = 5).</p>
+</section>
+<section id="rsf-models" class="level2">
+<h2 class="anchored" data-anchor-id="rsf-models">RSF models</h2>
+<p>Models followed the weighted mixed-effects logistic regression approach of Muff, Signer &amp; Fieberg (2020): available (pseudo-absence) points were down-weighted by assigning them a weight of 1000 relative to used points (weight = 1), and the variance of the individual-level random intercept was fixed at a large value (<code>log(1e3)</code>) so that it absorbs the used:available sampling ratio rather than competing with the fixed-effect slope estimates. Random slopes for elevation and TRI were left free to vary by individual.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rsf_formula <span class="ot">&lt;-</span> <span class="fu">paste</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"elevation_z + tri_z + tpi_z + northness_z + eastness_z"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ (1 | id)"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ (0 + elevation_z | id)"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ (0 + tri_z | id)"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>m_2nd <span class="ot">&lt;-</span> <span class="fu">fit_weighted_rsf</span>(second_order_dat, rsf_formula)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>m_3rd <span class="ot">&lt;-</span> <span class="fu">fit_weighted_rsf</span>(third_order_dat, rsf_formula)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>A full-model formula (all five topographic covariates) was fit for both orders in every season; the script also includes a <code>model_selection()</code> helper comparing this full model against reduced topo-only candidate models via AICc, for use once additional covariate layers (e.g. disturbance features) are added.</p>
+</section>
+<section id="spatial-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="spatial-prediction">Spatial prediction</h2>
+<p>The fitted fixed effects from <em>each</em> order’s model were used to predict a population-level (fixed-effects-only, <code>re.form = NA</code>) RSF surface across the cropped landscape. Each prediction re-derives the z-standardization used to fit that model – 2nd- and 3rd-order used-available data were standardized separately (Section 6 above), so the 2nd- and 3rd-order covariate means/sds differ and each prediction stack is built from its own model’s training data. Rather than calling <code>terra::predict()</code> directly on the <code>glmmTMB</code> object (which can build an oversized in-memory model matrix per raster block and trigger <code>std::bad_alloc</code> on large rasters), the linear predictor was computed by hand as raster algebra from the fixed-effect coefficients and covariate rasters, then back-transformed to the probability scale with the inverse logit. The results for each season were saved as <code>little_rancheria_rsf_2ndorder.tif</code> and <code>little_rancheria_rsf_3rdorder.tif</code>.</p>
+</section>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<p>Results are split into two sections below, one per order of selection. Within each section, seasons are shown as tabs; each tab gives the fixed- effects summary of that order’s model (<code>m_2nd.RDS</code> or <code>m_3rd.RDS</code>), the random-slope SDs (among-individual variation in selection strength), the corresponding predictive RSF surface (<code>little_rancheria_rsf_2ndorder.tif</code> or <code>little_rancheria_rsf_3rdorder.tif</code>) with that season’s GPS relocations and 100% MCP overlaid, and a short interpretation of that map. Seasons/orders that haven’t been (re-)run yet are flagged rather than breaking the render. The “Annual” model is fit separately by the workflow script but omitted from these season-by-season results.</p>
+<section id="nd-order-results" class="level2">
+<h2 class="anchored" data-anchor-id="nd-order-results">2nd-order results</h2>
+<p>2nd-order models describe selection of home-range placement within the broader herd/study-area extent.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Calving</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Summer</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Fall rut</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Early winter</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Late winter</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m_2nd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/m_2nd.RDS"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_2nd), <span class="at">caption =</span> <span class="st">"Calving – 2nd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Calving – 2nd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">169.032</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">-0.315</td>
+<td style="text-align: right;">0.189</td>
+<td style="text-align: right;">-1.671</td>
+<td style="text-align: right;">0.095</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.704</td>
+<td style="text-align: right;">0.211</td>
+<td style="text-align: right;">-3.334</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">0.309</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">35.288</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">-0.136</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-15.212</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-4.309</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_2nd)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Calving – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Calving – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">1.082</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">1.220</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>r_2nd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/little_rancheria_rsf_2ndorder.tif"</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/gps_points.gpkg"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/mcp_100.gpkg"</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_2nd)) {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_2nd, <span class="at">title =</span> <span class="st">"Calving – 2nd-order RSF"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use 'fill' for the fill color of polygons/symbols
+(instead of 'col'), and 'col' for the outlines (instead of 'border.col').
+[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 2929 by 3416 cells.
+
+[basemaps] Tiles from "Esri.WorldImagery" will be projected so details (e.g.
+text) could appear blurry
+This message is displayed once every 8 hours.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/calving-2nd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">interpret_fixed</span>(m_2nd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain position (TPI) (selection for, β = 0.31, p &lt; 0.001); northness (avoidance of, β = -0.14, p &lt; 0.001); eastness (avoidance of, β = -0.04, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.70, p = 0.001). elevation showed no clear evidence of selection.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m_2nd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/m_2nd.RDS"</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_2nd), <span class="at">caption =</span> <span class="st">"Summer – 2nd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Summer – 2nd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">174.069</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.968</td>
+<td style="text-align: right;">0.062</td>
+<td style="text-align: right;">15.544</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.593</td>
+<td style="text-align: right;">0.073</td>
+<td style="text-align: right;">-8.089</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">-0.083</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-17.973</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">-0.057</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-11.060</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.087</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-16.892</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_2nd)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Summer – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Summer – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.355</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.417</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>r_2nd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/little_rancheria_rsf_2ndorder.tif"</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/gps_points.gpkg"</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/mcp_100.gpkg"</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_2nd)) {</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_2nd, <span class="at">title =</span> <span class="st">"Summer – 2nd-order RSF"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 3261 by 3068 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/summer-2nd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">interpret_fixed</span>(m_2nd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain position (TPI) (avoidance of, β = -0.08, p &lt; 0.001); eastness (avoidance of, β = -0.09, p &lt; 0.001); elevation (selection for, β = 0.97, p &lt; 0.001); northness (avoidance of, β = -0.06, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.59, p &lt; 0.001).</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m_2nd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/m_2nd.RDS"</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_2nd), <span class="at">caption =</span> <span class="st">"Fall rut – 2nd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Fall rut – 2nd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">176.779</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">-1.853</td>
+<td style="text-align: right;">2.774</td>
+<td style="text-align: right;">-0.668</td>
+<td style="text-align: right;">0.504</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.778</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">-5.536</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">-0.041</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-4.516</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">-0.027</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-2.906</td>
+<td style="text-align: right;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.056</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-6.096</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_2nd)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Fall rut – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Fall rut – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">15.619</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.778</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>r_2nd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/little_rancheria_rsf_2ndorder.tif"</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/gps_points.gpkg"</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/mcp_100.gpkg"</span>))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_2nd)) {</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_2nd, <span class="at">title =</span> <span class="st">"Fall rut – 2nd-order RSF"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 3553 by 2815 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/fallrut-2nd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">interpret_fixed</span>(m_2nd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for eastness (avoidance of, β = -0.06, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.78, p &lt; 0.001); terrain position (TPI) (avoidance of, β = -0.04, p &lt; 0.001); northness (avoidance of, β = -0.03, p = 0.004). elevation showed no clear evidence of selection.</p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>m_2nd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/m_2nd.RDS"</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_2nd), <span class="at">caption =</span> <span class="st">"Early winter – 2nd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Early winter – 2nd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">164.389</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">-0.977</td>
+<td style="text-align: right;">0.190</td>
+<td style="text-align: right;">-5.131</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-1.400</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">-14.819</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">5.269</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">1.776</td>
+<td style="text-align: right;">0.076</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.057</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-11.410</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_2nd)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Early winter – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Early winter – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">1.154</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.556</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>r_2nd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/little_rancheria_rsf_2ndorder.tif"</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/gps_points.gpkg"</span>))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/mcp_100.gpkg"</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_2nd)) {</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_2nd, <span class="at">title =</span> <span class="st">"Early winter – 2nd-order RSF"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 2922 by 3423 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/earlywinter-2nd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">interpret_fixed</span>(m_2nd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain ruggedness (TRI) (avoidance of, β = -1.40, p &lt; 0.001); eastness (avoidance of, β = -0.06, p &lt; 0.001); terrain position (TPI) (selection for, β = 0.04, p &lt; 0.001); elevation (avoidance of, β = -0.98, p &lt; 0.001). northness showed no clear evidence of selection.</p>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>m_2nd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/m_2nd.RDS"</span>))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_2nd), <span class="at">caption =</span> <span class="st">"Late winter – 2nd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Late winter – 2nd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">162.234</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.403</td>
+<td style="text-align: right;">0.065</td>
+<td style="text-align: right;">6.203</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.516</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">-11.962</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">0.150</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">29.917</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">-0.062</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-12.766</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.111</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-23.002</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_2nd)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Late winter – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Late winter – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.397</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.256</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>r_2nd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/little_rancheria_rsf_2ndorder.tif"</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/gps_points.gpkg"</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/mcp_100.gpkg"</span>))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_2nd)) {</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_2nd, <span class="at">title =</span> <span class="st">"Late winter – 2nd-order RSF"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 2365 by 4229 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/latewinter-2nd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_2nd)) <span class="fu">interpret_fixed</span>(m_2nd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain position (TPI) (selection for, β = 0.15, p &lt; 0.001); eastness (avoidance of, β = -0.11, p &lt; 0.001); northness (avoidance of, β = -0.06, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.52, p &lt; 0.001); elevation (selection for, β = 0.40, p &lt; 0.001).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rd-order-results" class="level2">
+<h2 class="anchored" data-anchor-id="rd-order-results">3rd-order results</h2>
+<p>3rd-order models describe selection of locations within each individual’s own home range.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Calving</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Summer</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Fall rut</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Early winter</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false" href="">Late winter</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>m_3rd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/m_3rd.RDS"</span>))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_3rd), <span class="at">caption =</span> <span class="st">"Calving – 3rd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Calving – 3rd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">169.034</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.272</td>
+<td style="text-align: right;">0.075</td>
+<td style="text-align: right;">3.625</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.501</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">-3.576</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">31.346</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">-0.131</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-14.677</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">2.955</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_3rd)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Calving – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Calving – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.418</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.802</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>r_3rd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/little_rancheria_rsf_3rdorder.tif"</span>))</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/gps_points.gpkg"</span>))</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Calving/mcp_100.gpkg"</span>))</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_3rd)) {</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_3rd, <span class="at">title =</span> <span class="st">"Calving – 3rd-order RSF"</span>)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 2929 by 3416 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/calving-3rd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">interpret_fixed</span>(m_3rd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain position (TPI) (selection for, β = 0.25, p &lt; 0.001); northness (avoidance of, β = -0.13, p &lt; 0.001); elevation (selection for, β = 0.27, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.50, p &lt; 0.001); eastness (selection for, β = 0.03, p = 0.003).</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>m_3rd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/m_3rd.RDS"</span>))</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_3rd), <span class="at">caption =</span> <span class="st">"Summer – 3rd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Summer – 3rd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">174.074</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.939</td>
+<td style="text-align: right;">0.069</td>
+<td style="text-align: right;">13.531</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.610</td>
+<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">-12.731</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">-0.084</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-17.386</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">-0.022</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-4.265</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.065</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-12.553</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) {</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_3rd)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Summer – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Summer – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.395</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.269</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>r_3rd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/little_rancheria_rsf_3rdorder.tif"</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/gps_points.gpkg"</span>))</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Summer/mcp_100.gpkg"</span>))</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_3rd)) {</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_3rd, <span class="at">title =</span> <span class="st">"Summer – 3rd-order RSF"</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 3261 by 3068 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/summer-3rd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">interpret_fixed</span>(m_3rd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain position (TPI) (avoidance of, β = -0.08, p &lt; 0.001); elevation (selection for, β = 0.94, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.61, p &lt; 0.001); eastness (avoidance of, β = -0.06, p &lt; 0.001); northness (avoidance of, β = -0.02, p &lt; 0.001).</p>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>m_3rd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/m_3rd.RDS"</span>))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_3rd), <span class="at">caption =</span> <span class="st">"Fall rut – 3rd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Fall rut – 3rd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">176.775</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">1.107</td>
+<td style="text-align: right;">0.081</td>
+<td style="text-align: right;">13.690</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.589</td>
+<td style="text-align: right;">0.050</td>
+<td style="text-align: right;">-11.818</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">-0.048</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">-5.747</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">0.879</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-0.988</td>
+<td style="text-align: right;">0.323</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) {</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_3rd)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Fall rut – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Fall rut – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.441</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.263</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>r_3rd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/little_rancheria_rsf_3rdorder.tif"</span>))</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/gps_points.gpkg"</span>))</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Fall rut/mcp_100.gpkg"</span>))</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_3rd)) {</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_3rd, <span class="at">title =</span> <span class="st">"Fall rut – 3rd-order RSF"</span>)</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 3553 by 2815 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/fallrut-3rd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">interpret_fixed</span>(m_3rd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for elevation (selection for, β = 1.11, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.59, p &lt; 0.001); terrain position (TPI) (avoidance of, β = -0.05, p &lt; 0.001). eastness, northness showed no clear evidence of selection.</p>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>m_3rd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/m_3rd.RDS"</span>))</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_3rd), <span class="at">caption =</span> <span class="st">"Early winter – 3rd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Early winter – 3rd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">164.389</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">-0.245</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: right;">-4.267</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-1.031</td>
+<td style="text-align: right;">0.058</td>
+<td style="text-align: right;">-17.699</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">3.608</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">4.773</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.042</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-8.426</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) {</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_3rd)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Early winter – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Early winter – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.337</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.334</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>r_3rd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/little_rancheria_rsf_3rdorder.tif"</span>))</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/gps_points.gpkg"</span>))</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Early winter/mcp_100.gpkg"</span>))</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_3rd)) {</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_3rd, <span class="at">title =</span> <span class="st">"Early winter – 3rd-order RSF"</span>)</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 2922 by 3423 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/earlywinter-3rd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">interpret_fixed</span>(m_3rd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain ruggedness (TRI) (avoidance of, β = -1.03, p &lt; 0.001); eastness (avoidance of, β = -0.04, p &lt; 0.001); northness (selection for, β = 0.02, p &lt; 0.001); elevation (avoidance of, β = -0.24, p &lt; 0.001); terrain position (TPI) (selection for, β = 0.02, p &lt; 0.001).</p>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>m_3rd <span class="ot">&lt;-</span> <span class="fu">load_model</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/m_3rd.RDS"</span>))</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">kable</span>(<span class="fu">tidy_fixed</span>(m_3rd), <span class="at">caption =</span> <span class="st">"Late winter – 3rd-order fixed effects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Late winter – 3rd-order fixed effects</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">162.220</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.266</td>
+<td style="text-align: right;">0.072</td>
+<td style="text-align: right;">3.716</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">-0.371</td>
+<td style="text-align: right;">0.042</td>
+<td style="text-align: right;">-8.758</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tpi_z</td>
+<td style="text-align: right;">0.155</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">31.226</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">northness_z</td>
+<td style="text-align: right;">-0.075</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-15.379</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eastness_z</td>
+<td style="text-align: right;">-0.091</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-18.758</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) {</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> <span class="fu">tidy_ranef</span>(m_3rd)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, ]</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(rt, <span class="at">caption =</span> <span class="st">"Late winter – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted"</span>)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Late winter – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">id.1</td>
+<td style="text-align: left;">elevation_z</td>
+<td style="text-align: right;">0.434</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">id.2</td>
+<td style="text-align: left;">tri_z</td>
+<td style="text-align: right;">0.252</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>r_3rd <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/little_rancheria_rsf_3rdorder.tif"</span>))</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>gps_pts <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/gps_points.gpkg"</span>))</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>mcp_100 <span class="ot">&lt;-</span> <span class="fu">load_vector</span>(<span class="fu">paste0</span>(output_dir,<span class="st">"Late winter/mcp_100.gpkg"</span>))</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(r_3rd)) {</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">rsf_map</span>(r_3rd, <span class="at">title =</span> <span class="st">"Late winter – 3rd-order RSF"</span>)</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(mcp_100)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(mcp_100) <span class="sc">+</span> <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(gps_pts)) m <span class="ot">&lt;-</span> m <span class="sc">+</span> <span class="fu">tm_shape</span>(gps_pts) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.02</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── tmap v3 code detected ───────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[v3-&gt;v4] `tm_dots()`: use `fill_alpha` instead of `alpha`.
+SpatRaster object downsampled to 2365 by 4229 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="seasonal_RSFs_files/figure-html/latewinter-3rd-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(m_3rd)) <span class="fu">interpret_fixed</span>(m_3rd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Strongest evidence of selection was for terrain position (TPI) (selection for, β = 0.15, p &lt; 0.001); eastness (avoidance of, β = -0.09, p &lt; 0.001); northness (avoidance of, β = -0.07, p &lt; 0.001); terrain ruggedness (TRI) (avoidance of, β = -0.37, p &lt; 0.001); elevation (selection for, β = 0.27, p &lt; 0.001).</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="discussion-and-conclusions" class="level1">
+<h1>Discussion and conclusions</h1>
+<p>Seasonal RSFs provide a way to characterize how topographic selection by the Little Rancheria herd shifts across the annual cycle, at both the home-range placement (2nd-order) and within-home-range (3rd-order) scales. Comparing coefficient signs and magnitudes for elevation, terrain ruggedness (TRI), terrain position (TPI), and slope orientation (northness/eastness) across seasons can highlight, for example, whether the herd selects for higher/more rugged terrain during calving (often associated with predator avoidance) versus lower, more sheltered terrain in late winter.</p>
+<p>A few caveats are worth keeping in mind when interpreting these results:</p>
+<ul>
+<li><strong>Topography-only covariate set.</strong> The current models include only terrain-derived covariates. Anthropogenic and vegetation covariates (e.g., roads, cutblocks, seismic lines, land cover) are not yet included, and adding them may change both the relative importance of terrain variables and the collinearity structure (Section 6b of the workflow script should be re-run against any expanded covariate set).</li>
+<li><strong>Used:available ratio.</strong> A 1:10 ratio with a corresponding weight of 1000 on available points was used throughout; sensitivity of the fitted coefficients to this ratio has not yet been formally tested.</li>
+<li><strong>Model selection.</strong> The candidate model comparisons in the workflow script are illustrative reduced sets; a more complete hypothesis-driven candidate set (and validation, e.g., k-fold cross-validation of predicted RSF surfaces) would strengthen confidence in the selected model structure for each season.</li>
+</ul>
+<p>Overall, the workflow produces a consistent, reproducible basis for seasonal habitat mapping across the herd’s range, and is structured so that additional covariate layers or candidate model sets can be incorporated season-by-season without changing the core modeling approach.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/beaconsproject\.github\.io\/caribou_workbook");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/beaconsproject/caribou_workbook/edit/main/little_rancheria/seasonal_RSFs.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/beaconsproject/caribou_workbook/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

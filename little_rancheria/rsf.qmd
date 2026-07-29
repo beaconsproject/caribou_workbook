@@ -1,0 +1,741 @@
+---
+title: "Seasonal RSFs"
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(terra)
+library(sf)
+library(tmap)
+library(tidyterra)
+library(glmmTMB)
+library(knitr)
+herd_dir <- "little_rancheria"
+herd_name <- "Little Rancheria"
+source("../R/rsf_map.R")
+output_dir <- "../../models/little_rancheria/"
+
+# Bigger, full-width map figures.
+knitr::opts_chunk$set(fig.width = 10, fig.height = 8, out.width = "100%")
+
+# Seasons shown in Results below. "Annual" is also a valid season1 value in
+# little_rancheria_rsf_workflow.R (pooling all seasons) but is intentionally
+# left out of the season-by-season Results.
+seasons <- c("Calving", "Summer", "Fall rut",
+             "Early winter", "Late winter")
+
+term_labels <- c(
+  elevation_z = "elevation",
+  tri_z       = "terrain ruggedness (TRI)",
+  tpi_z       = "terrain position (TPI)",
+  northness_z = "northness",
+  eastness_z  = "eastness"
+)
+
+# Pull a tidy fixed-effects table out of a fitted glmmTMB model without
+# depending on broom.mixed (not part of the workflow's package list).
+tidy_fixed <- function(model) {
+  cc <- summary(model)$coefficients$cond
+  df <- data.frame(Term = rownames(cc), round(cc, 3), row.names = NULL)
+  names(df) <- c("Term", "Estimate", "Std. Error", "z value", "p value")
+  df
+}
+
+# Random-slope SDs by id (elevation_z, tri_z). The (1 | id) random-intercept
+# variance is fixed at log(1e3) by design (Muff et al. 2020 weighting
+# approach, see Methods) rather than estimated, so it is not a meaningful
+# variance component and is dropped by the caller before display.
+tidy_ranef <- function(model) {
+  vc <- VarCorr(model)$cond
+  rows <- Map(function(v, grp) {
+    sd <- attr(v, "stddev")
+    data.frame(Group = grp, Term = names(sd), SD = round(unname(sd), 3),
+               row.names = NULL)
+  }, vc, names(vc))
+  do.call(rbind, rows)
+}
+
+# Short, data-driven interpretation of a model's fixed effects, ordered by
+# strength of evidence (|z value|). Only fixed effects are discussed here,
+# since the accompanying map is a fixed-effects-only (re.form = NA)
+# prediction (see Methods).
+interpret_fixed <- function(model) {
+  fx <- tidy_fixed(model)
+  fx <- fx[fx$Term != "(Intercept)", ]
+  fx$Label     <- term_labels[fx$Term]
+  fx$Direction <- ifelse(fx$Estimate > 0, "selection for", "avoidance of")
+  fx$Sig       <- fx$`p value` < 0.05
+  fx <- fx[order(-abs(fx$`z value`)), ]
+
+  fmt_p <- function(p) if (p < 0.001) "p < 0.001" else paste0("p = ", round(p, 3))
+
+  sig    <- fx[fx$Sig, ]
+  nonsig <- fx[!fx$Sig, ]
+
+  if (nrow(sig) > 0) {
+    parts <- sprintf("%s (%s, β = %.2f, %s)",
+                      sig$Label, sig$Direction, sig$Estimate,
+                      sapply(sig$`p value`, fmt_p))
+    sig_txt <- paste0("Strongest evidence of selection was for ",
+                       paste(parts, collapse = "; "), ".")
+  } else {
+    sig_txt <- paste("None of the topographic covariates showed",
+                      "statistically clear selection (p < 0.05) at this",
+                      "order/season -- the predicted surface reflects a",
+                      "comparatively flat response.")
+  }
+
+  nonsig_txt <- if (nrow(nonsig) > 0 && nrow(sig) > 0) {
+    paste0(" ", paste(nonsig$Label, collapse = ", "),
+           " showed no clear evidence of selection.")
+  } else {
+    ""
+  }
+
+  cat(sig_txt, nonsig_txt, "\n")
+}
+
+# Load a model/raster if it exists, otherwise note that the season/order
+# hasn't been (re-)run yet, so a partial set of outputs doesn't break the
+# whole render.
+load_model <- function(path) {
+  if (!file.exists(path)) {
+    cat("Not yet available:", path, "\n")
+    return(invisible(NULL))
+  }
+  readRDS(path)
+}
+
+load_raster <- function(path) {
+  if (!file.exists(path)) {
+    cat("Not yet available:", path, "\n")
+    return(invisible(NULL))
+  }
+  terra::rast(path)
+}
+
+load_vector <- function(path) {
+  if (!file.exists(path)) {
+    cat("Not yet available:", path, "\n")
+    return(invisible(NULL))
+  }
+  sf::st_read(path, quiet = TRUE)
+}
+```
+
+# Introduction
+
+The Little Rancheria caribou herd occupies a range spanning several
+seasonal phases (calving, summer, fall rut, early winter, late winter),
+each associated with potentially distinct habitat requirements. Resource
+selection functions (RSFs) provide a statistical framework for
+quantifying how strongly animals select landscape features relative to
+their availability, and are commonly estimated at multiple spatial
+scales, or "orders of selection" (Johnson 1980): **2nd-order** selection
+describes placement of an individual's home range within the broader
+study area, while **3rd-order** selection describes use of locations
+within that home range.
+
+This report summarizes seasonal 2nd- and 3rd-order RSFs fit for the
+Little Rancheria herd from GPS telemetry data and terrain covariates
+derived from a regional digital elevation model (DEM).
+
+## Objectives
+
+- Characterize seasonal patterns of topographic habitat selection (elevation,
+  ruggedness, terrain position, and slope orientation) at both the
+  home-range (2nd-order) and within-home-range (3rd-order) scales.
+- Fit weighted mixed-effects RSFs that account for repeated sampling of
+  individuals and the used:available design.
+- Generate spatial predictions of relative probability of use across the
+  herd range for each season, to support habitat mapping and management
+  applications.
+
+# Methods
+
+The full analysis workflow is implemented in
+`little_rancheria_rsf_workflow.R`, run once per season by setting the
+`season1` variable (`"Calving"`, `"Summer"`, `"Fall rut"`,
+`"Early winter"`, `"Late winter"`, or `"Annual"`) and re-running the
+script; outputs are written to a folder named for that season. The
+sections below summarize the workflow; code shown is illustrative
+(`eval: false`) rather than re-executed in this report.
+
+## Movement data and study area
+
+GPS telemetry fixes (`caribou.csv`) were filtered to the season of
+interest using a `phase` column, parsed to timestamps, and converted to
+`amt` tracks per individual (`make_track()`), reprojected to match the
+CRS of a regional DEM (`mrdem.tif`).
+
+```{r}
+#| label: methods-tracks
+#| eval: false
+
+trk_all <- caribou_raw |>
+  make_track(x, y, t, id = id, crs = 4326) |>
+  transform_coords(crs_to = target_crs)
+```
+
+## Terrain covariates
+
+The DEM was cropped to the telemetry extent plus a 5 km buffer (to keep
+raster processing tractable and ensure coverage for available points near
+the range edge), then used to derive five topographic covariates with
+`terra::terrain()`:
+
+- **elevation** (m)
+- **TRI** (terrain ruggedness index)
+- **TPI** (topographic position index)
+- **northness** and **eastness** (cosine/sine of aspect, used in place of
+  circular aspect degrees)
+
+Slope and roughness were dropped as redundant with TRI (all three capture
+local ruggedness).
+
+## Home ranges and availability sampling
+
+Home ranges were estimated per individual with both MCP and KDE
+(`amt::hr_mcp()`, `amt::hr_kde()`; 95% level) as a sanity check on area
+estimates. Autocorrelated KDE (aKDE) was deliberately not used, since it
+assumes range residency that does not hold for this herd.
+
+Used-available data were generated at two scales, with a 1:10 used:available
+ratio:
+
+- **3rd order**: available points drawn within each individual's own KDE
+  home range (`amt::random_points()`).
+- **2nd order**: available points drawn from the union of all individuals'
+  MCPs (a stand-in herd/study-area extent).
+
+Covariates were extracted at all used and available points and
+standardized (z-scores) prior to model fitting. Collinearity among the
+five (unstandardized) covariates was checked separately for each order's
+dataset with `usdm::vifstep()` (threshold VIF = 5).
+
+## RSF models
+
+Models followed the weighted mixed-effects logistic regression approach of
+Muff, Signer & Fieberg (2020): available (pseudo-absence) points were
+down-weighted by assigning them a weight of 1000 relative to used points
+(weight = 1), and the variance of the individual-level random intercept
+was fixed at a large value (`log(1e3)`) so that it absorbs the
+used:available sampling ratio rather than competing with the fixed-effect
+slope estimates. Random slopes for elevation and TRI were left free to
+vary by individual.
+
+```{r}
+#| label: methods-formula
+#| eval: false
+
+rsf_formula <- paste(
+  "elevation_z + tri_z + tpi_z + northness_z + eastness_z",
+  "+ (1 | id)",
+  "+ (0 + elevation_z | id)",
+  "+ (0 + tri_z | id)"
+)
+
+m_2nd <- fit_weighted_rsf(second_order_dat, rsf_formula)
+m_3rd <- fit_weighted_rsf(third_order_dat, rsf_formula)
+```
+
+A full-model formula (all five topographic covariates) was fit for both
+orders in every season; the script also includes a `model_selection()`
+helper comparing this full model against reduced topo-only candidate
+models via AICc, for use once additional covariate layers (e.g.
+disturbance features) are added.
+
+## Spatial prediction
+
+The fitted fixed effects from *each* order's model were used to predict a
+population-level (fixed-effects-only, `re.form = NA`) RSF surface across
+the cropped landscape. Each prediction re-derives the z-standardization
+used to fit that model -- 2nd- and 3rd-order used-available data were
+standardized separately (Section 6 above), so the 2nd- and 3rd-order
+covariate means/sds differ and each prediction stack is built from its own
+model's training data. Rather than calling `terra::predict()` directly on
+the `glmmTMB` object (which can build an oversized in-memory model matrix
+per raster block and trigger `std::bad_alloc` on large rasters), the
+linear predictor was computed by hand as raster algebra from the
+fixed-effect coefficients and covariate rasters, then back-transformed to
+the probability scale with the inverse logit. The results for each season
+were saved as `little_rancheria_rsf_2ndorder.tif` and
+`little_rancheria_rsf_3rdorder.tif`.
+
+# Results
+
+Results are split into two sections below, one per order of selection.
+Within each section, seasons are shown as tabs; each tab gives the fixed-
+effects summary of that order's model (`m_2nd.RDS` or `m_3rd.RDS`),
+the random-slope SDs (among-individual variation in selection strength),
+the corresponding predictive RSF surface (`little_rancheria_rsf_2ndorder.tif`
+or `little_rancheria_rsf_3rdorder.tif`) with that season's GPS relocations
+and 100% MCP overlaid, and a short interpretation of that map.
+Seasons/orders that haven't been (re-)run yet are flagged rather than
+breaking the render. The "Annual" model is fit separately by the workflow
+script but omitted from these season-by-season results.
+
+## 2nd-order results
+
+2nd-order models describe selection of home-range placement within the
+broader herd/study-area extent.
+
+::: {.panel-tabset}
+
+### Calving
+
+```{r}
+#| label: calving-2nd-model
+
+m_2nd <- load_model(paste0(output_dir,"Calving/m_2nd.RDS"))
+if (!is.null(m_2nd)) kable(tidy_fixed(m_2nd), caption = "Calving – 2nd-order fixed effects")
+```
+
+```{r}
+#| label: calving-2nd-ranef
+
+if (!is.null(m_2nd)) {
+  rt <- tidy_ranef(m_2nd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Calving – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: calving-2nd-map
+
+r_2nd <- load_raster(paste0(output_dir,"Calving/little_rancheria_rsf_2ndorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Calving/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Calving/mcp_100.gpkg"))
+
+if (!is.null(r_2nd)) {
+  m <- rsf_map(r_2nd, title = "Calving – 2nd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: calving-2nd-interp
+#| output: asis
+
+if (!is.null(m_2nd)) interpret_fixed(m_2nd)
+```
+
+### Summer
+
+```{r}
+#| label: summer-2nd-model
+
+m_2nd <- load_model(paste0(output_dir,"Summer/m_2nd.RDS"))
+if (!is.null(m_2nd)) kable(tidy_fixed(m_2nd), caption = "Summer – 2nd-order fixed effects")
+```
+
+```{r}
+#| label: summer-2nd-ranef
+
+if (!is.null(m_2nd)) {
+  rt <- tidy_ranef(m_2nd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Summer – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: summer-2nd-map
+
+r_2nd <- load_raster(paste0(output_dir,"Summer/little_rancheria_rsf_2ndorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Summer/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Summer/mcp_100.gpkg"))
+
+if (!is.null(r_2nd)) {
+  m <- rsf_map(r_2nd, title = "Summer – 2nd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: summer-2nd-interp
+#| output: asis
+
+if (!is.null(m_2nd)) interpret_fixed(m_2nd)
+```
+
+### Fall rut
+
+```{r}
+#| label: fallrut-2nd-model
+
+m_2nd <- load_model(paste0(output_dir,"Fall rut/m_2nd.RDS"))
+if (!is.null(m_2nd)) kable(tidy_fixed(m_2nd), caption = "Fall rut – 2nd-order fixed effects")
+```
+
+```{r}
+#| label: fallrut-2nd-ranef
+
+if (!is.null(m_2nd)) {
+  rt <- tidy_ranef(m_2nd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Fall rut – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: fallrut-2nd-map
+
+r_2nd <- load_raster(paste0(output_dir,"Fall rut/little_rancheria_rsf_2ndorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Fall rut/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Fall rut/mcp_100.gpkg"))
+
+if (!is.null(r_2nd)) {
+  m <- rsf_map(r_2nd, title = "Fall rut – 2nd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: fallrut-2nd-interp
+#| output: asis
+
+if (!is.null(m_2nd)) interpret_fixed(m_2nd)
+```
+
+### Early winter
+
+```{r}
+#| label: earlywinter-2nd-model
+
+m_2nd <- load_model(paste0(output_dir,"Early winter/m_2nd.RDS"))
+if (!is.null(m_2nd)) kable(tidy_fixed(m_2nd), caption = "Early winter – 2nd-order fixed effects")
+```
+
+```{r}
+#| label: earlywinter-2nd-ranef
+
+if (!is.null(m_2nd)) {
+  rt <- tidy_ranef(m_2nd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Early winter – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: earlywinter-2nd-map
+
+r_2nd <- load_raster(paste0(output_dir,"Early winter/little_rancheria_rsf_2ndorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Early winter/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Early winter/mcp_100.gpkg"))
+
+if (!is.null(r_2nd)) {
+  m <- rsf_map(r_2nd, title = "Early winter – 2nd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: earlywinter-2nd-interp
+#| output: asis
+
+if (!is.null(m_2nd)) interpret_fixed(m_2nd)
+```
+
+### Late winter
+
+```{r}
+#| label: latewinter-2nd-model
+
+m_2nd <- load_model(paste0(output_dir,"Late winter/m_2nd.RDS"))
+if (!is.null(m_2nd)) kable(tidy_fixed(m_2nd), caption = "Late winter – 2nd-order fixed effects")
+```
+
+```{r}
+#| label: latewinter-2nd-ranef
+
+if (!is.null(m_2nd)) {
+  rt <- tidy_ranef(m_2nd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Late winter – 2nd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: latewinter-2nd-map
+
+r_2nd <- load_raster(paste0(output_dir,"Late winter/little_rancheria_rsf_2ndorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Late winter/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Late winter/mcp_100.gpkg"))
+
+if (!is.null(r_2nd)) {
+  m <- rsf_map(r_2nd, title = "Late winter – 2nd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: latewinter-2nd-interp
+#| output: asis
+
+if (!is.null(m_2nd)) interpret_fixed(m_2nd)
+```
+
+:::
+
+## 3rd-order results
+
+3rd-order models describe selection of locations within each individual's
+own home range.
+
+::: {.panel-tabset}
+
+### Calving
+
+```{r}
+#| label: calving-3rd-model
+
+m_3rd <- load_model(paste0(output_dir,"Calving/m_3rd.RDS"))
+if (!is.null(m_3rd)) kable(tidy_fixed(m_3rd), caption = "Calving – 3rd-order fixed effects")
+```
+
+```{r}
+#| label: calving-3rd-ranef
+
+if (!is.null(m_3rd)) {
+  rt <- tidy_ranef(m_3rd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Calving – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: calving-3rd-map
+
+r_3rd <- load_raster(paste0(output_dir,"Calving/little_rancheria_rsf_3rdorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Calving/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Calving/mcp_100.gpkg"))
+
+if (!is.null(r_3rd)) {
+  m <- rsf_map(r_3rd, title = "Calving – 3rd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: calving-3rd-interp
+#| output: asis
+
+if (!is.null(m_3rd)) interpret_fixed(m_3rd)
+```
+
+### Summer
+
+```{r}
+#| label: summer-3rd-model
+
+m_3rd <- load_model(paste0(output_dir,"Summer/m_3rd.RDS"))
+if (!is.null(m_3rd)) kable(tidy_fixed(m_3rd), caption = "Summer – 3rd-order fixed effects")
+```
+
+```{r}
+#| label: summer-3rd-ranef
+
+if (!is.null(m_3rd)) {
+  rt <- tidy_ranef(m_3rd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Summer – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: summer-3rd-map
+
+r_3rd <- load_raster(paste0(output_dir,"Summer/little_rancheria_rsf_3rdorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Summer/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Summer/mcp_100.gpkg"))
+
+if (!is.null(r_3rd)) {
+  m <- rsf_map(r_3rd, title = "Summer – 3rd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: summer-3rd-interp
+#| output: asis
+
+if (!is.null(m_3rd)) interpret_fixed(m_3rd)
+```
+
+### Fall rut
+
+```{r}
+#| label: fallrut-3rd-model
+
+m_3rd <- load_model(paste0(output_dir,"Fall rut/m_3rd.RDS"))
+if (!is.null(m_3rd)) kable(tidy_fixed(m_3rd), caption = "Fall rut – 3rd-order fixed effects")
+```
+
+```{r}
+#| label: fallrut-3rd-ranef
+
+if (!is.null(m_3rd)) {
+  rt <- tidy_ranef(m_3rd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Fall rut – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: fallrut-3rd-map
+
+r_3rd <- load_raster(paste0(output_dir,"Fall rut/little_rancheria_rsf_3rdorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Fall rut/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Fall rut/mcp_100.gpkg"))
+
+if (!is.null(r_3rd)) {
+  m <- rsf_map(r_3rd, title = "Fall rut – 3rd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: fallrut-3rd-interp
+#| output: asis
+
+if (!is.null(m_3rd)) interpret_fixed(m_3rd)
+```
+
+### Early winter
+
+```{r}
+#| label: earlywinter-3rd-model
+
+m_3rd <- load_model(paste0(output_dir,"Early winter/m_3rd.RDS"))
+if (!is.null(m_3rd)) kable(tidy_fixed(m_3rd), caption = "Early winter – 3rd-order fixed effects")
+```
+
+```{r}
+#| label: earlywinter-3rd-ranef
+
+if (!is.null(m_3rd)) {
+  rt <- tidy_ranef(m_3rd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Early winter – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: earlywinter-3rd-map
+
+r_3rd <- load_raster(paste0(output_dir,"Early winter/little_rancheria_rsf_3rdorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Early winter/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Early winter/mcp_100.gpkg"))
+
+if (!is.null(r_3rd)) {
+  m <- rsf_map(r_3rd, title = "Early winter – 3rd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: earlywinter-3rd-interp
+#| output: asis
+
+if (!is.null(m_3rd)) interpret_fixed(m_3rd)
+```
+
+### Late winter
+
+```{r}
+#| label: latewinter-3rd-model
+
+m_3rd <- load_model(paste0(output_dir,"Late winter/m_3rd.RDS"))
+if (!is.null(m_3rd)) kable(tidy_fixed(m_3rd), caption = "Late winter – 3rd-order fixed effects")
+```
+
+```{r}
+#| label: latewinter-3rd-ranef
+
+if (!is.null(m_3rd)) {
+  rt <- tidy_ranef(m_3rd)
+  rt <- rt[rt$Term != "(Intercept)", ]
+  kable(rt, caption = "Late winter – 3rd-order random-slope SDs (by id); random-intercept variance is fixed by design and omitted")
+}
+```
+
+```{r}
+#| label: latewinter-3rd-map
+
+r_3rd <- load_raster(paste0(output_dir,"Late winter/little_rancheria_rsf_3rdorder.tif"))
+gps_pts <- load_vector(paste0(output_dir,"Late winter/gps_points.gpkg"))
+mcp_100 <- load_vector(paste0(output_dir,"Late winter/mcp_100.gpkg"))
+
+if (!is.null(r_3rd)) {
+  m <- rsf_map(r_3rd, title = "Late winter – 3rd-order RSF")
+  if (!is.null(mcp_100)) m <- m + tm_shape(mcp_100) + tm_borders(col = "black", lwd = 2)
+  if (!is.null(gps_pts)) m <- m + tm_shape(gps_pts) + tm_dots(col = "black", size = 0.02, alpha = 0.5)
+  m
+}
+```
+
+```{r}
+#| label: latewinter-3rd-interp
+#| output: asis
+
+if (!is.null(m_3rd)) interpret_fixed(m_3rd)
+```
+
+:::
+
+# Discussion and conclusions
+
+Seasonal RSFs provide a way to characterize how topographic selection by
+the Little Rancheria herd shifts across the annual cycle, at both the
+home-range placement (2nd-order) and within-home-range (3rd-order)
+scales. Comparing coefficient signs and magnitudes for elevation, terrain
+ruggedness (TRI), terrain position (TPI), and slope orientation
+(northness/eastness) across seasons can highlight, for example, whether
+the herd selects for higher/more rugged terrain during calving (often
+associated with predator avoidance) versus lower, more sheltered terrain
+in late winter.
+
+A few caveats are worth keeping in mind when interpreting these results:
+
+- **Topography-only covariate set.** The current models include only
+  terrain-derived covariates. Anthropogenic and vegetation covariates
+  (e.g., roads, cutblocks, seismic lines, land cover) are not yet
+  included, and adding them may change both the relative importance of
+  terrain variables and the collinearity structure (Section 6b of the
+  workflow script should be re-run against any expanded covariate set).
+- **Used:available ratio.** A 1:10 ratio with a corresponding weight of
+  1000 on available points was used throughout; sensitivity of the
+  fitted coefficients to this ratio has not yet been formally tested.
+- **Model selection.** The candidate model comparisons in the workflow
+  script are illustrative reduced sets; a more complete hypothesis-driven
+  candidate set (and validation, e.g., k-fold cross-validation of
+  predicted RSF surfaces) would strengthen confidence in the selected
+  model structure for each season.
+
+Overall, the workflow produces a consistent, reproducible basis for
+seasonal habitat mapping across the herd's range, and is structured so
+that additional covariate layers or candidate model sets can be
+incorporated season-by-season without changing the core modeling
+approach.

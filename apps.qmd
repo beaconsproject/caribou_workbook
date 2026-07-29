@@ -25,6 +25,6 @@ As part of the project, we are developing some interactive apps that can be used
 To aid in visualizing and interpreting some of the components of the analysis, we are developing dashboards that can be used to view the results interactively. The four dashboards are linked together through menu buttons located at the top of each dashboard.
 
 - [Movement data](https://beaconsproject.shinyapps.io/caribou_movement_data) - Dashboard for visualizing caribou movement data and animations
-- [Migration segments](https://beaconsproject.shinyapps.io/caribou_movement_data) - Dashboard for visualizing the spring and fall migration segments that were defined using the **Movement Mapper** app.
+- [Migration segments](https://beaconsproject.shinyapps.io/caribou_movement_data) - Dashboard for visualizing spring and fall migration segments defined using the Movement Mapper app
 - [Seasonal ranges](https://beaconsproject.shinyapps.io/caribou_seasonal_ranges) - Dashboard for visualizing the output of the seasonal and annual ranges analysis
 - [Seasonal corridors](https://beaconsproject.shinyapps.io/caribou_seasonal_corridors) - Dashboard for visualing the output of the movement paths (corridors) analysis
